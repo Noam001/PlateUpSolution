@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+
 
 namespace Models
 {
@@ -13,7 +15,7 @@ namespace Models
         string mealPhoto;
         string mealDescription;
         double mealPrice;
-        string MealStatus;
+        string mealStatus;
 
         public string MealId
         {
