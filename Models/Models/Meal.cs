@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Models
 {
-    public class Meals
+    public class Meal
     {
         string mealId;
         string mealName;

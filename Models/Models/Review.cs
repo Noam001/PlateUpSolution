@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    public class Reviews
+    public class Review
     {
         string clientId;
         int reviewId;

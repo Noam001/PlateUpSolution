@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Models
 {
-    public class Orders
+    public class Order
     {
         int clientId;
         int orderId;

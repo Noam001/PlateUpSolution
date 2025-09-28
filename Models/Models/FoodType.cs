@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    public class FoodTypes
+    public class FoodType
     {
         int foodTypeId;
         string foodTypeName;
