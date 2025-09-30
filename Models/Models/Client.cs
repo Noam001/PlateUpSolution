@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    public class Client
+    public class Client : Model
     {
         string clientId;
         string clientName;
@@ -24,7 +24,7 @@ namespace Models
         public string ClientId
         {
             get { return clientId; }
-            set { clientId = value; }
+            set { clientId = value;  ValidateProperty(value, "ClientId"); }
         }
         [Required(ErrorMessage ="You must enter your name")]
         [StringLength(15, MinimumLength =2, ErrorMessage = "First name cannot be longer than 15 characters and less than 2")]
@@ -32,7 +32,7 @@ namespace Models
         public string ClientName
         {
             get { return clientName; }
-            set { clientName = value; }
+            set { clientName = value; ValidateProperty(value, "ClientName"); }
         }
         [Required(ErrorMessage = "You must enter your last name")]
         [StringLength(15, MinimumLength = 2, ErrorMessage = "Last name cannot be longer than 15 characters and less than 2")]
