@@ -1,5 +1,5 @@
 ﻿using System.Data;
-
+using System.Data.OleDb;
 
 namespace PlateUpWS
 {
@@ -13,6 +13,6 @@ namespace PlateUpWS
         int Delete(string sql); //מחזיר את כמות הדברים שנמחקו, לדוגמא בקשה למחוק 10 ספרים אז צריך להיות ערך מוחזר 10
         int Insert(string sql);
         int Update(string sql); 
-        DataReader Select (string sql); //אובייקט שיכול לשמור את הrecordset
+        IDataReader Select (string sql); //אובייקט שיכול לשמור את הrecordset
     }
 }
