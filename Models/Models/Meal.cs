@@ -10,14 +10,14 @@ namespace Models
 {
     public class Meal
     {
-        string mealId;
+        int mealId;
         string mealName;
         string mealPhoto;
         string mealDescription;
         double mealPrice;
         string mealStatus;
 
-        public string MealId
+        public int MealId
         {
             get { return this.mealId; }
             set { this.mealId = value; }

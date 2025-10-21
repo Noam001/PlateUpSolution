@@ -9,7 +9,7 @@ namespace Models
 {
     public class Order
     {
-        int clientId;
+        string clientId;
         int orderId;
         string orderDate;
         string orderTime;
@@ -17,7 +17,7 @@ namespace Models
         bool orderStatus;
 
         [Required(ErrorMessage = "Client ID is required")]
-        public int ClientId
+        public string ClientId
         {
             get { return this.clientId; }
             set { this.clientId = value; }
