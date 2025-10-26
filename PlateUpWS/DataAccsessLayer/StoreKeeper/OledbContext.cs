@@ -54,7 +54,9 @@ namespace PlateUpWS
         public IDataReader Select(string sql)
         {
             this.command.CommandText = sql;
-            return this.command.ExecuteReader();
+            IDataReader datareader = this.command.ExecuteReader();
+            this.command.Parameters.Clear();
+            return datareader;
         }
 
         public int Update(string sql)

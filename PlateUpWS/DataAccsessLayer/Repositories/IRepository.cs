@@ -7,6 +7,6 @@
         T GetById(int id);
         bool Create(T item);
         bool Update(T item);
-        bool Delete(T item);
+        bool Delete(string id);
     }
 }

@@ -4,7 +4,7 @@ namespace PlateUpWS
 {
     public class CityRepository : Repository, IRepository<City>
     {
-        public CityRepository(IDBContext dbContext, ModelFactory modelFactory) : base(dbContext, modelFactory)
+        public CityRepository(OledbContext dbContext, ModelFactory modelFactory) : base(dbContext, modelFactory)
         {
         }
 
