@@ -3,7 +3,7 @@ using System.Data.OleDb;
 
 namespace PlateUpWS
 {
-    public interface IDBContext
+    public interface IDBContext //ממשק של מחסנאי
     {
         void OpenConnection(); //פתיחת קשר עם מסד נתונים
         void CloseConnection(); //סגירת קשר עם נתונים

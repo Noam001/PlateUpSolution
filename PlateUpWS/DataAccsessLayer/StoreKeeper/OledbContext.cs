@@ -1,5 +1,4 @@
-﻿using PlateUpWS.DataAccsessLayer;
-using System.Data;
+﻿using System.Data;
 using System.Data.OleDb;
 
 namespace PlateUpWS
@@ -65,7 +64,13 @@ namespace PlateUpWS
         private int ChangeDb(string sql)
         {
             this.command.CommandText = sql;
-            return this.command.ExecuteNonQuery();
+            int records = this.command.ExecuteNonQuery();
+            this.command.Parameters.Clear();
+            return records;
+        }
+        public void AddParameter(string name, object value)
+        {
+            this.command.Parameters.Add(new OleDbParameter(name, value));
         }
     }
 }
