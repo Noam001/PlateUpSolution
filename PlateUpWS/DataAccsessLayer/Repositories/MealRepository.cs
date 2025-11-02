@@ -87,6 +87,7 @@ namespace PlateUpWS
             this.dbContext.AddParameter("@MealId", id);
             using (IDataReader reader = this.dbContext.Select(sql))
             {
+                reader.Read();
                 return this.modelFactory.MealCreator.CreateModel(reader);
             }
         }

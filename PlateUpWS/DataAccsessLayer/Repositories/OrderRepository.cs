@@ -57,13 +57,10 @@ namespace PlateUpWS
         {
             string sql = @"SELECT * FROM Orders WHERE OrderId = @OrderId";
             this.dbContext.AddParameter("@OrderId", id);
-
             using (IDataReader reader = this.dbContext.Select(sql))
             {
-                if (reader.Read())
-                {
-                    return this.modelFactory.OrderCreator.CreateModel(reader);
-                }
+                reader.Read();
+                return this.modelFactory.OrderCreator.CreateModel(reader);
             }
 
             return null;
