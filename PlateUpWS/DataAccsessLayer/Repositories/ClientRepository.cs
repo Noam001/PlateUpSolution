@@ -12,12 +12,6 @@ namespace PlateUpWS
 
         public bool Create(Client item)
         {
-            //string sql = @$"INSERT INTO Clients(ClientId, ClientName, ClientLastName,
-            //                ClientEmail, ClientPassword, ClientAddress, ClientPhoneNumber,
-            //                CityId) VALUES ({item.ClientId}, {item.ClientName}, 
-            //               {item.ClientLastName}, {item.ClientEmail} ,
-            //               {item.Password}, {item.ClientAddress}, {item.ClientPhoneNumber},
-            //               {item.CityId})";
             string sql = @$"INSERT INTO Clients(ClientId, ClientName, ClientLastName, 
                          ClientEmail, ClientPassword, ClientAddress, ClientPhoneNumber,CityId)
                          VALUES
@@ -58,12 +52,38 @@ namespace PlateUpWS
 
         public Client GetById(int id)
         {
-            throw new NotImplementedException();
+            string sql = $"SELECT * FROM Clients where ClientId=@ClientId";
+            this.dbContext.AddParameter("@ClientId", id);
+            using (IDataReader reader = this.dbContext.Select(sql))
+            {
+                reader.Read();
+                return modelFactory.ClientCreator.CreateModel(reader);
+            }
         }
 
         public bool Update(Client item)
         {
-            throw new NotImplementedException();
+            string sql = @$"
+                        UPDATE Clients
+                        SET 
+                           ClientName = @ClientName,
+                           ClientLastName = @ClientLastName,
+                           ClientEmail = @ClientEmail,
+                           ClientPassword = @ClientPassword,
+                           ClientAddress = @ClientAddress,
+                           ClientPhoneNumber = @ClientPhoneNumber,
+                           CityId = @CityId
+                        WHERE 
+                           ClientId = @ClientId
+                        ";
+            this.dbContext.AddParameter("@ClientId", item.ClientId);
+            this.dbContext.AddParameter("@ClientName", item.ClientName);
+            this.dbContext.AddParameter("@ClientLastName", item.ClientLastName);
+            this.dbContext.AddParameter("@ClientAddress", item.ClientAddress);
+            this.dbContext.AddParameter("@ClientPhoneNumber", item.ClientPhoneNumber);
+            this.dbContext.AddParameter("@CityId", item.CityId);
+
+            return this.dbContext.Update(sql) > 0;
         }
     }
 }

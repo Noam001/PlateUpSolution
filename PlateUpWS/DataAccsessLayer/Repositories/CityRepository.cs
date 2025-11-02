@@ -1,4 +1,5 @@
 ﻿using Models;
+using System.Data;
 
 namespace PlateUpWS
 {
@@ -10,17 +11,34 @@ namespace PlateUpWS
 
         public bool Create(City item)
         {
-            string sql = "I"
+            string sql = @"INSERT INTO Cities (CityName)
+                           VALUES (@CityName)";
+
+            this.dbContext.AddParameter("@CityName", item.CityName);
+            return this.dbContext.Insert(sql) > 0;
         }
 
         public bool Delete(City item)
         {
-            throw new NotImplementedException();
+            string sql = @"DELETE FROM Cities WHERE CityId = @CityId";
+            this.dbContext.AddParameter("@CityId", item.CityId);
+            return this.dbContext.Delete(sql) > 0;
         }
 
         public List<City> GetAll()
         {
-            throw new NotImplementedException();
+            List<City> cities = new List<City>();
+            string sql = @"SELECT * FROM Cities";
+
+            using (IDataReader reader = this.dbContext.Select(sql))
+            {
+                while (reader.Read())
+                {
+                    cities.Add(this.modelFactory.CityCreator.CreateModel(reader));
+                }
+            }
+
+            return cities;
         }
 
         public City GetById(int id)
