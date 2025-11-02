@@ -18,10 +18,10 @@ namespace PlateUpWS
             return this.dbContext.Insert(sql) > 0;
         }
 
-        public bool Delete(City item)
+        public bool Delete(string id)
         {
             string sql = @"DELETE FROM Cities WHERE CityId = @CityId";
-            this.dbContext.AddParameter("@CityId", item.CityId);
+            this.dbContext.AddParameter("@CityId", id);
             return this.dbContext.Delete(sql) > 0;
         }
 
@@ -43,12 +43,24 @@ namespace PlateUpWS
 
         public City GetById(int id)
         {
-            throw new NotImplementedException();
+            string sql = @"SELECT * FROM Cities WHERE CityId = @CityId";
+            this.dbContext.AddParameter("@CityId", id);
+            using (IDataReader reader = this.dbContext.Select(sql))
+            {
+                reader.Read();
+                return this.modelFactory.CityCreator.CreateModel(reader);
+            }
         }
-
         public bool Update(City item)
         {
-            throw new NotImplementedException();
+            string sql = @"UPDATE Cities
+                           SET CityName = @CityName
+                           WHERE CityId = @CityId";
+
+            this.dbContext.AddParameter("@CityId", item.CityId);
+            this.dbContext.AddParameter("@CityName", item.CityName);
+
+            return this.dbContext.Update(sql) > 0;
         }
     }
 }
