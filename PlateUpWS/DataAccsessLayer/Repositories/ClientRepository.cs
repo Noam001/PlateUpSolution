@@ -85,5 +85,13 @@ namespace PlateUpWS
 
             return this.dbContext.Update(sql) > 0;
         }
+        public string Login(string email, string password)
+        {
+            string sql = @"SELECT ClientId FROM Clients 
+                         WHERE ClientEmail = @ClientEmail AND ClientPassword = @ClientPassword";
+            this.dbContext.AddParameter("@ClientEmail", email);
+            this.dbContext.AddParameter("@ClientPassword", password);
+            return this.dbContext.GetValue(sql).ToString();   
+        }
     }
 }

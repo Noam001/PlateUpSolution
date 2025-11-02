@@ -37,9 +37,12 @@ namespace PlateUpWS
 
         public List<Meal> GetAll()
         {
-            List<Meal> meals = new List<Meal>();
             string sql = @"SELECT * FROM Meals";
-
+            return GetMeals(sql);
+        }
+        private List<Meal> GetMeals(string sql)
+        {
+            List<Meal> meals = new List<Meal>();
             using (IDataReader reader = this.dbContext.Select(sql))
             {
                 while (reader.Read())
@@ -47,10 +50,37 @@ namespace PlateUpWS
                     meals.Add(this.modelFactory.MealCreator.CreateModel(reader));
                 }
             }
-
             return meals;
         }
+        public List<Meal> GetMealsByFoodType(string foodTypeId)
+        {
+            string sql = $@"SELECT FoodTypesMeals.FoodTypeId, Meals.MealId, Meals.MealName, Meals.MealPhoto, Meals.MealPrice
+                          FROM Meals INNER JOIN FoodTypesMeals ON Meals.MealId = FoodTypesMeals.MealId
+                           WHERE FoodTypesMeals.FoodTypeId = @FoodTypeId";
+            this.dbContext.AddParameter("@FoodTypeId", foodTypeId);
+            return GetMeals(sql);
+        }
+        public List<Meal> FilterByPage()
+        {
+            return null;
+        }
+        public List<Meal> SortByPrice(bool option)
+        {
+            if (option)
+            {
+                string sql = $@"SELECT Meals.MealId, Meals.MealName, Meals.MealPhoto, Meals.MealPrice
+                              FROM Meals ORDER BY Meals.MealPrice";
+                return GetMeals(sql);
 
+            }
+            else
+            {
+                string sql = $@"SELECT Meals.MealId, Meals.MealName, Meals.MealPhoto, Meals.MealPrice
+                              FROM Meals
+                              ORDER BY Meals.MealPrice DESC";
+                return GetMeals(sql);
+            }
+        }
         public Meal GetById(int id)
         {
             string sql = @"SELECT * FROM Meals WHERE MealId = @MealId";
@@ -60,7 +90,6 @@ namespace PlateUpWS
                 return this.modelFactory.MealCreator.CreateModel(reader);
             }
         }
-
         public bool Update(Meal item)
         {
             string sql = @$"

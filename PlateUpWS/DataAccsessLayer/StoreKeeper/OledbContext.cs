@@ -74,5 +74,12 @@ namespace PlateUpWS
         {
             this.command.Parameters.Add(new OleDbParameter(name, value));
         }
+        public Object GetValue(string sql)
+        {
+            this.command.CommandText = sql;
+            object value = this.command.ExecuteScalar(); // מקבלים ממסד נתונים ערך אחד בלבד
+            this.command.Parameters.Clear();
+            return value;
+        }
     }
 }
