@@ -10,7 +10,6 @@ namespace PlateUpWS
             : base(dbContext, modelFactory)
         {
         }
-
         public bool Create(Order item)
         {
             string sql = @$"
