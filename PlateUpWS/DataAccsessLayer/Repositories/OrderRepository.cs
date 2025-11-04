@@ -103,5 +103,13 @@ namespace PlateUpWS
             this.dbContext.AddParameter("@OrderID", orderId);
             return this.dbContext.Delete(sql) > 0;
         }
+        public bool CheckoutUpdateStatus(string orderId)
+        {
+            string sql = $@"UPDATE Orders
+                            SET OrderStatus = True
+                            WHERE OrderId = @OrderId;";
+            this.dbContext.AddParameter("@OrderId", orderId);
+
+        }
     }
 }

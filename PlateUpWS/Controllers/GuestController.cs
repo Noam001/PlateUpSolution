@@ -16,8 +16,7 @@ namespace PlateUpWS.Controllers
             OledbContext oledbcontext = new OledbContext();
             ModelFactory modelFactory = new ModelFactory();
             oledbcontext.OpenConnection();
-            MealRepository mealRepository = new MealRepository(oledbcontext, modelFactory);
-            FoodTypeRepository foodTypeRepository = new FoodTypeRepository(oledbcontext,modelFactory);
+            RepositoryFactory repositoryFactory = new RepositoryFactory(oledbcontext, modelFactory);
 
             MenuViewModel menuViewModel = new MenuViewModel();
             menuViewModel.Meals = mealRepository.GetAll();
