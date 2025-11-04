@@ -62,8 +62,6 @@ namespace PlateUpWS
                 reader.Read();
                 return this.modelFactory.OrderCreator.CreateModel(reader);
             }
-
-            return null;
         }
 
         public bool Update(Order item)
@@ -87,6 +85,24 @@ namespace PlateUpWS
             this.dbContext.AddParameter("@OrderStatus", item.OrderStatus);
 
             return this.dbContext.Update(sql) > 0;
+        }
+
+        public bool AddMealToOrder(string mealId, string orderId, int price, int quantity, string notes)
+        {
+            string sql = @$"INSERT INTO MealOrders (MealID, OrderID, Quantity, MealPrice, MealNotes)
+                            VALUES (@MealID, @OrderID, @Quantity, @MealPrice, @MealNotes)";
+            this.dbContext.AddParameter("@MealID", mealId);
+            this.dbContext.AddParameter("@OrderID", orderId);
+            this.dbContext.AddParameter("@Quantity", quantity);
+            this.dbContext.AddParameter("@MealNotes", notes);
+            return this.dbContext.Insert(sql) > 0;
+        }
+        public bool RemoveMealFromOrder(string mealId, string orderId)
+        {
+            string sql = $@"DELETE FROM MealsOrders WHERE MealID= @MealID AND OrderID = @OrderID";
+            this.dbContext.AddParameter("@MealID", mealId);
+            this.dbContext.AddParameter("@OrderID", orderId);
+            return this.dbContext.Delete(sql) > 0;
         }
     }
 }
