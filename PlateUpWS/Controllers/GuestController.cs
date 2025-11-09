@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Models;
 
 namespace PlateUpWS.Controllers
 {
@@ -22,20 +21,36 @@ namespace PlateUpWS.Controllers
             try//נסה לעשות את פקודות אלו
             {
                 this.repositoryFactory.ConnectDb();
-                if(foodTypeId=="-1" && pageNumber == 0 && mealNameSearch=="")
-                    menuViewModel.Meals = repositoryFactory.MealRepository.GetAll();
-                else if(foodTypeId == "-1" && pageNumber > 0 && mealNameSearch == "")
-                {
-                    menuViewModel.Meals = repositoryFactory.MealRepository.GetAll();
-                    int first = (pageNumber - 1) * mealperPage;
-                    int last = (pageNumber * mealperPage ) -1;
-                    menuViewModel.Meals = menuViewModel.Meals.Skip(first).Take(last).ToList<Meal>();   
-                }
-                else if(foodTypeId != "-1" && pageNumber > 0 && mealNameSearch == "")
-                {
 
+                // מקרה 1: לא נבחר שום סינון
+                if (foodTypeId=="-1" && pageNumber == 0 && mealNameSearch=="")
+                    menuViewModel.Meals = repositoryFactory.MealRepository.GetAll();
+
+                // --- מקרה 2: רק עמוד נבחר ---
+                else if (foodTypeId == "-1" && pageNumber > 0 && mealNameSearch == "")
+                {
+                    menuViewModel.Meals = repositoryFactory.MealRepository.FilterByPage(pageNumber, mealperPage);
                 }
-                    
+
+                // --- מקרה 3: נבחר גם סוג אוכל וגם עמוד ---
+                else if (foodTypeId != "-1" && pageNumber > 0 && mealNameSearch == "")
+                {
+                    menuViewModel.Meals = repositoryFactory.MealRepository.GetMealsByFoodType(foodTypeId);
+                    int first = (pageNumber - 1) * mealperPage;
+                    menuViewModel.Meals = menuViewModel.Meals.Skip(first).Take(mealperPage);
+                }
+
+                // --- מקרה 4: רק סוג אוכל נבחר (בלי עמודים, בלי חיפוש) ---
+                else if (foodTypeId != "-1" && pageNumber == 0 && mealNameSearch == "")
+                {
+                    menuViewModel.Meals = repositoryFactory.MealRepository.GetMealsByFoodType(foodTypeId);
+                }
+
+                // --- מקרה 5: חיפוש לפי שם מנה ---
+                else if (mealNameSearch != "")
+                {
+                    Meal meal = repositoryFactory.MealRepository.GetMealByName(mealNameSearch);
+                }
                 menuViewModel.FoodTypes = repositoryFactory.FoodTypeRepository.GetAll();
                 return menuViewModel;
             }

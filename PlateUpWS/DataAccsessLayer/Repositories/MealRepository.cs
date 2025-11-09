@@ -62,7 +62,19 @@ namespace PlateUpWS
         }
         public List<Meal> FilterByPage()
         {
-            return null;
+            List<Meal> allMeals = GetAll(); // מביא את כל המנות
+            int skip = (pageNumber - 1) * mealsPerPage; //כמות המנות של העמודים הקודמים שצריך לדלג
+            return allMeals.Skip(skip).Take(mealsPerPage).ToList();
+        }
+        public Meal GetMealByName(string mealName)
+        {
+            string sql = @"SELECT * FROM Meals WHERE MealName = @MealName";
+            this.dbContext.AddParameter("@MealName", mealName);
+            using (IDataReader reader = this.dbContext.Select(sql))
+            {
+                reader.Read();
+                return this.modelFactory.MealCreator.CreateModel(reader);
+            }
         }
         public List<Meal> SortByPrice(bool option)
         {
