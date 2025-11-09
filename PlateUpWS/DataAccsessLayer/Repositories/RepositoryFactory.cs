@@ -1,4 +1,5 @@
-﻿namespace PlateUpWS
+﻿
+namespace PlateUpWS
 {
     public class RepositoryFactory
     {
@@ -12,8 +13,8 @@
         ModelFactory modelFactory;
         public RepositoryFactory()
         {
-            this.dbContext = new OleDbConext();
-            this.modelsFactory = new ModelsFactory();
+            this.dbContext = new OledbContext();
+            this.modelFactory = new ModelFactory();
         }
         public CityRepository CityRepository
         {

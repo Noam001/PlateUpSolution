@@ -8,21 +8,26 @@ namespace PlateUpWS.Controllers
     [ApiController]
     public class GuestController : ControllerBase
     {
+        RepositoryFactory repositoryFactory;
 
-
+        public GuestController()
+        {
+            this.repositoryFactory = new RepositoryFactory();
+        }
         [HttpGet]
         public MenuViewModel GetMenu()
         {
             OledbContext oledbcontext = new OledbContext();
-            ModelFactory modelFactory = new ModelFactory();
+            
             oledbcontext.OpenConnection();
-            RepositoryFactory repositoryFactory = new RepositoryFactory(oledbcontext, modelFactory);
+            RepositoryFactory repositoryFactory = new RepositoryFactory();
 
             MenuViewModel menuViewModel = new MenuViewModel();
-            menuViewModel.Meals = mealRepository.GetAll();
-            menuViewModel.FoodTypes = foodTypeRepository.GetAll();
+            menuViewModel.Meals = repositoryFactory.MealRepository.GetAll();
+            menuViewModel.FoodTypes = repositoryFactory.FoodTypeRepository.GetAll();
             oledbcontext.CloseConnection();
             return menuViewModel;
         }
+
     }
 }
