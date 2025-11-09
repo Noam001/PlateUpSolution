@@ -75,5 +75,13 @@ namespace PlateUpWS
                 return this.reviewRepository;
             }
         }
+        public void ConnectDb()
+        {
+            this.dbContext.OpenConnection();
+        }
+        public void DisconnectDb()
+        {
+            this.dbContext.CloseConnection();
+        }
     }
 }

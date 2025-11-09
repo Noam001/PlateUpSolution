@@ -109,7 +109,7 @@ namespace PlateUpWS
                             SET OrderStatus = True
                             WHERE OrderId = @OrderId;";
             this.dbContext.AddParameter("@OrderId", orderId);
-
+            return this.dbContext.Update(sql) > 0;
         }
     }
 }
