@@ -76,9 +76,9 @@ namespace PlateUpWS
                 return this.modelFactory.MealCreator.CreateModel(reader);
             }
         }
-        public List<Meal> SortByPrice(bool option)
+        public List<Meal> SortByPrice(bool? option)
         {
-            if (option)
+            if (option== true)
             {
                 string sql = $@"SELECT Meals.MealId, Meals.MealName, Meals.MealPhoto, Meals.MealPrice
                               FROM Meals ORDER BY Meals.MealPrice";

@@ -32,6 +32,7 @@ namespace PlateUpWS
                 this.repositoryFactory.DisconnectDb();
             }
         }
+
         [HttpGet]
         public MenuViewModel GetMenu(string foodTypeId = "-1", int pageNumber = 0, string mealNameSearch = "", bool? priceSort =null)
         {
@@ -46,21 +47,20 @@ namespace PlateUpWS
                     menuViewModel.Meals = repositoryFactory.MealRepository.GetAll();
 
                 // --- מקרה 2: רק עמוד נבחר ---
-                else if (foodTypeId == "-1" && pageNumber > 0 && mealNameSearch == "")
+                else if (foodTypeId == "-1" && pageNumber > 0 && mealNameSearch == "" && priceSort == null)
                 {
                     menuViewModel.Meals = repositoryFactory.MealRepository.FilterByPage(pageNumber, mealperPage);
                 }
 
-                // --- מקרה 3: נבחר גם סוג אוכל וגם עמוד ---
-                else if (foodTypeId != "-1" && pageNumber > 0 && mealNameSearch == "")
+                // ---  מקרה 3: נבחר גם סוג אוכל וסינון לפי מחיר ---
+                else if (foodTypeId != "-1" && pageNumber == 0 && mealNameSearch == "" && priceSort != null)
                 {
                     menuViewModel.Meals = repositoryFactory.MealRepository.GetMealsByFoodType(foodTypeId);
-                    int first = (pageNumber - 1) * mealperPage;
-                    menuViewModel.Meals = (List<Meal>)menuViewModel.Meals.Skip(first).Take(mealperPage);
+                    menuViewModel.Meals = repositoryFactory.MealRepository.SortByPrice(priceSort);
                 }
 
-                // --- מקרה 4: רק סוג אוכל נבחר (בלי עמודים, בלי חיפוש) ---
-                else if (foodTypeId != "-1" && pageNumber == 0 && mealNameSearch == "")
+                // --- מקרה 4: רק סוג אוכל נבחר ---
+                else if (foodTypeId != "-1" && pageNumber == 0 && mealNameSearch == "" && priceSort == null)
                 {
                     menuViewModel.Meals = repositoryFactory.MealRepository.GetMealsByFoodType(foodTypeId);
                 }
@@ -71,8 +71,16 @@ namespace PlateUpWS
                     Meal meal = repositoryFactory.MealRepository.GetMealByName(mealNameSearch);
                 }
 
-                else if(priceSort == true)
+                // ---  מקרה 6: מיון לפי מחיר ---
+                else if (priceSort != null) 
                 {
+                    menuViewModel.Meals = repositoryFactory.MealRepository.SortByPrice(priceSort);
+                }
+
+                // ---  מקרה 7: מיון לפי מחיר ועמוד נבחר ---
+                else if (foodTypeId == "-1" && pageNumber > 0 && mealNameSearch == "" && priceSort != null)
+                {
+                    menuViewModel.Meals = repositoryFactory.MealRepository.FilterByPage(pageNumber, mealperPage);
                     menuViewModel.Meals = repositoryFactory.MealRepository.SortByPrice(priceSort);
                 }
                 menuViewModel.FoodTypes = repositoryFactory.FoodTypeRepository.GetAll();
@@ -88,6 +96,7 @@ namespace PlateUpWS
                 this.repositoryFactory.DisconnectDb();
             }
         }
+
         [HttpGet]
         public Meal GetMealDetails(int mealId)
         {
