@@ -60,7 +60,7 @@ namespace PlateUpWS
             this.dbContext.AddParameter("@FoodTypeId", foodTypeId);
             return GetMeals(sql);
         }
-        public List<Meal> FilterByPage()
+        public List<Meal> FilterByPage(int pageNumber, int mealsPerPage)
         {
             List<Meal> allMeals = GetAll(); // מביא את כל המנות
             int skip = (pageNumber - 1) * mealsPerPage; //כמות המנות של העמודים הקודמים שצריך לדלג

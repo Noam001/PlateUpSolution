@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Models;
 
-namespace PlateUpWS.Controllers
+namespace PlateUpWS
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
@@ -14,7 +15,25 @@ namespace PlateUpWS.Controllers
             this.repositoryFactory = new RepositoryFactory();
         }
         [HttpGet]
-        public MenuViewModel GetMenu(string foodTypeId="-1", int pageNumber=0, string mealNameSearch="")
+        public List<Review> GetReviews()
+        {
+            try
+            {
+                this.repositoryFactory.ConnectDb();
+                return this.repositoryFactory.ReviewRepository.GetAll();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+            finally
+            {
+                this.repositoryFactory.DisconnectDb();
+            }
+        }
+        [HttpGet]
+        public MenuViewModel GetMenu(string foodTypeId = "-1", int pageNumber = 0, string mealNameSearch = "", bool? priceSort =null)
         {
             MenuViewModel menuViewModel = new MenuViewModel();
             int mealperPage = 10;
@@ -23,7 +42,7 @@ namespace PlateUpWS.Controllers
                 this.repositoryFactory.ConnectDb();
 
                 // מקרה 1: לא נבחר שום סינון
-                if (foodTypeId=="-1" && pageNumber == 0 && mealNameSearch=="")
+                if (foodTypeId == "-1" && pageNumber == 0 && mealNameSearch == "" && priceSort == null)
                     menuViewModel.Meals = repositoryFactory.MealRepository.GetAll();
 
                 // --- מקרה 2: רק עמוד נבחר ---
@@ -37,7 +56,7 @@ namespace PlateUpWS.Controllers
                 {
                     menuViewModel.Meals = repositoryFactory.MealRepository.GetMealsByFoodType(foodTypeId);
                     int first = (pageNumber - 1) * mealperPage;
-                    menuViewModel.Meals = menuViewModel.Meals.Skip(first).Take(mealperPage);
+                    menuViewModel.Meals = (List<Meal>)menuViewModel.Meals.Skip(first).Take(mealperPage);
                 }
 
                 // --- מקרה 4: רק סוג אוכל נבחר (בלי עמודים, בלי חיפוש) ---
@@ -50,6 +69,11 @@ namespace PlateUpWS.Controllers
                 else if (mealNameSearch != "")
                 {
                     Meal meal = repositoryFactory.MealRepository.GetMealByName(mealNameSearch);
+                }
+
+                else if(priceSort == true)
+                {
+                    menuViewModel.Meals = repositoryFactory.MealRepository.SortByPrice(priceSort);
                 }
                 menuViewModel.FoodTypes = repositoryFactory.FoodTypeRepository.GetAll();
                 return menuViewModel;
@@ -82,6 +106,26 @@ namespace PlateUpWS.Controllers
                 this.repositoryFactory.DisconnectDb();
             }
         }
+
+        [HttpPost]
+        public bool Registration(Client client)
+        {
+            try
+            {
+                this.repositoryFactory.ConnectDb();
+                return this.repositoryFactory.ClientRepository.Create(client);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
+            finally
+            {
+                this.repositoryFactory.DisconnectDb();
+            }
+        }
+
 
     }
 }
