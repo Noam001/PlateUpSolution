@@ -42,9 +42,9 @@ namespace PlateUpWS
             string sql = $@"SELECT * FROM [Client]";
             using (IDataReader reader = this.dbContext.Select(sql))
             {
-                while(reader.Read())
+                while (reader.Read())
                 {
-                    clients.Add(this.modelFactory.ClientCreator.CreateModel(reader));   
+                    clients.Add(this.modelFactory.ClientCreator.CreateModel(reader));
                 }
             }
             return clients;
@@ -85,13 +85,21 @@ namespace PlateUpWS
 
             return this.dbContext.Update(sql) > 0;
         }
-        public string Login(string email, string password)
+        public string Login(string email, string password, bool isAdmin)
         {
+
             string sql = @"SELECT ClientId FROM Clients 
                          WHERE ClientEmail = @ClientEmail AND ClientPassword = @ClientPassword";
             this.dbContext.AddParameter("@ClientEmail", email);
             this.dbContext.AddParameter("@ClientPassword", password);
-            return this.dbContext.GetValue(sql).ToString();   
+            string id = this.dbContext.GetValue(sql).ToString();
+            if (isAdmin)
+            {
+                sql = "Select AdminId FROM ADMINS WHERE AdminId = @AdminId";
+                this.dbContext.AddParameter("@AdminId", id);
+                return this.dbContext.GetValue(sql) != null ? id : null;
+            }
+            return id;
         }
     }
 }
