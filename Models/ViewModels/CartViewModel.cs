@@ -8,5 +8,6 @@ namespace Models.ViewModels
 {
     internal class CartViewModel
     {
+        public List<Meal> Meals { get; set; }
     }
 }
