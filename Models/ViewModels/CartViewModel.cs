@@ -6,9 +6,30 @@ using System.Threading.Tasks;
 
 namespace Models.ViewModels
 {
-    internal class CartViewModel
+    public class CartViewModel
     {
-        public List<Meal> Meals { get; set; }
-        public int amount { get; set; }
+        // רשימת כל הפריטים שנמצאים בעגלה
+        public List<CartItemViewModel> Items { get; set; }
+        // סכום כולל של כל העגלה
+        public double TotalPrice { get; set; }
+
+
     }
+    public class CartItemViewModel
+    {
+        public Meal meal { get; set; }
+
+        // כמות – בגלל כפתור ה +
+        public int Quantity { get; set; }
+
+        // חישוב מחיר למנה * כמות
+        public double ItemTotal
+        {
+            get
+            {
+                return meal.MealPrice * Quantity;
+            }
+        }
+    }
+
 }
