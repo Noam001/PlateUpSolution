@@ -111,5 +111,28 @@ namespace PlateUpWS
             this.dbContext.AddParameter("@OrderId", orderId);
             return this.dbContext.Update(sql) > 0;
         }
+        public List<CartItem> GetCart(string clientId)
+        {
+           
+            string sql = @"SELECT Meals.MealId, Meals.MealName, Meals.MealPhoto, Meals.MealDescription, Meals.MealPrice, Meals.MealStatus, MealsOrders.Quantity, MealsOrders.OrderID, Orders.ClientId, Orders.OrderStatus
+                           FROM Orders INNER JOIN (Meals INNER JOIN MealsOrders ON Meals.MealId = MealsOrders.MealID) ON Orders.OrderId = MealsOrders.OrderID
+                           WHERE Orders.ClientId= @ClientId AND Orders.OrderStatus = False;";
+            this.dbContext.AddParameter("@ClientId", clientId);
+            List<CartItem> cartItems = new List<CartItem>();
+            using (IDataReader reader = this.dbContext.Select(sql))
+            {
+                while (reader.Read())
+                {
+                    CartItem cartItem = new CartItem();
+                    cartItem.Meal = this.modelFactory.MealCreator.CreateModel(reader);
+                    cartItem.Quantity = Convert.ToInt16(reader["Quantity"]);
+                    cartItems.Add(cartItem);
+                }
+            }
+
+            return cartItems;
+
+
+        }
     }
 }

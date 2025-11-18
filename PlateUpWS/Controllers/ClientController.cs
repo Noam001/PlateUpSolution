@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Models;
 
 namespace PlateUpWS
@@ -15,12 +16,12 @@ namespace PlateUpWS
             this.repositoryFactory = new RepositoryFactory();
         }
         [HttpPost]
-        public string LoginGetId(string email, string password)
+        public string LoginGetId(string email, string password, bool isAdmin)
         {
             try
             {
                 this.repositoryFactory.ConnectDb();
-                return this.repositoryFactory.ClientRepository.Login(email, password);
+                return this.repositoryFactory.ClientRepository.Login(email, password, isAdmin);
             }
             catch (Exception ex)
             {
@@ -135,6 +136,25 @@ namespace PlateUpWS
             {
                 Console.WriteLine(ex.Message);
                 return false;
+            }
+            finally
+            {
+                this.repositoryFactory.DisconnectDb();
+            }
+        }
+
+        [HttpGet]
+        public List<CartItem> GetCart(string clientId)
+        {
+            try
+            {
+                this.repositoryFactory.ConnectDb();
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
             }
             finally
             {
