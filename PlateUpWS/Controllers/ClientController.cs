@@ -33,6 +33,27 @@ namespace PlateUpWS
                 this.repositoryFactory.DisconnectDb();
             }
         }
+        [HttpGet]
+        public UpdateProfileViewModel GetUpdateProfileData(int clientId)
+        {
+            try
+            {
+                this.repositoryFactory.ConnectDb();
+                UpdateProfileViewModel vm = new UpdateProfileViewModel();
+                vm.Client = this.repositoryFactory.ClientRepository.GetById(clientId);
+                vm.City = this.repositoryFactory.CityRepository.GetAll();
+                return vm;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+            finally
+            {
+                this.repositoryFactory.DisconnectDb();
+            }
+        }
         [HttpPost]
         public bool UpdateProfile(Client client)
         {
@@ -149,7 +170,7 @@ namespace PlateUpWS
             try
             {
                 this.repositoryFactory.ConnectDb();
-
+                return this.repositoryFactory.OrderRepository.GetCart(clientId);
             }
             catch (Exception ex)
             {

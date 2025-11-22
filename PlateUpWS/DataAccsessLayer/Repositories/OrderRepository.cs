@@ -62,7 +62,20 @@ namespace PlateUpWS
                 return this.modelFactory.OrderCreator.CreateModel(reader);
             }
         }
-
+        public List<Order> GetOrdersByStatus(bool? orderStatus)
+        {
+            string sql = @"SELECT * FROM Orders WHERE OrderStatus = @OrderStatus";
+            this.dbContext.AddParameter("@OrderStatus", orderStatus);
+            List<Order> orders = new List<Order>();
+            using (IDataReader reader = this.dbContext.Select(sql))
+            {
+                while (reader.Read())
+                {
+                    orders.Add(this.modelFactory.OrderCreator.CreateModel(reader));
+                }
+            }
+            return orders;
+        }
         public bool Update(Order item)
         {
             string sql = @$"
@@ -83,6 +96,15 @@ namespace PlateUpWS
             this.dbContext.AddParameter("@NumOfPeople", item.NumOfPeople);
             this.dbContext.AddParameter("@OrderStatus", item.OrderStatus);
 
+            return this.dbContext.Update(sql) > 0;
+        }
+        public bool UpdateOrderStatus(int orderId, bool orderStatus)
+        {
+            string sql = $@"UPDATE Orders
+                            SET OrderStatus = @OrderStatus
+                            WHERE OrderId = @OrderId";
+            this.dbContext.AddParameter("@OrderId", orderId);
+            this.dbContext.AddParameter("@OrderStatus", orderStatus);
             return this.dbContext.Update(sql) > 0;
         }
 
@@ -113,10 +135,9 @@ namespace PlateUpWS
         }
         public List<CartItem> GetCart(string clientId)
         {
-           
             string sql = @"SELECT Meals.MealId, Meals.MealName, Meals.MealPhoto, Meals.MealDescription, Meals.MealPrice, Meals.MealStatus, MealsOrders.Quantity, MealsOrders.OrderID, Orders.ClientId, Orders.OrderStatus
                            FROM Orders INNER JOIN (Meals INNER JOIN MealsOrders ON Meals.MealId = MealsOrders.MealID) ON Orders.OrderId = MealsOrders.OrderID
-                           WHERE Orders.ClientId= @ClientId AND Orders.OrderStatus = False;";
+                           WHERE Orders.ClientId = @ClientId AND Orders.OrderStatus = False;";
             this.dbContext.AddParameter("@ClientId", clientId);
             List<CartItem> cartItems = new List<CartItem>();
             using (IDataReader reader = this.dbContext.Select(sql))
@@ -129,10 +150,51 @@ namespace PlateUpWS
                     cartItems.Add(cartItem);
                 }
             }
-
             return cartItems;
+        }
+        public int GetTotalOrdersInDateRange(string fromDate, string toDate)
+        {
+            string sql = @"SELECT 
+                          COUNT(*) AS TotalOrders
+                          FROM Orders
+                          WHERE 
+                               CDate(Orders.OrderDate) 
+                          BETWEEN CDate('2025-09-05') AND CDate('2025-09-09');";
+            this.dbContext.AddParameter("@FromDate", fromDate);
+            this.dbContext.AddParameter("@ToDate", toDate);
+            int totalOrders = 0;
+            using (IDataReader reader = this.dbContext.Select(sql))
+            {
+                if (reader.Read())
+                {
+                    totalOrders = Convert.ToInt32(reader["TotalOrders"]);
+                }
+            }
+            return totalOrders;
+        }
+        public double GetTotalIncomeInDateRange(string fromDate, string toDate)
+        {
+            string sql = @"SELECT 
+                         SUM(MealsOrders.Quantity * MealsOrders.MealPrice) AS TotalIncome
+                         FROM Orders
+                         INNER JOIN MealsOrders
+                              ON Orders.OrderId = MealsOrders.OrderID
+                         WHERE 
+                             CDate(Orders.OrderDate) 
+                                 BETWEEN CDate(@FromDate) AND CDate(@ToDate);";
 
-
+            this.dbContext.AddParameter("@FromDate", fromDate);
+            this.dbContext.AddParameter("@ToDate", toDate);
+            double totalIncome = 0;
+            using (IDataReader reader = this.dbContext.Select(sql))
+            {
+                if (reader.Read())
+                {
+                    if (reader["TotalIncome"] != DBNull.Value) //רק אם יש הכנסות- הערך שונה מכלום
+                        totalIncome = Convert.ToDouble(reader["TotalIncome"]);
+                }
+            }
+            return totalIncome;
         }
     }
 }

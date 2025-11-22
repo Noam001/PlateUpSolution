@@ -8,8 +8,8 @@ namespace Models
 {
     public class ManageOrdersViewModel
     {
-        public string OrderNumber { get; set; }
+        public int? OrderID { get; set; }
         public List<Order> Orders { get; set; }
-        public bool OrderStatus { get; set; }
+        public bool? OrderStatus { get; set; }
     }
 }

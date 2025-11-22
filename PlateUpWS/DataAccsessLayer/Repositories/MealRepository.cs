@@ -125,5 +125,54 @@ namespace PlateUpWS
 
             return this.dbContext.Update(sql) > 0;
         }
+        public List<Meal> GetTop3MostOrdered()
+        {
+            string sql = @$"SELECT TOP 3 
+                                Meals.MealId,
+                                Meals.MealName,
+                                Meals.MealPhoto,
+                                Meals.MealDescription,
+                                Meals.MealPrice,
+                                Meals.MealStatus,
+                            SUM(MealsOrders.Quantity) AS TotalOrdered
+                            FROM Meals
+                            INNER JOIN MealsOrders 
+                                 ON Meals.MealId = MealsOrders.MealId
+                            GROUP BY Meals.MealId, Meals.MealName, Meals.MealPhoto,Meals.MealDescription, 
+                            Meals.MealPrice, Meals.MealStatus
+                            ORDER BY SUM(MealsOrders.Quantity) DESC";
+            List<Meal> meals = new List<Meal>();
+            using (IDataReader reader = this.dbContext.Select(sql))
+            {
+                while (reader.Read())
+                {
+                    Meal meal = this.modelFactory.MealCreator.CreateModel(reader);
+                    meals.Add(meal);
+                }
+            }
+            return meals;
+        }
+        public List<Meal> GetTop3LeastOrderedMeals()
+        {
+            string sql = $@"
+                         SELECT TOP 3 Meals.MealId, Meals.MealName, Meals.MealPhoto, Meals.MealDescription,
+                         Meals.MealPrice, Meals.MealStatus,
+                              SUM(MealsOrders.Quantity) AS TotalOrdered
+                         FROM Meals
+                         INNER JOIN MealsOrders ON Meals.MealId = MealsOrders.MealId
+                         GROUP BY Meals.MealId, Meals.MealName, Meals.MealPhoto, Meals.MealDescription,
+                         Meals.MealPrice, Meals.MealStatus
+                         ORDER BY SUM(MealsOrders.Quantity) ASC";
+            List<Meal> meals = new List<Meal>();
+            using (IDataReader reader = this.dbContext.Select(sql))
+            {
+                while (reader.Read())
+                {
+                    Meal meal = this.modelFactory.MealCreator.CreateModel(reader);
+                    meals.Add(meal);
+                }
+            }
+            return meals;
+        }
     }
 }

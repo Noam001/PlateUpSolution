@@ -8,8 +8,9 @@ namespace Models
 {
     public class ManageMenuViewModel
     {
-        public string FoodTypeName {  get; set; }
+        public string? FoodTypeId { get; set; }
+        public List<FoodType> FoodTypes { get; set; }
         public List<Meal> Meals { get; set; }
-        public string MealName { get; set; }
+        public string? MealNameSearch { get; set; }
     }
 }

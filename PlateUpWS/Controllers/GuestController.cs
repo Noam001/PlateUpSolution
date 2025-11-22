@@ -69,6 +69,7 @@ namespace PlateUpWS
                 else if (mealNameSearch != "")
                 {
                     Meal meal = repositoryFactory.MealRepository.GetMealByName(mealNameSearch);
+                    menuViewModel.Meals = new List<Meal>() { meal };                
                 }
 
                 // ---  מקרה 6: מיון לפי מחיר ---
