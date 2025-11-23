@@ -271,6 +271,8 @@ namespace PlateUpWS
             {
                 this.repositoryFactory.ConnectDb();
                 ManageOrdersViewModel movm = new ManageOrdersViewModel();
+                movm.OrderStatus = orderStatus;
+                movm.OrderID = orderID;
                 // מקרה 1: לא נבחר שום סינון
                 if (orderStatus == null && orderID == 0)
                     movm.Orders = this.repositoryFactory.OrderRepository.GetAll();

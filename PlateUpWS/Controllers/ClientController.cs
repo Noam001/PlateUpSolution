@@ -34,7 +34,7 @@ namespace PlateUpWS
             }
         }
         [HttpGet]
-        public UpdateProfileViewModel GetUpdateProfileData(int clientId)
+        public UpdateProfileViewModel GetUpdateProfileViewModel(int clientId)
         {
             try
             {
