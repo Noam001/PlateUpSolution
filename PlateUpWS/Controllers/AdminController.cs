@@ -168,6 +168,7 @@ namespace PlateUpWS
                 this.repositoryFactory.DisconnectDb();
             }
         }
+
         [HttpPost]
         public bool UpdateMeal(Meal meal)
         {
@@ -224,6 +225,7 @@ namespace PlateUpWS
                 this.repositoryFactory.DisconnectDb();
             }
         }
+
         [HttpPost]
         public bool UpdateCity(City city)
         {

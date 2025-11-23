@@ -18,7 +18,7 @@ namespace Models
             set { cityId = value; } 
         }
         [Required(ErrorMessage = "You must enter city name")]
-        [RegularExpression(@"^[\u0590-\u05FF\s]+$", ErrorMessage ="Text must be hebrew")]
+        //[RegularExpression(@"^[א-ת]", ErrorMessage ="Text must be hebrew")]
         public string CityName
         {
             get { return cityName; } 

@@ -12,13 +12,13 @@ namespace PlateUpWS
         public bool Create(Meal item)
         {
             string sql = @$"
-                INSERT INTO Meals(MealId, MealName, MealPhoto, MealDescription, MealPrice, MealStatus)
+                INSERT INTO Meals(MealName, MealPhoto, MealDescription, MealPrice, MealStatus)
                 VALUES
                 (
-                    @MealId, @MealName, @MealPhoto, @MealDescription, @MealPrice, @MealStatus
+                    @MealName, @MealPhoto, @MealDescription, @MealPrice, @MealStatus
                 )";
 
-            this.dbContext.AddParameter("@MealId", item.MealId);
+           
             this.dbContext.AddParameter("@MealName", item.MealName);
             this.dbContext.AddParameter("@MealPhoto", item.MealPhoto);
             this.dbContext.AddParameter("@MealDescription", item.MealDescription);
@@ -54,7 +54,7 @@ namespace PlateUpWS
         }
         public List<Meal> GetMealsByFoodType(string foodTypeId)
         {
-            string sql = $@"SELECT FoodTypesMeals.FoodTypeId, Meals.MealId, Meals.MealName, Meals.MealPhoto, Meals.MealPrice
+            string sql = $@"SELECT FoodTypesMeals.FoodTypeId, Meals.MealId, Meals.MealName, Meals.MealPhoto, Meals.MealPrice, MealDescription, MealStatus
                           FROM Meals INNER JOIN FoodTypesMeals ON Meals.MealId = FoodTypesMeals.MealId
                            WHERE FoodTypesMeals.FoodTypeId = @FoodTypeId";
             this.dbContext.AddParameter("@FoodTypeId", foodTypeId);
