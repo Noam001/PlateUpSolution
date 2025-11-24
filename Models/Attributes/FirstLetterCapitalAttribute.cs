@@ -11,18 +11,14 @@ namespace Models
     {
         public override bool IsValid(object? value)
         {
-            string str = value.ToString();
-            char firstLetter = str[0];
-            if (firstLetter <= 65 || firstLetter >= 90)
-                return false;
-            for (int i = 1; i < str.Length; i++)
+            string str = value as string;
+            if (!Char.IsUpper(str[0]))
             {
-                if (str[i] < 141 && str[i] > 172)
-                    return false;
+                // If the first character is not uppercase, the validation fails.
+                return false;
             }
+            // Return true if the validation condition (first letter is capital) is met.
             return true;
-
-            return base.IsValid(value);
         }
     }
 }

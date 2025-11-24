@@ -38,6 +38,9 @@ namespace PlateUpWS
         {
             MenuViewModel menuViewModel = new MenuViewModel();
             int mealperPage = 10;
+            menuViewModel.FoodTypeId = foodTypeId;
+            menuViewModel.PageNumber = pageNumber;
+            menuViewModel.MealNameSearch = mealNameSearch;
             try//נסה לעשות את פקודות אלו
             {
                 this.repositoryFactory.ConnectDb();

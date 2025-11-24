@@ -9,26 +9,24 @@ namespace Models
 {
     public class Review
     {
-        string clientId;
         int reviewId;
+        string clientId;
         string reviewDate;
         string reviewComment;
         int reviewRating;
-
+        public int ReviewId
+        {
+            get { return this.reviewId; }
+            set { this.reviewId = value; }
+        }
         [Required(ErrorMessage = "Client ID is required")]
         public string ClientId
         {
             get { return this.clientId; }
             set { this.clientId = value; }
         }
-
-        public int ReviewId
-        {
-            get { return this.reviewId; }
-            set { this.reviewId = value; }
-        }
         [Required(ErrorMessage = "Review date is required")]
-        [RegularExpression(@"^\d{4}-\d{2}-\d{2}$", ErrorMessage = "Date must be in the format YYYY-MM-DD")]
+        [RegularExpression(@"^\d{2}/\d{2}/\d{4}$", ErrorMessage = "Date must be in the format DD/MM/YYYY")]
         public string ReviewDate
         {
             get { return this.reviewDate; }

@@ -55,9 +55,8 @@ namespace PlateUpWS
             string sql = @"UPDATE FoodTypes
                            SET FoodTypeName = @FoodTypeName
                            WHERE FoodTypeId = @FoodTypeId";
-
-            this.dbContext.AddParameter("@FoodTypeId", item.FoodTypeId);
             this.dbContext.AddParameter("@FoodTypeName", item.FoodTypeName);
+            this.dbContext.AddParameter("@FoodTypeId", item.FoodTypeId);
 
             return this.dbContext.Update(sql) > 0;
         }

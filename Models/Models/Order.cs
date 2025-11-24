@@ -15,21 +15,19 @@ namespace Models
         string orderTime;
         int numOfPeople;
         bool orderStatus;
-
+        public int OrderId
+        {
+            get { return this.orderId; }
+            set { this.orderId = value; }
+        }
         [Required(ErrorMessage = "Client ID is required")]
         public string ClientId
         {
             get { return this.clientId; }
             set { this.clientId = value; }
         }
-        [Required(ErrorMessage = "Order ID is required")]
-        public int OrderId
-        {
-            get { return this.orderId; }
-            set { this.orderId = value; }
-        }
         [Required(ErrorMessage = "Order date is required")]
-        [RegularExpression(@"^\d{4}-\d{2}-\d{2}$", ErrorMessage = "Date must be in the format YYYY-MM-DD")]
+        [RegularExpression(@"^\d{2}/\d{2}/\d{4}$", ErrorMessage = "Date must be in the format DD/MM/YYYY")]
         public string OrderDate
         {
             get { return this.orderDate; }

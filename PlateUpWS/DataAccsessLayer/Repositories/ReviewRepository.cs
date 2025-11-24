@@ -13,13 +13,11 @@ namespace PlateUpWS
         public bool Create(Review item)
         {
             string sql = @$"
-                INSERT INTO Reviews(ReviewId, ClientId, ReviewDate, ReviewComment, ReviewRating)
+                INSERT INTO Reviews(ClientId, ReviewDate, ReviewComment, ReviewRating)
                 VALUES
                 (
-                    @ReviewId, @ClientId, @ReviewDate, @ReviewComment, @ReviewRating
+                    @ClientId, @ReviewDate, @ReviewComment, @ReviewRating
                 )";
-
-            this.dbContext.AddParameter("@ReviewId", item.ReviewId);
             this.dbContext.AddParameter("@ClientId", item.ClientId);
             this.dbContext.AddParameter("@ReviewDate", item.ReviewDate);
             this.dbContext.AddParameter("@ReviewComment", item.ReviewComment);

@@ -103,43 +103,27 @@ namespace PlateUpWS
                 return this.modelFactory.MealCreator.CreateModel(reader);
             }
         }
-        //public bool Update(Meal item)
-        //{
-        //    string sql = @$"
-        //        UPDATE Meals
-        //        SET 
-        //            MealName = @MealName,
-        //            MealPhoto = @MealPhoto,
-        //            MealDescription = @MealDescription,
-        //            MealPrice = @MealPrice,
-        //            MealStatus = @MealStatus
-        //        WHERE 
-        //            MealId = @MealId";
-
-        //    this.dbContext.AddParameter("@MealId", item.MealId);
-        //    this.dbContext.AddParameter("@MealName", item.MealName);
-        //    this.dbContext.AddParameter("@MealPhoto", item.MealPhoto);
-        //    this.dbContext.AddParameter("@MealDescription", item.MealDescription);
-        //    this.dbContext.AddParameter("@MealPrice", item.MealPrice);
-        //    this.dbContext.AddParameter("@MealStatus", item.MealStatus);
-        //    int x = this.dbContext.Update(sql);
-        //    return x > 0;
-        //}
-
         public bool Update(Meal item)
         {
             string sql = @$"
                 UPDATE Meals
                 SET 
-                    MealName = '{item.MealName}',
-                    MealPhoto ='{item.MealPhoto}',
-                    MealDescription = '{item.MealDescription}',
-                    MealPrice ={item.MealPrice},
-                    MealStatus = '{item.MealStatus}'
+                    MealName = @MealName,
+                    MealPhoto = @MealPhoto,
+                    MealDescription = @MealDescription,
+                    MealPrice = @MealPrice,
+                    MealStatus = @MealStatus
                 WHERE 
-                    MealId ={item.MealId}";
-            return  this.dbContext.Update(sql)>0;
-           
+                    MealId = @MealId";
+
+            
+            this.dbContext.AddParameter("@MealName", item.MealName);
+            this.dbContext.AddParameter("@MealPhoto", item.MealPhoto);
+            this.dbContext.AddParameter("@MealDescription", item.MealDescription);
+            this.dbContext.AddParameter("@MealPrice", item.MealPrice);
+            this.dbContext.AddParameter("@MealStatus", item.MealStatus);
+            this.dbContext.AddParameter("@MealId", item.MealId);
+            return this.dbContext.Update(sql) > 0;
         }
         public List<Meal> GetTop3MostOrdered()
         {

@@ -56,10 +56,8 @@ namespace PlateUpWS
             string sql = @"UPDATE Cities
                            SET CityName = @CityName
                            WHERE CityId = @CityId";
-
-            this.dbContext.AddParameter("@CityId", item.CityId);
             this.dbContext.AddParameter("@CityName", item.CityName);
-
+            this.dbContext.AddParameter("@CityId", item.CityId);
             return this.dbContext.Update(sql) > 0;
         }
     }

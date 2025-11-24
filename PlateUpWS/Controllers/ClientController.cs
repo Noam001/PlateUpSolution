@@ -91,7 +91,7 @@ namespace PlateUpWS
             }
         }
         [HttpPost]
-        public bool AddMealToOrder(string mealId, string orderId, int price, int quantity, string notes)
+        public bool AddMealToOrder(string mealId, string orderId, int price, int quantity, string? notes ="")
         {
             try
             {
@@ -163,7 +163,24 @@ namespace PlateUpWS
                 this.repositoryFactory.DisconnectDb();
             }
         }
-
+        [HttpGet]
+        public bool RemoveReview(string reviewID)
+        {
+            try
+            {
+                this.repositoryFactory.ConnectDb();
+                return this.repositoryFactory.ReviewRepository.Delete(reviewID);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
+            finally
+            {
+                this.repositoryFactory.DisconnectDb();
+            }
+        }
         [HttpGet]
         public List<CartItem> GetCart(string clientId)
         {

@@ -13,13 +13,12 @@ namespace PlateUpWS
         public bool Create(Order item)
         {
             string sql = @$"
-                INSERT INTO Orders(OrderId, ClientId, OrderDate, OrderTime, NumOfPeople, OrderStatus)
+                INSERT INTO Orders(ClientId, OrderDate, OrderTime, NumOfPeople, OrderStatus)
                 VALUES
                 (
-                    @OrderId, @ClientId, @OrderDate, @OrderTime, @NumOfPeople, @OrderStatus
+                    @ClientId, @OrderDate, @OrderTime, @NumOfPeople, @OrderStatus
                 )";
 
-            this.dbContext.AddParameter("@OrderId", item.OrderId);
             this.dbContext.AddParameter("@ClientId", item.ClientId);
             this.dbContext.AddParameter("@OrderDate", item.OrderDate);
             this.dbContext.AddParameter("@OrderTime", item.OrderTime);
@@ -103,18 +102,19 @@ namespace PlateUpWS
             string sql = $@"UPDATE Orders
                             SET OrderStatus = @OrderStatus
                             WHERE OrderId = @OrderId";
-            this.dbContext.AddParameter("@OrderId", orderId);
             this.dbContext.AddParameter("@OrderStatus", orderStatus);
+            this.dbContext.AddParameter("@OrderId", orderId);
             return this.dbContext.Update(sql) > 0;
         }
 
-        public bool AddMealToOrder(string mealId, string orderId, int price, int quantity, string notes)
+        public bool AddMealToOrder(string mealId, string orderId, int price, int quantity, string? notes ="")
         {
-            string sql = @$"INSERT INTO MealOrders (MealID, OrderID, Quantity, MealPrice, MealNotes)
+            string sql = @$"INSERT INTO MealsOrders (MealID, OrderID, Quantity, MealPrice, MealNotes)
                             VALUES (@MealID, @OrderID, @Quantity, @MealPrice, @MealNotes)";
             this.dbContext.AddParameter("@MealID", mealId);
             this.dbContext.AddParameter("@OrderID", orderId);
             this.dbContext.AddParameter("@Quantity", quantity);
+            this.dbContext.AddParameter("@MealPrice", price);
             this.dbContext.AddParameter("@MealNotes", notes);
             return this.dbContext.Insert(sql) > 0;
         }
