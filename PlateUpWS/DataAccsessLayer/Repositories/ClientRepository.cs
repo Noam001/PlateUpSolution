@@ -22,6 +22,8 @@ namespace PlateUpWS
             this.dbContext.AddParameter("@ClientId", item.ClientId);
             this.dbContext.AddParameter("@ClientName", item.ClientName);
             this.dbContext.AddParameter("@ClientLastName", item.ClientLastName);
+            this.dbContext.AddParameter("@ClientEmail", item.ClientEmail);
+            this.dbContext.AddParameter("@ClientPassword", item.Password);
             this.dbContext.AddParameter("@ClientAddress", item.ClientAddress);
             this.dbContext.AddParameter("@ClientPhoneNumber", item.ClientPhoneNumber);
             this.dbContext.AddParameter("@CityId", item.CityId);
