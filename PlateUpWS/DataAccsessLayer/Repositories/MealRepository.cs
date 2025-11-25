@@ -27,14 +27,12 @@ namespace PlateUpWS
 
             return this.dbContext.Insert(sql) > 0;
         }
-
         public bool Delete(string id)
         {
             string sql = @"DELETE FROM Meals WHERE MealId = @MealId";
             this.dbContext.AddParameter("@MealId", id);
             return this.dbContext.Delete(sql) > 0;
         }
-
         public List<Meal> GetAll()
         {
             string sql = @"SELECT * FROM Meals";
@@ -78,20 +76,29 @@ namespace PlateUpWS
         }
         public List<Meal> SortByPrice(bool? option)
         {
-            if (option== true)
-            {
-                string sql = $@"SELECT Meals.MealId, Meals.MealName, Meals.MealPhoto, Meals.MealPrice
-                              FROM Meals ORDER BY Meals.MealPrice";
-                return GetMeals(sql);
-
-            }
-            else
-            {
-                string sql = $@"SELECT Meals.MealId, Meals.MealName, Meals.MealPhoto, Meals.MealPrice
-                              FROM Meals
-                              ORDER BY Meals.MealPrice DESC";
-                return GetMeals(sql);
-            }
+            string sql = $@"SELECT *
+                              FROM Meals ORDER BY Meals.MealPrice"; //מחיר הנמוך לגבוה
+            if (option == true)
+                sql = sql + " DESC"; // מהמחיר הגבוה לנמוך
+           return GetMeals(sql);       
+        }
+        public List<Meal> SortByPriceFoodType(string foodTypeId, bool? option)
+        {
+            string sql = $@"SELECT Meals.MealId, Meals.MealName, Meals.MealPhoto, Meals.MealDescription, Meals.MealPrice, Meals.MealStatus, FoodTypesMeals.FoodTypeId
+                           FROM Meals INNER JOIN FoodTypesMeals ON Meals.MealId = FoodTypesMeals.MealId
+                           WHERE (((FoodTypesMeals.FoodTypeId)=1))
+                           ORDER BY Meals.MealPrice";
+            if (option == true)
+                sql = sql + " DESC"; // מהמחיר הגבוה לנמוך
+            return GetMeals(sql);
+        }
+        public List<Meal> SortByPriceFilterByPage(int pageNumber, int mealsPerPage, bool? option)
+        {
+            List<Meal> meals = FilterByPage(pageNumber, mealsPerPage);
+            meals.Sort((meal1, meal2) => meal1.MealPrice.CompareTo(meal2.MealPrice));
+            if (option == true)
+                meals.Reverse();
+            return meals;
         }
         public Meal GetById(int id)
         {
