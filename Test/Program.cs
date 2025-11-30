@@ -20,7 +20,9 @@ namespace Test
             Console.WriteLine("Select Currency number to >> ");
             int to = int.Parse(Console.ReadLine());
             Console.WriteLine("Inter Sum >> ");
-            int sum = int.Parse(Console.ReadLine());
+            int amount = int.Parse(Console.ReadLine());
+            ConvertResult result = GetConvertResult(list[from - 1].symbol, list[to-1].symbol, amount).Result;
+            Console.WriteLine($"{result.amountToConvert} {result.from} = {result.convertedAmount} {result.to}");
             Console.ReadLine();
         }
         static void ModelValidation()
@@ -60,6 +62,26 @@ namespace Test
                 response.EnsureSuccessStatusCode();
                 var body = await response.Content.ReadAsStringAsync();
                 return JsonSerializer.Deserialize<List<Currency>>(body); //מעביר את הגייסון לרשימה של המחלקה CURRENCY
+            }
+        }
+        static async Task<ConvertResult> GetConvertResult(string from, string to, double amount)
+        {
+            var client = new HttpClient();
+            var request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri($"https://currency-converter18.p.rapidapi.com/api/v1/convert?from={from}&to={to}&amount={amount}"),
+                Headers =
+    {
+        { "x-rapidapi-key", "666e2c0358msh2992bad87407b33p104059jsne30a192444cf" },
+        { "x-rapidapi-host", "currency-converter18.p.rapidapi.com" },
+    },
+            };
+            using (var response = await client.SendAsync(request))
+            {
+                response.EnsureSuccessStatusCode();
+                var body = await response.Content.ReadAsStringAsync();
+                return JsonSerializer.Deserialize<ConvertResult>(body);
             }
         }
     }

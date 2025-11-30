@@ -11,7 +11,7 @@ namespace Test
     {
         public string from {  get; set; }
         public string to { get; set; }
-        public int amountToConvert { get; set; }
+        public double amountToConvert { get; set; }
         public double convertedAmount {  get; set; }
 
     }
