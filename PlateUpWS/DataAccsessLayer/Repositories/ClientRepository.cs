@@ -1,6 +1,7 @@
 ﻿using Models;
 using System.Collections.Generic;
 using System.Data;
+using System.Security.Cryptography;
 
 namespace PlateUpWS
 {
@@ -13,11 +14,11 @@ namespace PlateUpWS
         public bool Create(Client item)
         {
             string sql = @$"INSERT INTO Clients(ClientId, ClientName, ClientLastName, 
-                         ClientEmail, ClientPassword, ClientAddress, ClientPhoneNumber,CityId)
+                         ClientEmail, ClientPassword, ClientAddress, ClientPhoneNumber, CityId, ClientSalt)
                          VALUES
                          (
                              @ClientId, @ClientName, @ClientLastName, @ClientEmail, @ClientPassword, 
-                             @ClientAddress, @ClientPhoneNumber, @CityId
+                             @ClientAddress, @ClientPhoneNumber, @CityId, @ClientSalt
                          )";
             this.dbContext.AddParameter("@ClientId", item.ClientId);
             this.dbContext.AddParameter("@ClientName", item.ClientName);
@@ -27,10 +28,17 @@ namespace PlateUpWS
             this.dbContext.AddParameter("@ClientAddress", item.ClientAddress);
             this.dbContext.AddParameter("@ClientPhoneNumber", item.ClientPhoneNumber);
             this.dbContext.AddParameter("@CityId", item.CityId);
+            string salt = GenerateSalt();
+            this.dbContext.AddParameter("@ClientSalt", salt);
 
             return this.dbContext.Insert(sql) > 0;
         }
-
+        private string GenerateSalt()
+        {
+            byte[] saltbytes = new byte[16];
+            RandomNumberGenerator.Fill(saltbytes);
+            return Convert.ToBase64String(saltbytes);
+        }
         public bool Delete(string id)
         {
             string sql = $@"DELETE FROM Clients WHERE ClientId = @ClientId";

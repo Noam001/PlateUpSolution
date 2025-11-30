@@ -18,6 +18,7 @@ namespace Models
         string clientPhoneNumber;
         int cityId;
 
+
         [Required(ErrorMessage = "You must enter your ID")]
         [RegularExpression("^\\d+$",ErrorMessage = "Invalid ID format. Please try again.")]
         [StringLength(9, MinimumLength =9, ErrorMessage = "Invalid ID format. Please try again.")]
@@ -76,5 +77,6 @@ namespace Models
             get { return cityId; }
             set { cityId = value; }
         }
+        public string ClientSalt { get; set; } 
     }
 }

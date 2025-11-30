@@ -15,7 +15,8 @@ namespace PlateUpWS
                 Password = Convert.ToString(reader["ClientPassword"]),
                 ClientAddress = Convert.ToString(reader["ClientAddress"]),
                 ClientPhoneNumber = Convert.ToString(reader["ClientPhoneNumber"]),
-                CityId = Convert.ToUInt16(reader["CityId"])
+                CityId = Convert.ToUInt16(reader["CityId"]),
+                ClientSalt = Convert.ToString(reader["ClientSalt"])
             };
         }
     }

@@ -21,8 +21,8 @@ namespace Test
             int to = int.Parse(Console.ReadLine());
             Console.WriteLine("Inter Sum >> ");
             int amount = int.Parse(Console.ReadLine());
-            ConvertResult result = GetConvertResult(list[from - 1].symbol, list[to-1].symbol, amount).Result;
-            Console.WriteLine($"{result.amountToConvert} {result.from} = {result.convertedAmount} {result.to}");
+            ConvertResult r = GetConvertResult(list[from - 1].symbol, list[to-1].symbol, amount).Result;
+            Console.WriteLine($"{r.result.amountToConvert} {r.result.from} = {r.result.convertedAmount} {r.result.to}");
             Console.ReadLine();
         }
         static void ModelValidation()
