@@ -1,6 +1,7 @@
 ﻿using Models;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlTypes;
 using System.Security.Cryptography;
 
 namespace PlateUpWS
@@ -110,18 +111,34 @@ namespace PlateUpWS
         public string Login(string email, string password, bool isAdmin)
         {
 
-            string sql = @"SELECT ClientId FROM Clients 
-                         WHERE ClientEmail = @ClientEmail AND ClientPassword = @ClientPassword";
+            string sql = @"SELECT ClientId, ClientPassword, ClientSalt FROM Clients 
+                         WHERE ClientEmail = @ClientEmail";
             this.dbContext.AddParameter("@ClientEmail", email);
-            this.dbContext.AddParameter("@ClientPassword", password);
-            string id = this.dbContext.GetValue(sql).ToString();
-            if (isAdmin)
+            string hash = string.Empty;
+            string salt = string.Empty;
+            string id = string.Empty;
+            using (IDataReader reader = this.dbContext.Select(sql))
             {
-                sql = "Select AdminId FROM ADMINS WHERE AdminId = @AdminId";
-                this.dbContext.AddParameter("@AdminId", id);
-                return this.dbContext.GetValue(sql) != null ? id : null;
+                if(reader.Read())
+                {
+                    salt = reader["ClientSalt"].ToString();
+                    hash = reader["Password"].ToString();
+                    id = reader["ClientId"].ToString();
+                }
+                if (hash == CalculateHash(password, salt))
+                {
+                    if (isAdmin == false)
+                        return id;
+                    else
+                    {
+                        sql = "Select AdminId FROM ADMINS WHERE AdminId = @AdminId";
+                        this.dbContext.AddParameter("@AdminId", id);
+                        return this.dbContext.GetValue(sql) != null ? id : null;
+                    }
+                }
+                return null;
+                
             }
-            return id;
         }
     }
 }

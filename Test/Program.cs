@@ -1,5 +1,6 @@
 ﻿using Models;
 using System.Net.Http.Headers;
+using System.Security.Cryptography;
 using System.Text.Json;
 
 namespace Test
@@ -8,9 +9,14 @@ namespace Test
     {
         static void Main(string[] args)
         {
+            ViewHash();
+            Console.ReadLine();
+        }
+        static void CurrencyTest()
+        {
             List<Currency> list = CurrencyListTest().Result;
             int count = 1;
-            foreach(var currency in list)
+            foreach (var currency in list)
             {
                 Console.WriteLine($"{count}. {currency.symbol} - {currency.name}");
                 count++;
@@ -21,9 +27,8 @@ namespace Test
             int to = int.Parse(Console.ReadLine());
             Console.WriteLine("Inter Sum >> ");
             int amount = int.Parse(Console.ReadLine());
-            ConvertResult r = GetConvertResult(list[from - 1].symbol, list[to-1].symbol, amount).Result;
+            ConvertResult r = GetConvertResult(list[from - 1].symbol, list[to - 1].symbol, amount).Result;
             Console.WriteLine($"{r.result.amountToConvert} {r.result.from} = {r.result.convertedAmount} {r.result.to}");
-            Console.ReadLine();
         }
         static void ModelValidation()
         {
@@ -83,6 +88,30 @@ namespace Test
                 var body = await response.Content.ReadAsStringAsync();
                 return JsonSerializer.Deserialize<ConvertResult>(body);
             }
+        }
+        static string GenerateSalt()
+        {
+            byte[] saltbytes = new byte[16];
+            RandomNumberGenerator.Fill(saltbytes);
+            return Convert.ToBase64String(saltbytes);
+        }
+        static string CalculateHash(string password, string salt)
+        {
+            string s = password + salt;
+            byte[] pass = System.Text.Encoding.UTF8.GetBytes(s);
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                byte[] bytes = sha256.ComputeHash(pass);
+                return Convert.ToBase64String(bytes);
+            }
+        }
+        static void ViewHash()
+        {
+            string pass = "q1b8c7d2";
+            string salt = GenerateSalt();
+            Console.WriteLine(salt);
+            string hash = CalculateHash(pass, salt);
+            Console.WriteLine(hash);
         }
     }
 }
