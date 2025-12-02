@@ -20,15 +20,15 @@ namespace PlateUpWS
                              @ClientId, @ClientName, @ClientLastName, @ClientEmail, @ClientPassword, 
                              @ClientAddress, @ClientPhoneNumber, @CityId, @ClientSalt
                          )";
+            string salt = GenerateSalt();
             this.dbContext.AddParameter("@ClientId", item.ClientId);
             this.dbContext.AddParameter("@ClientName", item.ClientName);
             this.dbContext.AddParameter("@ClientLastName", item.ClientLastName);
             this.dbContext.AddParameter("@ClientEmail", item.ClientEmail);
-            this.dbContext.AddParameter("@ClientPassword", item.Password);
+            this.dbContext.AddParameter("@ClientPassword", CalculateHash(item.Password, salt));
             this.dbContext.AddParameter("@ClientAddress", item.ClientAddress);
             this.dbContext.AddParameter("@ClientPhoneNumber", item.ClientPhoneNumber);
             this.dbContext.AddParameter("@CityId", item.CityId);
-            string salt = GenerateSalt();
             this.dbContext.AddParameter("@ClientSalt", salt);
 
             return this.dbContext.Insert(sql) > 0;
@@ -38,6 +38,16 @@ namespace PlateUpWS
             byte[] saltbytes = new byte[16];
             RandomNumberGenerator.Fill(saltbytes);
             return Convert.ToBase64String(saltbytes);
+        }
+        private string CalculateHash(string password, string salt)
+        {
+            string s = password + salt;
+            byte[] pass = System.Text.Encoding.UTF8.GetBytes(s);
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                byte[] bytes =  sha256.ComputeHash(pass);
+                return Convert.ToBase64String(bytes);
+            }
         }
         public bool Delete(string id)
         {
