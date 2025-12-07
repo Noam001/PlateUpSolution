@@ -2,6 +2,7 @@
 using System.Net.Http.Headers;
 using System.Security.Cryptography;
 using System.Text.Json;
+using WebApiClient;
 
 namespace Test
 {
@@ -9,8 +10,20 @@ namespace Test
     {
         static void Main(string[] args)
         {
-            ViewHash();
             Console.ReadLine();
+            TestWebClient();
+            Console.ReadLine();
+        }
+        static void TestWebClient()  
+        {
+            WebClient<Meal> webClient = new WebClient<Meal>();
+            webClient.Schema = "http";
+            webClient.Host = "localhost";
+            webClient.Port = 5035;
+            webClient.Path = "api/Guest/GetMealDetails";
+            webClient.AddParameter("mealId", "5");
+            Meal meal = webClient.Get();
+            Console.WriteLine($"Name: {meal.MealName}, Price: {meal.MealPrice}.");
         }
         static void CurrencyTest()
         {

@@ -12,7 +12,7 @@ namespace PlateUpWS
                 MealName = Convert.ToString(reader["MealName"]),
                 MealPhoto = Convert.ToString(reader["MealPhoto"]),
                 MealDescription = Convert.ToString(reader["MealDescription"]),
-                MealPrice = Convert.ToUInt16(reader["MealPrice"]),
+                MealPrice = Convert.ToDouble(reader["MealPrice"]),
                 MealStatus = Convert.ToString(reader["MealStatus"])
             };
         }

@@ -19,6 +19,7 @@ namespace WebApiClient
         {
             this.httpClient = new HttpClient();
             this.uriBuilder = new UriBuilder();
+            this.uriBuilder.Query = string.Empty;   
         }
         public string Schema 
         {  
@@ -120,7 +121,7 @@ namespace WebApiClient
 
         public bool Post(T data, FileStream file)
         {
-            using (HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Get, this.uriBuilder.Uri))
+            using (HttpRequestMessage requestMessage = new HttpRequestMessage())
             {
                 requestMessage.Method = HttpMethod.Post;
                 requestMessage.RequestUri = this.uriBuilder.Uri;
@@ -140,22 +141,83 @@ namespace WebApiClient
 
         public bool Post(T data, List<FileStream> files)
         {
-            throw new NotImplementedException();
+            using (HttpRequestMessage requestMessage = new HttpRequestMessage())
+            {
+                requestMessage.Method = HttpMethod.Post;
+                requestMessage.RequestUri = this.uriBuilder.Uri;
+                MultipartFormDataContent multipartFormDataContent = new MultipartFormDataContent();
+                string jsondata = JsonSerializer.Serialize(data);
+                StringContent stringContent = new StringContent(jsondata, Encoding.UTF8, "application/json");
+                multipartFormDataContent.Add(stringContent, "data");
+                foreach (var file in files)
+                {
+                    StreamContent fileContent = new StreamContent(file);
+                    multipartFormDataContent.Add(fileContent, "file", "fileName");
+                }
+                requestMessage.Content = multipartFormDataContent;
+                using (HttpResponseMessage responseMessage = this.httpClient.SendAsync(requestMessage).Result)
+                {
+                    return responseMessage.IsSuccessStatusCode;
+                }
+            }
         }
 
-        public Task<bool> PostAsync(T data)
+        public async Task<bool> PostAsync(T data)
         {
-            throw new NotImplementedException();
+            using (HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Get, this.uriBuilder.Uri))
+            {
+                requestMessage.Method = HttpMethod.Post;
+                requestMessage.RequestUri = this.uriBuilder.Uri;
+                string jsondata = JsonSerializer.Serialize(data); //מעביר את הפורמט של האובייקט לפורמט גייסון
+                requestMessage.Content = new StringContent(jsondata, Encoding.UTF8, "application/json");
+                using (HttpResponseMessage responseMessage = await this.httpClient.SendAsync(requestMessage))
+                {
+                    return responseMessage.IsSuccessStatusCode;
+                }
+            }
         }
 
-        public Task<bool> PostAsync(T data, FileStream file)
+        public async Task<bool> PostAsync(T data, FileStream file)
         {
-            throw new NotImplementedException();
+            using (HttpRequestMessage requestMessage = new HttpRequestMessage())
+            {
+                requestMessage.Method = HttpMethod.Post;
+                requestMessage.RequestUri = this.uriBuilder.Uri;
+                MultipartFormDataContent multipartFormDataContent = new MultipartFormDataContent();
+                string jsondata = JsonSerializer.Serialize(data);
+                StringContent stringContent = new StringContent(jsondata, Encoding.UTF8, "application/json");
+                multipartFormDataContent.Add(stringContent, "data");
+                StreamContent fileContent = new StreamContent(file);
+                multipartFormDataContent.Add(fileContent, "file", "fileName");
+                requestMessage.Content = multipartFormDataContent;
+                using (HttpResponseMessage responseMessage = await this.httpClient.SendAsync(requestMessage))
+                {
+                    return responseMessage.IsSuccessStatusCode;
+                }
+            }
         }
 
-        public Task<bool> PostAsync(T data, List<FileStream> files)
+        public async Task<bool> PostAsync(T data, List<FileStream> files)
         {
-            throw new NotImplementedException();
+            using (HttpRequestMessage requestMessage = new HttpRequestMessage())
+            {
+                requestMessage.Method = HttpMethod.Post;
+                requestMessage.RequestUri = this.uriBuilder.Uri;
+                MultipartFormDataContent multipartFormDataContent = new MultipartFormDataContent();
+                string jsondata = JsonSerializer.Serialize(data);
+                StringContent stringContent = new StringContent(jsondata, Encoding.UTF8, "application/json");
+                multipartFormDataContent.Add(stringContent, "data");
+                foreach (var file in files)
+                {
+                    StreamContent fileContent = new StreamContent(file);
+                    multipartFormDataContent.Add(fileContent, "file", "fileName");
+                }
+                requestMessage.Content = multipartFormDataContent;
+                using (HttpResponseMessage responseMessage = await this.httpClient.SendAsync(requestMessage))
+                {
+                    return responseMessage.IsSuccessStatusCode;
+                }
+            }
         }
     }
 }
