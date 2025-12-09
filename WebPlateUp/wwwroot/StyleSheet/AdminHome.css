@@ -1,0 +1,159 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.wrapper {
+    min-height: 100vh; /* גובה מינמלי של אלמנט יהיה בגבוה המלא של מסך */
+    background-color: #060713;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin: auto;
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.3);
+}
+.logo img {
+    width: 100px;
+    margin-left: 55px;
+    cursor: pointer;
+}
+.Title {
+    font-family: 'Open Sans';
+    font-weight: bold;
+    font-size: 35px;
+    color:white;
+}
+.Logout {
+    padding: 10px 20px;
+    margin-right: 24px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    background-color: #f1f1f1; /* Light gray background */
+    color: #020204; /* Very dark text to match the new background color */
+    font-size: 16px;
+    font-weight: 600;
+    transition: background-color 0.3s ease, box-shadow 0.3s;
+    box-shadow: 0 4px 15px rgba(89, 46, 239, 0.4); /* Glow effect using the accent color */
+}
+
+    /* Hover effect: darker red when the mouse is over the button */
+.Logout:hover {
+    background-color: #4a25c1; /* A slightly deeper purple on hover */
+    box-shadow: 0 6px 20px rgba(89, 46, 239, 0.6); /* Enhanced glow on hover */
+}
+.main{
+    display:flex;
+}
+.sidebar {
+    width: 240px;
+    background: #060713; /* כהה כמו בתמונה */
+    border-right: 1px solid rgba(255,255,255,0.05);
+    padding: 30px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    color: #9aa0b8; /* טקסט אפרפר */
+    min-height: 100vh;
+}
+
+/* ADMIN NAME */
+.Name {
+    color: #c8cbe0;
+    font-size: 15px;
+    margin-bottom: 20px;
+    text-align:center;
+    display: block;
+}
+
+.side-btn {
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    padding: 12px 14px;
+    border-radius: 12px;
+    color: #858a9f;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    letter-spacing: 0.3px;
+}
+
+.side-btn:hover {
+    background: rgba(255,255,255,0.05);
+    color: #ffffff;
+}
+
+/* ACTIVE — PURPLE GLOW */
+.side-btn.active {
+    position: relative;
+    color: #ffffff;
+    background: rgba(120, 70, 200, 0.07); /* כמעט שקוף */
+    border-radius: 14px;
+    border: 1px solid rgba(150, 90, 255, 0.45); /* הניאון העיקרי */
+    box-shadow:0 0 10px rgba(150, 90, 255, 0.35), /* זוהר חיצוני */
+        inset 0 -15px 25px rgba(150, 90, 255, 0.12); /* אור מלמטה */
+    backdrop-filter: blur(4px);
+    transition: 0.3s ease;
+}
+
+.section-title {
+    font-size: 40px;
+    font-family: Rubik;
+    margin-bottom: 30px;
+    color: white;
+    font-weight: 400;
+}
+
+.content {
+    flex: 1; /* תופס את כל הרוחב שנשאר אחרי ה-sidebar */
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column; /* כותרת למעלה, כרטיסים מתחתיה */
+    align-items: center;
+}
+.reports-container {
+    display: flex;
+    gap: 70px;
+    flex-wrap: wrap; /* חשוב: שלא ישברו אם המסך קטן */
+    margin-top: 70px;
+}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+.card {
+    width: 400px;
+    height: 180px;
+    padding: 40px;
+    font-family: 'Inter', sans-serif;
+    color: #fff;
+    border-radius: 18px;
+    background: radial-gradient( circle at 85% 40%, rgba(130, 60, 255, 0.25) 0%, /* כתם ניאון סגול עדין */
+    rgba(50, 30, 80, 0.12) 35%, rgba(20, 15, 40, 0.08) 55%, rgba(5, 5, 15, 1) 100% /* שחור כהה בקצוות */
+    );
+    /* גבול עם זוהר עדין ושקוף */
+    border: 1px solid rgba(180, 150, 255, 0.12);
+    box-shadow: 0 0 18px rgba(140, 80, 255, 0.15), /* הילה חיצונית עדינה */
+    inset 0 0 10px rgba(140, 80, 255, 0.07); /* הילה פנימית קלה */
+}
+h3{
+    text-align:center;
+    margin-bottom: 15px;
+}
+.footer {
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    color: #ccc;
+    padding: 15px 0;
+    background: rgba(0, 0, 0, 0);
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    backdrop-filter: blur(5px);
+    box-shadow: none;
+}

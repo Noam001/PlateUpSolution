@@ -62,7 +62,7 @@ namespace WebApiClient
         }
         public T Get()
         {
-            using(HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Get, this.uriBuilder.Uri)) //מילה יוסינג מוודא שהאובייקט שנוצר בתוכו ימחק מהזכרון בסיום הפעולה
+            using(HttpRequestMessage requestMessage = new HttpRequestMessage()) //מילה יוסינג מוודא שהאובייקט שנוצר בתוכו ימחק מהזכרון בסיום הפעולה
             {
                 requestMessage.Method = HttpMethod.Get; //שיטת שליחת בקשה GET
                 requestMessage.RequestUri = this.uriBuilder.Uri; //מגדיר את כתובת הבקשה
@@ -71,13 +71,15 @@ namespace WebApiClient
                     if (responseMessage.IsSuccessStatusCode == true) //האם הבקשה הצליחה(קיבלה קוד 200)
                     {
                         string result = responseMessage.Content.ReadAsStringAsync().Result;
-                        T data = JsonSerializer.Deserialize<T>(result); //העברת פורמט מגייסון לאובייקט הספציפי
+                        JsonSerializerOptions options = new JsonSerializerOptions
+                        {
+                            PropertyNameCaseInsensitive = true
+                        };
+                        T data = JsonSerializer.Deserialize<T>(result,options); //העברת פורמט מגייסון לאובייקט הספציפי
                         return data;
                     }
                     else
-                    {
                         return default(T); //בהתאם לאובייקט של T מוחזר ערך ברירת מחדל
-                    }
                 }
             }
         }

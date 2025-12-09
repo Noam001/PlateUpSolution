@@ -1,0 +1,123 @@
+﻿* 
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.wrapper {
+    min-height: 100vh; /* גובה מינמלי של אלמנט יהיה בגבוה המלא של מסך */
+    background: linear-gradient(to bottom, #000000, #1a1715, #141210, #0b0b0b);
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin: auto;
+}
+.logo img {
+    width: 100px;
+    margin-left: 55px;
+    cursor: pointer;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    padding: 2px 0;
+    align-items: center;
+    border-bottom: 1px solid rgba(255,255,255,0.3);
+}
+.item {
+    display: inline;
+    margin: 0 27.5px;
+    font-family: 'Open Sans';
+    font-weight: bold;
+    color: white;
+    transition: 0.25s ease;
+}
+.item:hover {
+    color: #8F6947;  /* subtle elegant hover */
+}
+.nav a {
+    text-decoration: none;
+    color: inherit;
+}
+.nav {
+    margin-right: 100px;
+}
+.PlateUp {
+    text-align: center;
+    background: linear-gradient(90deg, #c49a6c 0%, #e8d5b5 50%, #ffffff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.25);
+    margin-top: 70px;
+    font-family: Rubik;
+    font-weight: 500;
+    font-size: 180px;
+}
+
+.description {
+    text-align: center;
+    font-size: 25px;
+    color: beige;
+}
+.Reviews {
+    font-family: 'Open Sans';
+    font-weight: bold;
+    color: beige;
+    margin-left: 24px;
+    margin-bottom: 18px;
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+.ReviewBlock {
+    width: 470px;
+    margin-top: 260px;
+}
+.reviewBox {
+    display: flex;
+    width: 400px;
+    background: #fff;
+    margin-left: 13px;
+    border: 2px solid #d8b89c;
+    border-radius: 25px;
+    padding: 5px 7px;
+}
+.reviewInput {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #f0e6d8;
+    font-size: 17px;
+    padding: 12px;
+}
+.reviewInput::placeholder {
+    color: #8e8377;
+}
+
+.Send {
+    padding: 10px 26px;
+    border-radius: 20px;
+    background-color: #3F3A36; /* dark espresso */
+    color: #F6EEE6; /* soft cream */
+    border: 1px solid #2C2927;
+    margin-left: 8px;
+    color: white;
+}
+button:hover {
+    background-color: #8F6947; /* slightly darker */
+    transform: translateY(-2px);
+    cursor: pointer;
+}
+.footer {
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    color: #ccc;
+    padding: 15px 0;
+    background: rgba(0, 0, 0, 0);
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    backdrop-filter: blur(5px);
+    box-shadow: none;
+}

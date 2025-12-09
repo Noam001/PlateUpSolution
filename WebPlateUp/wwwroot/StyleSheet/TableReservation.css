@@ -1,0 +1,122 @@
+﻿*
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    background-image: url('../Photos/TableBackGround.png');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.TableReservation {
+    width: 1000px;
+    margin: auto;
+    padding: 80px 30px;
+    box-shadow: 10px 10px 15px #141414;
+    background: linear-gradient(#ffffff34,#ffffff27);
+    backdrop-filter: blur(7px);
+    border-radius: 25px;
+}
+.Title {
+    margin-top: 30px;
+    text-align: center;
+    font-family: Rubik;
+    font-size: 40px;
+    font-weight: 400;
+    margin-bottom: 30px;
+}
+.PlateUp {
+    text-align: center;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.25);
+    font-family: Rubik;
+    font-weight: 400;
+    font-size: 75px;
+}
+.fields {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    gap: 15px;
+}
+.field input[type="date"],
+.field input[type="time"],
+.field select {
+    padding: 10px 15px;
+    border: 2px solid #ccc;
+    border-radius: 25px;
+    background-color: white;
+    font-size: 16px;
+    font-family: 'Open Sans', sans-serif;
+    box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
+}
+.field {
+    position: relative;
+}
+/* 2. נותן רווח בצד ימין ל־select כדי שהטקסט לא יסתיר את האייקון */
+.field select {
+    padding-right: 42px; /* מספיק מקום לאייקון */
+}
+.guest-icon {
+    position: absolute; /*ממקם את האייקון בתוך השדה*/
+    right: 16px; /* מרחק מהקצה הימני של ה־li */
+    margin-top: 10px;
+    width: 28px; /* גודל האייקון */
+    pointer-events: none; /* אומר שהתמונה לא תחסום לחיצה על ה־select. */
+}
+.reserve-text {
+    margin-top: 50px;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 19px;
+    font-family: 'Poppins', 'Open Sans', sans-serif;
+    color: white;
+}
+button {
+    display: block;
+    margin: 0 auto;
+    font-size: 18px;
+    color: white;
+    width: 190px;
+    border-radius: 25px;
+    padding: 16px 19px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    cursor: pointer;
+    background-color: #009ca6; /* teal turquoise */
+    border: none;
+}
+.Extra-Buttons {
+    display: flex;
+    justify-content: center;
+    gap: 23px; /* space between buttons */
+    margin-top: 50px;
+}
+    .Extra-Buttons a {
+        padding: 14px 22px;
+        border-radius: 10px;
+        background-color: #ffffffa0;
+        font-family: 'Open Sans';
+        font-weight: bold;
+        color: #000;
+        font-size: 18px;
+        outline: 3px solid #009ca6;
+        text-decoration: none;
+    }
+.footer {
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    color: #ccc;
+    padding: 15px 0;
+    background: rgba(0, 0, 0, 0);
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    backdrop-filter: blur(5px);
+    box-shadow: none;
+}
