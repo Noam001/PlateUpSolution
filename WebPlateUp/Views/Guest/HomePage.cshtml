@@ -1,9 +1,23 @@
 ﻿@using Models;
 @model List<Review>
-{
+@{
     ViewData["Title"] = "HomePage";
     Layout = "~/Views/Shared/MasterPage.cshtml";
 }
+<link href="~\stylesheet\homepage.css" rel="stylesheet" />
+<main class="main">
+    <h1 class="PlateUp">PlateUp</h1>
+    <p class="description">Lorem ipsum dolor sit amet, consectetur adipi- <br>scing elit, sed do iusmod tempor incididunt ut <br> labore et dolore magna.</p>
+    <div class="ReviewBlock">
+        <h2 class="Reviews">Reviews</h2>
 
-<h1>HomePage</h1>
-
+        @foreach(Review review in Model)
+        {
+            <p> @review.ReviewComment </p>
+        }
+        <div class="reviewBox">
+            <input name="review" id="review" type="text" placeholder="Write a Review..." class="reviewInput" />
+            <button class="Send" type="submit">Send</button>
+        </div>
+    </div>
+</main>

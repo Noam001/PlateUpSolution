@@ -3,7 +3,7 @@
     padding: 0;
     box-sizing: border-box;
 }
-.wraper {
+.MenuWrapper {
     background: linear-gradient(135deg, #000000, #1A1A1A);
     background-repeat: no-repeat;
     background-size: cover;
@@ -11,28 +11,6 @@
     padding-bottom: 60px;
 }
 
-.header {
-    padding-top: 66px;
-    padding-bottom: 112px;
-    display: flex;
-    justify-content: end;
-}
-
-.nav-item {
-    display: inline;
-    margin: 0 27.5px;
-    font-family: 'Open Sans';
-    font-weight: bold;
-    color: white;
-}
-.nav a {
-    text-decoration: none;
-    color: inherit;
-}
-
-.nav {
-    margin-right: 100px;
-}
 .page-layout {
     display: flex;
     align-items: flex-start;
