@@ -1,0 +1,89 @@
+﻿@using Models;
+
+@model MenuViewModel
+{
+    ViewData["Title"] = "Menu";
+    Layout = "~/Views/Shared/MasterPage.cshtml";
+}
+<link href="~/stylesheet/menu.css" rel="stylesheet" />
+<main class="main">
+    <div class="page-layout">
+        <aside class="filters">
+            <section class="search-section">
+                <input type="text" placeholder="Search" class="search-bar">
+            </section>
+            <h3>Food Type</h3>
+            <select name="foodType" id="foodType">
+                <option value="">Select</option>
+                <option value="Appetizers">Appetizers</option>
+                <option value="Italian Cuisine">Italian Cuisine</option>
+                <option value="Pastas">Pastas</option>
+                <option value="Pizzas">Pizzas</option>
+                <option value="drinks">Drinks</option>
+                <option value="Desserts">Desserts</option>
+                <option value="Salads">Salads</option>
+                <option value="Fish">Fish</option>
+            </select>
+
+            <h3>Price</h3>
+            <div class="price-sort">
+                <label><input type="radio" name="price" value="lowToHigh">Low to High</label><br>
+                <label><input type="radio" name="price" value="highToLow">High to Low</label>
+            </div>
+        </aside>
+        <!-- Menu items grid -->
+        <section class="menu-items">
+            <a href=""><div class="item"><img src="../Photos/placeholder.png" alt=""><p>Margherita Pizza</p><p>$12</p></div></a>
+            <a href=""><div class="item"><img src="../Photos/placeholder.png" alt=""><p>Veggie Pizza</p><p>$14</p></div></a>
+            <a href=""><div class="item"><img src="../Photos/placeholder.png" alt=""><p>Pasta Rosa</p><p>$18</p></div></a>
+            <a href=""><div class="item"><img src="../Photos/placeholder.png" alt=""><p>Ravioli Sweet Potato</p><p>$20</p></div></a>
+            <a href=""><div class="item"><img src="../Photos/placeholder.png" alt=""><p>Ravioli Cheese</p><p>$20</p></div></a>
+            <a href=""><div class="item"><img src="../Photos/placeholder.png" alt=""><p>Pasta Pomodoro</p><p>$18</p></div></a>
+            <a href=""><div class="item"><img src="../Photos/placeholder.png" alt=""><p>Crème Brûlée</p><p>$15</p></div></a>
+            <a href=""><div class="item"><img src="../Photos/placeholder.png" alt=""><p>Chocolate Cake</p><p>$15</p></div></a>
+            <a href=""><div class="item"><img src="../Photos/placeholder.png" alt=""><p>Pavlova</p><p>$15</p></div></a>
+            <a href=""><div class="item"><img src="../Photos/placeholder.png" alt=""><p>Cheesecake</p><p>$15</p></div></a>
+            <a href=""><div class="item"><img src="../Photos/placeholder.png" alt=""><p>Mille-Feuille</p><p>$15</p></div></a>
+            <a href=""><div class="item"><img src="../Photos/placeholder.png" alt=""><p>Focaccina</p><p>$8</p></div></a>
+            <a href=""><div class="item"><img src="../Photos/placeholder.png" alt=""><p>Truffle Arancini</p><p>$18</p></div></a>
+            <a href=""><div class="item"><img src="../Photos/placeholder.png" alt=""><p>Cloud Gnocchi</p><p>$18</p></div></a>
+            <a href=""><div class="item"><img src="../Photos/placeholder.png" alt=""><p>Cheese Tortellini</p><p>$18</p></div></a>
+            <a href=""><div class="item"><img src="../Photos/placeholder.png" alt=""><p>French Fries</p><p>$8</p></div></a>
+            <a href=""><div class="item"><img src="../Photos/placeholder.png" alt=""><p>Potato Croquettes</p><p>$10</p></div></a>
+            <a href=""><div class="item"><img src="../Photos/placeholder.png" alt=""><p>Caesar Salad</p><p>$18</p></div></a>
+            <a href=""><div class="item"><img src="../Photos/placeholder.png" alt=""><p>Fresh Garden Salad</p><p>$18</p></div></a>
+            <a href=""><div class="item"><img src="../Photos/placeholder.png" alt=""><p>Greek Salad</p><p>$18</p></div></a>
+            <a href=""><div class="item"><img src="../Photos/placeholder.png" alt=""><p>Panzanella Salad</p><p>$18</p></div></a>
+            <a href=""><div class="item"><img src="../Photos/placeholder.png" alt=""><p>Caprese Burrata</p><p>$18</p></div></a>
+            <a href=""><div class="item"><img src="../Photos/placeholder.png" alt=""><p>Avocado Salad</p><p>$18</p></div></a>
+            <a href=""><div class="item"><img src="../Photos/placeholder.png" alt=""><p>Coca Cola / Zero</p><p>$4</p></div></a>
+            <a href=""><div class="item"><img src="../Photos/placeholder.png" alt=""><p>Sprite</p><p>$4</p></div></a>
+            <a href=""><div class="item"><img src="../Photos/placeholder.png" alt=""><p>Fanta</p><p>$4</p></div></a>
+            <a href=""><div class="item"><img src="../Photos/placeholder.png" alt=""><p>Fuze Tea Peach</p><p>$4</p></div></a>
+            <a href=""><div class="item"><img src="../Photos/placeholder.png" alt=""><p>Flavored Water (Peach / Grape / Apple)</p><p>$4</p></div></a>
+            <a href=""><div class="item"><img src="../Photos/placeholder.png" alt=""><p>Water</p><p>$3</p></div></a>
+            <a href=""><div class="item"><img src="../Photos/placeholder.png" alt=""><p>Freshly Squeezed Orange Juice</p><p>$5</p></div></a>
+            <a href=""><div class="item"><img src="../Photos/placeholder.png" alt=""><p>Fresh Lemonade</p><p>$5</p></div></a>
+            <a href=""><div class="item"><img src="../Photos/placeholder.png" alt=""><p>Soda</p><p>$3</p></div></a>
+            <a href=""><div class="item"><img src="../Photos/placeholder.png" alt=""><p>Cappuccino</p><p>$4</p></div></a>
+            <a href=""><div class="item"><img src="../Photos/placeholder.png" alt=""><p>Hot Chocolate</p><p>$4</p></div></a>
+            <a href=""><div class="item"><img src="../Photos/placeholder.png" alt=""><p>Iced Coffee</p><p>$5</p></div></a>
+            <a href=""><div class="item"><img src="../Photos/placeholder.png" alt=""><p>Grilled Salmon Fillet</p><p>$24</p></div></a>
+            <a href=""><div class="item"><img src="../Photos/placeholder.png" alt=""><p>Fish & Chips</p><p>$20</p></div></a>
+            <a href=""><div class="item"><img src="../Photos/placeholder.png" alt=""><p>Sea Bass Fillet</p><p>$24</p></div></a>
+            <a href=""><div class="item"><img src="../Photos/placeholder.png" alt=""><p>Tilapia Fillet</p><p>$21</p></div></a>
+            <a href=""><div class="item"><img src="../Photos/placeholder.png" alt=""><p>Pasta Cream</p><p>$18</p></div></a>
+        </section>
+    </div>
+    <section class="pagination">
+        <button>Prev</button>
+        <button class="active">1</button>
+        <button>2</button>
+        <button>3</button>
+        <button>4</button>
+        <button>5</button>
+        <button>Next</button>
+    </section>
+
+</main>
+
