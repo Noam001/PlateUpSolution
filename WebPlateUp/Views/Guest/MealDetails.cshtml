@@ -1,0 +1,37 @@
+﻿@using Models;
+
+@model Meal
+@{
+    ViewData["Title"] = "MealDetails";
+    Layout = "~/Views/Shared/MasterPage.cshtml";
+}
+<link href="~/stylesheet/mealdetails.css" rel="stylesheet" />
+<div class="MealWrapper">
+    <div class="meal-image">
+        <img src="@Model.MealPhoto" alt="@Model.MealName" />
+    </div>
+
+    <!-- Left side: Info -->
+    <div class="meal-info">
+        <h1 class="meal-name">@Model.MealName</h1>
+
+        <p class="meal-description">
+            @Model.MealDescription
+        </p>
+
+        <p class="meal-price">
+            $@Model.MealPrice
+        </p>
+
+        <div class="meal-actions">
+            <input type="number" min="1" value="1" class="meal-quantity" />
+
+            <button class="add-to-cart">
+                Add to Cart
+            </button>
+        </div>
+    </div>
+
+</div>
+
+

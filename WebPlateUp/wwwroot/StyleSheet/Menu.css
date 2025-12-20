@@ -12,9 +12,10 @@
 }
 
 .page-layout {
+    margin-top: 100px;
     display: flex;
     align-items: flex-start;
-    gap: 20px;
+    gap: 30px;
 }
 .filters {
     margin-left: 35px;
@@ -63,9 +64,9 @@ h3 {
 /* עיצוב כללי של הגריד */
 .menu-items {
     display: grid;
-    grid-template-columns: repeat(5, 1fr); /* 3 עמודות, כל אחת בגודל שווה */
+    grid-template-columns: repeat(4, 1fr); /* 3 עמודות, כל אחת בגודל שווה */
     gap: 20px; /* מרווח בין הריבועים */
-    margin-left: 300px; /* לדאוג שיהיה בצד הימני, בהתאמה לרוחב של הפילטרים */
+    margin-left: 100px;
     padding: 20px;
 }
 
@@ -106,8 +107,11 @@ h3 {
 /* עיצוב למחיר (בולט יותר) */
 .menu-items .item p:last-child {
     font-size: 18px;
-    color: #e67e22; /* צבע כתום שמושך תשומת לב */
+    color: #c48a3a; /* זהב חמים */
     font-weight: bold;
+}
+.menu-items a {
+    text-decoration: none;
 }
 .pagination {
     display: flex;
@@ -126,17 +130,4 @@ h3 {
 }
 .pagination button.active, button:hover{
     background: linear-gradient(to bottom, #9c9c9c 0%, #111 100%)
-}
-.footer {
-    text-align: center;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 14px;
-    color: #ccc;
-    padding: 15px 0;
-    background: rgba(0, 0, 0, 0);
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    backdrop-filter: blur(5px);
-    box-shadow: none;
 }

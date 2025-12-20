@@ -4,44 +4,6 @@
     padding: 0;
     box-sizing: border-box;
 }
-.wrapper {
-    min-height: 100vh; /* גובה מינמלי של אלמנט יהיה בגבוה המלא של מסך */
-    background: linear-gradient(to bottom, #000000, #1a1715, #141210, #0b0b0b);
-    background-repeat: no-repeat;
-    background-size: cover;
-    margin: auto;
-}
-.logo img {
-    width: 100px;
-    margin-left: 55px;
-    cursor: pointer;
-}
-
-.header {
-    display: flex;
-    justify-content: space-between;
-    padding: 2px 0;
-    align-items: center;
-    border-bottom: 1px solid rgba(255,255,255,0.3);
-}
-.item {
-    display: inline;
-    margin: 0 27.5px;
-    font-family: 'Open Sans';
-    font-weight: bold;
-    color: white;
-    transition: 0.25s ease;
-}
-.item:hover {
-    color: #8F6947;  /* subtle elegant hover */
-}
-.nav a {
-    text-decoration: none;
-    color: inherit;
-}
-.nav {
-    margin-right: 100px;
-}
 .PlateUp {
     text-align: center;
     background: linear-gradient(90deg, #c49a6c 0%, #e8d5b5 50%, #ffffff 100%);
@@ -53,7 +15,6 @@
     font-weight: 500;
     font-size: 180px;
 }
-
 .description {
     text-align: center;
     font-size: 25px;
@@ -108,16 +69,39 @@ button:hover {
     transform: translateY(-2px);
     cursor: pointer;
 }
-.footer {
-    text-align: center;
+.allReviews {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.review-card {
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(6px);
+    border-radius: 14px;
+    padding: 16px 20px;
+    max-width: 420px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+}
+
+.review-text {
+    color: #f0e6d8;
+    font-size: 16px;
+    line-height: 1.6;
     font-family: 'Open Sans', sans-serif;
+}
+.review-stars {
+    color: #FFD700; /* צבע זהב לכוכבים */
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+.review-footer {
+    display: flex;
+    justify-content: space-between;
     font-size: 14px;
     color: #ccc;
-    padding: 15px 0;
-    background: rgba(0, 0, 0, 0);
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    backdrop-filter: blur(5px);
-    box-shadow: none;
+    margin-top: 10px;
+    font-family: 'Open Sans', sans-serif;
 }

@@ -1,0 +1,72 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.MealWrapper {
+    display: flex;
+    gap: 40px;
+    padding: 60px;
+    align-items: flex-start;
+}
+
+.meal-image {
+    flex: 1;
+}
+
+.meal-image img {
+    width: 100%;
+    border-radius: 18px;
+    object-fit: cover;
+}
+
+.meal-info {
+    flex: 1;
+    color: #f0e6d8;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.meal-name {
+    font-size: 42px;
+    margin-bottom: 16px;
+}
+
+.meal-description {
+    font-size: 18px;
+    line-height: 1.7;
+    margin-bottom: 24px;
+}
+
+.meal-price {
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+.meal-actions {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.meal-quantity {
+    width: 80px;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    font-size: 16px;
+}
+
+.add-to-cart {
+    padding: 12px 30px;
+    border-radius: 25px;
+    background-color: #8F6947;
+    color: white;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.add-to-cart:hover {
+    background-color: #c49a6c;
+}

@@ -1,0 +1,58 @@
+﻿* 
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.wrapper {
+    min-height: 100vh; /* גובה מינמלי של אלמנט יהיה בגבוה המלא של מסך */
+    background: linear-gradient(to bottom, #000000, #1a1715, #141210, #0b0b0b);
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin: auto;
+}
+.logo img {
+    width: 100px;
+    margin-left: 55px;
+    cursor: pointer;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    padding: 2px 0;
+    align-items: center;
+    border-bottom: 1px solid rgba(255,255,255,0.3);
+}
+.item {
+    display: inline;
+    margin: 0 27.5px;
+    font-family: 'Open Sans';
+    font-weight: bold;
+    color: white;
+    transition: 0.25s ease;
+}
+.item:hover {
+    color: #8F6947;  /* subtle elegant hover */
+}
+.nav a {
+    text-decoration: none;
+    color: inherit;
+}
+.nav {
+    margin-right: 100px;
+}
+
+.footer {
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    color: #ccc;
+    padding: 15px 0;
+    background: rgba(0, 0, 0, 0);
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    backdrop-filter: blur(5px);
+    box-shadow: none;
+}

@@ -10,7 +10,6 @@
     <Folder Include="wwwroot\Images\" />
     <Folder Include="wwwroot\Fonts\" />
     <Folder Include="wwwroot\Scripts\" />
-    <Folder Include="wwwroot\StyleSheet\" />
   </ItemGroup>
 
   <ItemGroup>

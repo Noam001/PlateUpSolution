@@ -1,0 +1,109 @@
+﻿@using Models;
+@model Client
+@{
+    ViewData["Title"] = "SignUp";
+    Layout = "~/Views/Shared/MasterPage.cshtml";
+}
+<link href="~/stylesheet/signup.css" rel="stylesheet" />
+<form class="Signup" method="post" action="#">
+    <h1 class="Title">Sign Up</h1>
+    <ul class="fields">
+        <li class="field">
+            <input name="id" id="id" type="text" placeholder="ID" />
+            <img class="icon" src="../Photos/Id.png" />
+        </li>
+        <li class="double-field">
+            <div class="field">
+                <input name="firstname" id="firstname" type="text" placeholder="First Name" />
+                <img class="icon" src="../Photos/profile.png" />
+            </div>
+
+            <div class="field">
+                <input name="lastname" id="lastname" type="text" placeholder="Last Name" />
+                <img class="icon" src="../Photos/profile.png" />
+            </div>
+        </li>
+        <li class="field">
+            <input name="phonenumber" id="phonenumber" type="text" placeholder="Phone Number" />
+            <img class="icon" src="../Photos/Phone.png" />
+        </li>
+        <li class="field">
+            <select id="city" name="City" required>
+                <option value="0">City</option>
+                <option value="1">ירושלים</option>
+                <option value="2">תל אביב-יפו</option>
+                <option value="3">חיפה</option>
+                <option value="4">ראשון לציון</option>
+                <option value="5">פתח תקווה</option>
+                <option value="6">אשדוד</option>
+                <option value="7">נתניה</option>
+                <option value="8">באר שבע</option>
+                <option value="9">בני ברק</option>
+                <option value="10">חולון</option>
+                <option value="11">רמת גן</option>
+                <option value="12">אשקלון</option>
+                <option value="13">רחובות</option>
+                <option value="14">בית שמש</option>
+                <option value="15">בת ים</option>
+                <option value="16">כפר סבא</option>
+                <option value="17">הרצליה</option>
+                <option value="18">חדרה</option>
+                <option value="19">מודיעין- מכבים- רעות</option>
+                <option value="20">לוד</option>
+                <option value="21">מודיעין עילית</option>
+                <option value="22">נצרת</option>
+                <option value="23">רמלה</option>
+                <option value="24">רעננה</option>
+                <option value="25">רהט</option>
+                <option value="26">ראש העין</option>
+                <option value="27">הוד השרון</option>
+                <option value="28">ביתר עילית</option>
+                <option value="29">גבעתיים</option>
+                <option value="30">קריית אתא</option>
+                <option value="31">נהריה</option>
+                <option value="32">קריית גת</option>
+                <option value="33">אום אל-פחם</option>
+                <option value="34">עפולה</option>
+                <option value="35">אילת</option>
+                <option value="36">נס ציונה</option>
+                <option value="37">עכו</option>
+                <option value="38">יבנה</option>
+                <option value="39">אלעד</option>
+                <option value="40">רמת השרון</option>
+                <option value="41">כרמיאל</option>
+                <option value="42">טבריה</option>
+                <option value="43">קריית מוצקין</option>
+                <option value="44">טייבה</option>
+                <option value="45">שפרעם</option>
+                <option value="46">נוף הגליל</option>
+                <option value="47">קריית ביאליק</option>
+                <option value="48">קריית אונו</option>
+                <option value="49">קריית ים</option>
+                <option value="50">נתיבות</option>
+                <option value="51">מעלה אדומים</option>
+                <option value="52">אור יהודה</option>
+                <option value="53">צפת</option>
+                <option value="54">דימונה</option>
+                <option value="55">טמרה</option>
+                <option value="56">אופקים</option>
+            </select>
+        </li>
+        <li class="field">
+            <input name="Address" id="Address" type="text" placeholder="Address" />
+            <img class="icon" src="../Photos/Address.png" />
+        </li>
+        <li class="field">
+            <input name="email" id="email" type="text" placeholder="Email" />
+            <img class="icon" src="../Photos/Email.png" />
+        </li>
+        <li class="field">
+            <input name="password" id="password" type="password" placeholder="Password" />
+            <img class="icon" src="../Photos/lock.png" />
+        </li>
+    </ul>
+    <button class="buttonReset" type="reset">Reset</button>
+    <button class="buttonSignUp" type="submit">Sign Up</button>
+    <div class="Login-link">
+        <p>Already have an account? <a href=" Login.html">Login</a></p>
+    </div>
+</form>
