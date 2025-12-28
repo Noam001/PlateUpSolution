@@ -29,6 +29,8 @@ namespace WebPlateUp.Controllers
             client.Host = "localhost";
             client.Port = 5035;
             client.Path = "api/Guest/GetMenu";
+            //int pages = client.menu
+            //client.AddParameter()
             if (foodTypeId != "-1")
             {
                 client.AddParameter("foodTypeId", foodTypeId);
