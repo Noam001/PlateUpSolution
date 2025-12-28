@@ -31,9 +31,7 @@
                         }
                         else{
                             <option value="@foodType.FoodTypeId" >@foodType.FoodTypeName</option>
-                        }
-                       
-
+                        }                      
                     }
                 </select>
             </form>
@@ -59,10 +57,9 @@
     </div>
     <section class="pagination">
         <a href="">Prev</a>
-        <a href="" class="active">1</a>
         @for(int i = 1; i <= Model.Pages; i++)
         {
-            <a href="">i</a>
+            <a href="http://localhost:5290/Guest/Menu/?pageNumber=@i">@i</a>
         }
         <a href="">Next</a>
 

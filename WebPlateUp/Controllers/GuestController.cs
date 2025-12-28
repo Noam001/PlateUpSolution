@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Models;
+using NuGet.Protocol.Core.Types;
 using System.Net;
 using WebApiClient;
 
@@ -21,7 +22,7 @@ namespace WebPlateUp.Controllers
             return View(reviews);
         }
         [HttpGet]
-        public IActionResult Menu(string foodTypeId = "-1", int pageNumber = 0, string mealNameSearch = "", bool? priceSort = null)
+        public IActionResult Menu(string foodTypeId = "-1", int pageNumber = 0,  string mealNameSearch = "", bool? priceSort = null, int pages = 0)
         {
             //1 get data from Web Server
             WebClient<MenuViewModel> client = new WebClient<MenuViewModel>();
@@ -29,8 +30,6 @@ namespace WebPlateUp.Controllers
             client.Host = "localhost";
             client.Port = 5035;
             client.Path = "api/Guest/GetMenu";
-            //int pages = client.menu
-            //client.AddParameter()
             if (foodTypeId != "-1")
             {
                 client.AddParameter("foodTypeId", foodTypeId);
@@ -48,7 +47,9 @@ namespace WebPlateUp.Controllers
                 client.AddParameter("priceSort", priceSort.ToString());
             }
             MenuViewModel menuViewModel = client.Get();
-
+            int mealsAmount = menuViewModel.Meals.Count();
+            pages = mealsAmount / 8;
+            menuViewModel.Pages = pages;    
             return View(menuViewModel);
         }
         [HttpGet]

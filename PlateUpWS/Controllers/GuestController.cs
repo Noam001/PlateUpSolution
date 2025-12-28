@@ -34,13 +34,14 @@ namespace PlateUpWS
         }
 
         [HttpGet]
-        public MenuViewModel GetMenu(string foodTypeId = "-1", int pageNumber = 0, string mealNameSearch = "", bool? priceSort =null)
+        public MenuViewModel GetMenu(string foodTypeId = "-1", int pageNumber = 0, string mealNameSearch = "", bool? priceSort =null, int pages = 0)
         {
             MenuViewModel menuViewModel = new MenuViewModel();
-            int mealperPage = 10;
+            int mealperPage = 8;
             menuViewModel.FoodTypeId = foodTypeId;
             menuViewModel.PageNumber = pageNumber;
             menuViewModel.MealNameSearch = mealNameSearch;
+            menuViewModel.Pages = pages;
             try//נסה לעשות את פקודות אלו
             {
                 this.repositoryFactory.ConnectDb();

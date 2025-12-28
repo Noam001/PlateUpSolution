@@ -118,7 +118,7 @@ h3 {
     justify-content: center;
     margin-top: 20px;
 }
-.pagination button {
+.pagination a {
     padding: 10px 20px;
     margin: 0 5px;
     background-color: transparent;
