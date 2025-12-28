@@ -6,22 +6,37 @@
     Layout = "~/Views/Shared/MasterPage.cshtml";
 }
 <link href="~/stylesheet/menu.css" rel="stylesheet" />
+<script>
+    function GoLink()
+    {
+        document.forms[0].submit();
+    }
+</script>
 <div class="MenuWrapper">
     <div class="page-layout">
         <aside class="filters">
             <section class="search-section">
                 <input type="text" placeholder="Search" class="search-bar">
             </section>
-            <h3>Food Type</h3>
-            <select name="foodType" id="foodType">
-                <option value="">Select</option>
-                @foreach(FoodType foodType in Model.FoodTypes)
-                {
-                    <option value="">@foodType.FoodTypeName</option>
+            <form action="http://localhost:5290/Guest/Menu/" method="get">
+                <h3>Food Type</h3>
+                <select name="foodTypeId" id="foodType" onchange="GoLink()">
+                   
+                    <option value="-1">All Food Type</option>
+                    @foreach(FoodType foodType in Model.FoodTypes)
+                    {
+                        if(foodType.FoodTypeId == int.Parse(Model.FoodTypeId))
+                        {
+                            <option value="@foodType.FoodTypeId" selected>@foodType.FoodTypeName</option>
+                        }
+                        else{
+                            <option value="@foodType.FoodTypeId" >@foodType.FoodTypeName</option>
+                        }
+                       
 
-                }
-            </select>
-
+                    }
+                </select>
+            </form>
             <h3>Price</h3>
             <div class="price-sort">
                 <label><input type="radio" name="price" value="lowToHigh">Low to High</label><br>
@@ -33,7 +48,7 @@
             @foreach (Meal meal in Model.Meals)
             {
                 <div class="item">
-                    <a href="">
+                    <a href="http://localhost:5290/Guest/MealDetails/?id=@meal.MealId">
                         <img src="http://localhost:5035/DataImages/@meal.MealPhoto">
                         <p>@meal.MealName</p>
                         <p>$@meal.MealPrice</p>
@@ -43,13 +58,18 @@
         </section>
     </div>
     <section class="pagination">
-        <button>Prev</button>
+        <a href="">Prev</a>
+        @for(int i = 1; i <=Model.Pages; i++)
+        {
+            <a href=""></a>
+        }
+        <a href="">Next</a>
+
         <button class="active">1</button>
         <button>2</button>
         <button>3</button>
         <button>4</button>
         <button>5</button>
-        <button>Next</button>
     </section>
 </div>
 

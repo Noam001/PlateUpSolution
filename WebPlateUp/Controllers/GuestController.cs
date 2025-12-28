@@ -21,7 +21,7 @@ namespace WebPlateUp.Controllers
             return View(reviews);
         }
         [HttpGet]
-        public IActionResult Menu()
+        public IActionResult Menu(string foodTypeId = "-1", int pageNumber = 0, string mealNameSearch = "", bool? priceSort = null)
         {
             //1 get data from Web Server
             WebClient<MenuViewModel> client = new WebClient<MenuViewModel>();
@@ -29,6 +29,22 @@ namespace WebPlateUp.Controllers
             client.Host = "localhost";
             client.Port = 5035;
             client.Path = "api/Guest/GetMenu";
+            if (foodTypeId != "-1")
+            {
+                client.AddParameter("foodTypeId", foodTypeId);
+            }
+            if (pageNumber > 0)
+            {
+                client.AddParameter("pageNumber", pageNumber.ToString());
+            }
+            if (mealNameSearch != "")
+            {
+                client.AddParameter("mealNameSearch", mealNameSearch);
+            }
+            if (priceSort != null)
+            {
+                client.AddParameter("priceSort", priceSort.ToString());
+            }
             MenuViewModel menuViewModel = client.Get();
 
             return View(menuViewModel);
@@ -41,6 +57,7 @@ namespace WebPlateUp.Controllers
             client.Host = "localhost";
             client.Port = 5035;
             client.Path = "api/Guest/GetMealDetails";
+            client.AddParameter("mealId", id);
             Meal meal = client.Get();
             return View(meal);
         }
@@ -59,5 +76,6 @@ namespace WebPlateUp.Controllers
             Client client1 = client.Get();
             return View(client1);
         }
+
     }
 }
