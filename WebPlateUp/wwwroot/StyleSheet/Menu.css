@@ -4,10 +4,6 @@
     box-sizing: border-box;
 }
 .MenuWrapper {
-    background: linear-gradient(135deg, #000000, #1A1A1A);
-    background-repeat: no-repeat;
-    background-size: cover;
-    margin: auto;
     padding-bottom: 60px;
 }
 
@@ -64,10 +60,9 @@ h3 {
 /* עיצוב כללי של הגריד */
 .menu-items {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 3 עמודות, כל אחת בגודל שווה */
+    grid-template-columns: repeat(4, 320px); /* 3 עמודות, כל אחת בגודל שווה */
     gap: 20px; /* מרווח בין הריבועים */
-    margin-left: 100px;
-    padding: 20px;
+    margin-left: 200px;
 }
 
 /* עיצוב הריבועים של כל פריט */
@@ -119,6 +114,8 @@ h3 {
     margin-top: 20px;
 }
 .pagination a {
+    display:block; 
+    text-decoration: none;
     padding: 10px 20px;
     margin: 0 5px;
     background-color: transparent;
@@ -128,6 +125,15 @@ h3 {
     cursor: pointer;
     font-size: 20px;
 }
-.pagination button.active, button:hover{
+.pagination a.active {
+    background: #c48a3a;
+    color: black;
+    font-weight: bold;
+}
+.pagination a.disabled {
+    pointer-events: none;
+    opacity: 0.4;
+}
+.pagination a:hover{
     background: linear-gradient(to bottom, #9c9c9c 0%, #111 100%)
 }

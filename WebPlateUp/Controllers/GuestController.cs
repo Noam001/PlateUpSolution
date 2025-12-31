@@ -47,9 +47,12 @@ namespace WebPlateUp.Controllers
                 client.AddParameter("priceSort", priceSort.ToString());
             }
             MenuViewModel menuViewModel = client.Get();
-            int mealsAmount = menuViewModel.Meals.Count();
-            pages = mealsAmount / 8;
-            menuViewModel.Pages = pages;    
+            menuViewModel.FoodTypeId = foodTypeId;
+            menuViewModel.PageNumber = pageNumber;
+            menuViewModel.MealNameSearch = mealNameSearch;
+            menuViewModel.PriceSort = priceSort;
+            menuViewModel.Pages = menuViewModel.TotalMeals / 8;
+
             return View(menuViewModel);
         }
         [HttpGet]

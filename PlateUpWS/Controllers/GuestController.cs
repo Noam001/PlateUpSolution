@@ -42,10 +42,12 @@ namespace PlateUpWS
             menuViewModel.PageNumber = pageNumber;
             menuViewModel.MealNameSearch = mealNameSearch;
             menuViewModel.Pages = pages;
+            menuViewModel.PriceSort = priceSort;
             try//נסה לעשות את פקודות אלו
             {
                 this.repositoryFactory.ConnectDb();
-
+                List<Meal> allMeals = repositoryFactory.MealRepository.GetAll();
+                menuViewModel.TotalMeals = allMeals.Count;
                 // מקרה 1: לא נבחר שום סינון
                 if (foodTypeId == "-1" && pageNumber == 0 && mealNameSearch == "" && priceSort == null)
                     menuViewModel.Meals = repositoryFactory.MealRepository.GetAll();

@@ -9,37 +9,43 @@
 <script>
     function GoLink()
     {
-        document.forms[0].submit();
+        document.getElementById("filterForm").submit();
     }
 </script>
 <div class="MenuWrapper">
     <div class="page-layout">
         <aside class="filters">
-            <section class="search-section">
-                <input type="text" placeholder="Search" class="search-bar">
-            </section>
-            <form action="http://localhost:5290/Guest/Menu/" method="get">
+            <form action="http://localhost:5290/Guest/Menu/" method="get" id="filterForm">
+                <section class="search-section">
+                    <input type="text" name="mealNameSearch" placeholder="Search" class="search-bar" value="@Model.MealNameSearch">
+                </section>
                 <h3>Food Type</h3>
                 <select name="foodTypeId" id="foodType" onchange="GoLink()">
-                   
                     <option value="-1">All Food Type</option>
-                    @foreach(FoodType foodType in Model.FoodTypes)
+                    @foreach (FoodType foodType in Model.FoodTypes)
                     {
-                        if(foodType.FoodTypeId == int.Parse(Model.FoodTypeId))
+                        if (foodType.FoodTypeId == int.Parse(Model.FoodTypeId))
                         {
                             <option value="@foodType.FoodTypeId" selected>@foodType.FoodTypeName</option>
                         }
-                        else{
-                            <option value="@foodType.FoodTypeId" >@foodType.FoodTypeName</option>
-                        }                      
+                        else
+                        {
+                            <option value="@foodType.FoodTypeId">@foodType.FoodTypeName</option>
+                        }
                     }
                 </select>
+                <h3>Price</h3>
+                <div class="price-sort">
+                    <label>
+                        <input type="radio" name="priceSort" value="false" onchange="GoLink()"
+                               @(Model.PriceSort == false ? "checked" : "")>Low to High
+                    </label><br>
+                    <label>
+                        <input type="radio" name="priceSort" value="true" onchange="GoLink()"
+                               @(Model.PriceSort == true ? "checked" : "")>High to Low
+                    </label>
+                </div>
             </form>
-            <h3>Price</h3>
-            <div class="price-sort">
-                <label><input type="radio" name="price" value="lowToHigh">Low to High</label><br>
-                <label><input type="radio" name="price" value="highToLow">High to Low</label>
-            </div>
         </aside>
         <!-- Menu items grid -->
         <section class="menu-items">
@@ -56,12 +62,16 @@
         </section>
     </div>
     <section class="pagination">
-        <a href="">Prev</a>
+        <a href="http://localhost:5290/Guest/Menu/?pageNumber=@(Model.PageNumber - 1)"
+           class="@(Model.PageNumber == 1 ? "disabled" : "")">Prev</a>
         @for(int i = 1; i <= Model.Pages; i++)
         {
-            <a href="http://localhost:5290/Guest/Menu/?pageNumber=@i">@i</a>
+            <a href="http://localhost:5290/Guest/Menu/?pageNumber=@i&priceSort=@Model.PriceSort"
+               class="@(Model.PageNumber == i ? "active" : "")">@i @* תנאי ? ערך_אם_אמת : ערך_אם_שקר *@
+            </a>
         }
-        <a href="">Next</a>
+        <a href="http://localhost:5290/Guest/Menu/?pageNumber=@(Model.PageNumber + 1)"
+           class="@(Model.PageNumber == Model.Pages ? "disabled" : "")">Next</a>
 
     </section>
 </div>
