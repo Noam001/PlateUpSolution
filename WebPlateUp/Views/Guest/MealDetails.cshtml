@@ -6,6 +6,19 @@
     Layout = "~/Views/Shared/MasterPage.cshtml";
 }
 <link href="~/stylesheet/mealdetails.css" rel="stylesheet" />
+<script>
+    function handleCartClick()
+    {
+        window.location.href = "http://localhost:5290/Guest/Login/";
+    }
+</script>
+@section CartIcon
+{
+    <div class="cart-container" onclick="handleCartClick()">
+        <img src="~/images/shopping-cart.png" class="cart-icon" alt="Cart" />
+        <span class="cart-badge">0</span> 
+    </div>
+}
 <div class="MealWrapper">
     <div class="meal-image">
         <img src="http://localhost:5035/DataImages/@Model.MealPhoto" alt="@Model.MealName" />

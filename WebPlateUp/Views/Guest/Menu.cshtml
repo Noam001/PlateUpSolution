@@ -11,11 +11,53 @@
     {
         document.getElementById("filterForm").submit();
     }
+    function handleCartClick() 
+    {
+        window.location.href = "http://localhost:5290/Guest/Login/";
+    }
 </script>
+@section CartIcon
+{
+    <div class="cart-container" onclick="handleCartClick()">
+        <img src="~/images/shopping-cart.png" class="cart-icon" alt="Cart" />
+        <span class="cart-badge">0</span> @* ה"עיגול" הקטן שיושב על האייקון ומראה כמה מוצרים יש בעגלה *@
+    </div>
+}
 <div class="MenuWrapper">
     <div class="page-layout">
         <aside class="filters">
-            <form action="http://localhost:5290/Guest/Menu/" method="get" id="filterForm">
+            @{
+                string link = "http://localhost:5290/Guest/Menu/";
+                string query = "";
+
+                if(Model.PriceSort != null)
+                {
+                    if (query == "")
+                        query = "?priceSort"+Model.PriceSort;
+
+                }
+
+                if (Model.PageNumber > 0)
+                {
+                    if (query == "")
+                        query += "?pageNumber" + Model.PageNumber;
+                    else
+                    {
+                        query += "&pageNumber" + Model.PageNumber;
+                    }
+                }
+                if(Model.FoodTypeId != "-1")
+                {
+                    if (query == "")
+                        query += "?foodTypeId" + Model.FoodTypeId;
+                    else
+                    {
+                        query += "&foodTypeId" + Model.FoodTypeId;
+                    }
+                }
+                link = link + query;
+            }
+            <form action="@link" method="get" id="filterForm">
                 <section class="search-section">
                     <input type="text" name="mealNameSearch" placeholder="Search" class="search-bar" value="@Model.MealNameSearch">
                 </section>
@@ -66,9 +108,15 @@
            class="@(Model.PageNumber == 1 ? "disabled" : "")">Prev</a>
         @for(int i = 1; i <= Model.Pages; i++)
         {
-            <a href="http://localhost:5290/Guest/Menu/?pageNumber=@i&priceSort=@Model.PriceSort"
+            string url = "http://localhost:5290/Guest/Menu/?pageNumber="+i;
+            if(Model.PriceSort != null)
+            {
+                url = url + "&priceSort=" + Model.PriceSort;
+            }
+            <a href="@url"
                class="@(Model.PageNumber == i ? "active" : "")">@i @* תנאי ? ערך_אם_אמת : ערך_אם_שקר *@
             </a>
+
         }
         <a href="http://localhost:5290/Guest/Menu/?pageNumber=@(Model.PageNumber + 1)&priceSort=@Model.PriceSort"
            class="@(Model.PageNumber == Model.Pages ? "disabled" : "")">Next</a>
