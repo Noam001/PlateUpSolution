@@ -31,21 +31,17 @@ namespace WebPlateUp.Controllers
             client.Port = 5035;
             client.Path = "api/Guest/GetMenu";
             if (foodTypeId != "-1")
-            {
                 client.AddParameter("foodTypeId", foodTypeId);
-            }
+
             if (pageNumber > 0)
-            {
                 client.AddParameter("pageNumber", pageNumber.ToString());
-            }
+
             if (mealNameSearch != "")
-            {
                 client.AddParameter("mealNameSearch", mealNameSearch);
-            }
+
             if (priceSort != null)
-            {
                 client.AddParameter("priceSort", priceSort.ToString());
-            }
+
             MenuViewModel menuViewModel = client.Get();
             menuViewModel.FoodTypeId = foodTypeId;
             menuViewModel.PageNumber = pageNumber;

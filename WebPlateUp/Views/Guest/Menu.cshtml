@@ -62,7 +62,7 @@
         </section>
     </div>
     <section class="pagination">
-        <a href="http://localhost:5290/Guest/Menu/?pageNumber=@(Model.PageNumber - 1)"
+        <a href="http://localhost:5290/Guest/Menu/?pageNumber=@(Model.PageNumber - 1)&priceSort=@Model.PriceSort"
            class="@(Model.PageNumber == 1 ? "disabled" : "")">Prev</a>
         @for(int i = 1; i <= Model.Pages; i++)
         {
@@ -70,7 +70,7 @@
                class="@(Model.PageNumber == i ? "active" : "")">@i @* תנאי ? ערך_אם_אמת : ערך_אם_שקר *@
             </a>
         }
-        <a href="http://localhost:5290/Guest/Menu/?pageNumber=@(Model.PageNumber + 1)"
+        <a href="http://localhost:5290/Guest/Menu/?pageNumber=@(Model.PageNumber + 1)&priceSort=@Model.PriceSort"
            class="@(Model.PageNumber == Model.Pages ? "disabled" : "")">Next</a>
 
     </section>
