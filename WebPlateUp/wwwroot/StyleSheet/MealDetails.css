@@ -39,12 +39,11 @@
     margin-left: -10px; /* מצמיד את הבועה לאייקון */
     margin-top: -20px;
 }
-.meal-image {
-    flex: 1;
-}
+
 
 .meal-image img {
-    width: 100%;
+    width: 800px;
+    height: 720px;
     border-radius: 18px;
     object-fit: cover;
 }
