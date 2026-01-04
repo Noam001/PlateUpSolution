@@ -63,21 +63,44 @@ namespace WebPlateUp.Controllers
             Meal meal = client.Get();
             return View(meal);
         }
-        [HttpPost]
-        public IActionResult SignUp()
-        {          
-            return View();
-        }
-        public IActionResult Login()
+
+        [HttpGet]
+        public IActionResult ViewRegistration()
         {
-            WebClient<Client> client = new WebClient<Client>();
+            WebClient<RegistrationViewModel> client = new WebClient<RegistrationViewModel>();
             client.Schema = "http";
             client.Host = "localhost";
             client.Port = 5035;
-            client.Path = "api/Guest/LoginGetId";
-            Client client1 = client.Get();
-            return View(client1);
+            client.Path = "api/Guest/GetRegistrationViewModel";
+            RegistrationViewModel signUpVM = client.Get();
+            return View(signUpVM);
         }
+        [HttpPost]
+        public IActionResult Registration(Client client)
+        {
+            if (!ModelState.IsValid)
+            {
+                WebClient<RegistrationViewModel> webClient = new WebClient<RegistrationViewModel>();
+                webClient.Schema = "http";
+                webClient.Host = "localhost";
+                webClient.Port = 5035;
+                webClient.Path = "api/Guest/GetRegistrationViewModel";
+                RegistrationViewModel signUpVM = webClient.Get();
+                signUpVM.Client = client;
+                return View("ViewRegistration", signUpVM);
+            } 
+            return View();
+        }
+        //public IActionResult Login()
+        //{
+        //    WebClient<Client> client = new WebClient<Client>();
+        //    client.Schema = "http";
+        //    client.Host = "localhost";
+        //    client.Port = 5035;
+        //    client.Path = "api/Guest/LoginGetId";
+        //    Client client1 = client.Get();
+        //    return View(client1);
+        //}
 
     }
 }

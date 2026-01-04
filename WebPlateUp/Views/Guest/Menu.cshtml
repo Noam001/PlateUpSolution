@@ -26,38 +26,8 @@
 <div class="MenuWrapper">
     <div class="page-layout">
         <aside class="filters">
-            @{
-                string link = "http://localhost:5290/Guest/Menu/";
-                string query = "";
-
-                if(Model.PriceSort != null)
-                {
-                    if (query == "")
-                        query = "?priceSort"+Model.PriceSort;
-
-                }
-
-                if (Model.PageNumber > 0)
-                {
-                    if (query == "")
-                        query += "?pageNumber" + Model.PageNumber;
-                    else
-                    {
-                        query += "&pageNumber" + Model.PageNumber;
-                    }
-                }
-                if(Model.FoodTypeId != "-1")
-                {
-                    if (query == "")
-                        query += "?foodTypeId" + Model.FoodTypeId;
-                    else
-                    {
-                        query += "&foodTypeId" + Model.FoodTypeId;
-                    }
-                }
-                link = link + query;
-            }
-            <form action="@link" method="get" id="filterForm">
+        
+            <form action="http://localhost:5290/Guest/Menu/" method="get" id="filterForm">
                 <section class="search-section">
                     <input type="text" name="mealNameSearch" placeholder="Search" class="search-bar" value="@Model.MealNameSearch">
                 </section>
@@ -86,6 +56,8 @@
                         <input type="radio" name="priceSort" value="true" onchange="GoLink()"
                                @(Model.PriceSort == true ? "checked" : "")>High to Low
                     </label>
+                    <input type="text" name="priceSort" value="@Model.PriceSort.ToString()" />
+                    
                 </div>
             </form>
         </aside>

@@ -12,7 +12,7 @@ namespace Models
         public override bool IsValid(object? value)
         {
             string str = value as string;
-            if (!Char.IsUpper(str[0]))
+            if (value==null &&!Char.IsUpper(str[0]))
             {
                 // If the first character is not uppercase, the validation fails.
                 return false;

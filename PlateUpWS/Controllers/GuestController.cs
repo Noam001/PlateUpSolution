@@ -138,7 +138,27 @@ namespace PlateUpWS
                 this.repositoryFactory.DisconnectDb();
             }
         }
-
+        [HttpGet]
+        public RegistrationViewModel GetRegistrationViewModel()
+        {
+            RegistrationViewModel viewModel = new RegistrationViewModel();
+            try
+            {
+                this.repositoryFactory.ConnectDb();
+                viewModel.Cities = this.repositoryFactory.CityRepository.GetAll();
+                viewModel.Client = null;
+                return viewModel;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+            finally
+            {
+                this.repositoryFactory.DisconnectDb();
+            }
+        }
 
     }
 }

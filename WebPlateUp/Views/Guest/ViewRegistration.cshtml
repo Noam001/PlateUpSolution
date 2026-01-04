@@ -1,0 +1,95 @@
+﻿@using Models;
+@model RegistrationViewModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="~/stylesheet/signup.css" rel="stylesheet" />
+    <title></title>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <a href="HomePage.html">
+                <img src="~/images/logo.png" alt="Restaurant Logo">
+            </a>
+        </div>
+        <nav class="nav">
+            <ul class="navigation">
+                <li class="item"><a href="HomePage.html">H O M E</a></li>
+                <li class="item"><a href="Menu.html">M E N U</a></li>
+                <li class="item"><a href="TableReservation.html">T A B L E &#160 R E S E R V A T I O N</a></li>
+                <li class="item"><a href="Login.html">L O G I N</a></li>
+                <li class="item"><a href="Signup.html">S I G N U P</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="page-container">
+        <form aspcontroller="Guest" asp-action="Registration" class="Signup" method="post" >
+            <h1 class="Title">Sign Up</h1>
+            <ul class="fields">
+                <li class="field">
+                    <input asp-for="Client.ClientId" id="id" type="text" placeholder="ID" />
+                    <img class="icon" src="../Photos/Id.png" />
+                    <span asp-validation-for="Client.ClientId" class="errorData" id="ClientError"></span>
+                </li>
+                <li class="double-field">
+                    <div class="field">
+                        <input asp-for="Client.ClientName" id="firstname" type="text" placeholder="First Name" />
+                        <img class="icon" src="../Photos/profile.png" />
+                        <span asp-validation-for="Client.ClientName" class="errorData" id="ClientError"></span>
+                    </div>
+
+                    <div class="field">
+                        <input asp-for="Client.ClientLastName" id="lastname" type="text" placeholder="Last Name" />
+                        <img class="icon" src="../Photos/profile.png" />
+                        <span asp-validation-for="Client.ClientLastName" class="errorData" id="ClientError"></span>
+                    </div>
+                </li>
+                <li class="field">
+                    <input asp-for="Client.ClientPhoneNumber" id="phonenumber" type="text" placeholder="Phone Number" />
+                    <img class="icon" src="../Photos/Phone.png" />
+                    <span asp-validation-for="Client.ClientPhoneNumber" class="errorData" id="ClientError"></span>
+                </li>
+                <li class="field">
+                    <select asp-for="Client.CityId" id="city" required>
+                        <option value="0">Select City</option>
+                        @foreach (City city in Model.Cities)
+                        {
+                            <option value="@city.CityId">@city.CityName</option>
+                        }
+                    </select>
+                    <span asp-validation-for="Client.CityId" class="errorData" id="ClientError"></span>
+                </li>
+                <li class="field">
+                    <input asp-for="Client.ClientAddress" id="Address" type="text" placeholder="Address" />
+                    <img class="icon" src="../Photos/Address.png" />
+                    <span asp-validation-for="Client.ClientAddress" class="errorData" id="ClientError"></span>
+                </li>
+                <li class="field">
+                    <input asp-for="Client.ClientEmail" id="email" type="text" placeholder="Email" />
+                    <img class="icon" src="../Photos/Email.png" />
+                    <span asp-validation-for="Client.ClientEmail" class="errorData" id="ClientError"></span>
+                </li>
+                <li class="field">
+                    <input asp-for="Client.Password" id="password" type="password" placeholder="Password" />
+                    <img class="icon" src="../Photos/lock.png" />
+                    <span asp-validation-for="Client.Password" class="errorData" id="ClientError"></span>
+                </li>
+            </ul>
+            <button class="buttonReset" type="reset">Reset</button>
+            <button class="buttonSignUp" type="submit">Sign Up</button>
+            <div class="Login-link">
+                <p>Already have an account? <a href=" Login.html">Login</a></p>
+            </div>
+        </form>
+    </div>
+    <footer class="footer">
+        <p class="rights">All Rights Reserved</p>
+    </footer>
+</body>
+</html>
+
