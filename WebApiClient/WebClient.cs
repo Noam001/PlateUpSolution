@@ -51,13 +51,15 @@ namespace WebApiClient
         }
         public void AddParameter(string key, string value)
         {
-            if(this.uriBuilder.Query != string.Empty)
+
+            if(this.uriBuilder.Query == string.Empty)
             {
-                this.uriBuilder.Query = value;
+                this.uriBuilder.Query +="?"+ key + "=" + value;
             }
+        
             else
             {
-                this.uriBuilder.Query += key + "=" + value;
+                this.uriBuilder.Query += "&" + key + "=" + value;
             }
         }
         public T Get()

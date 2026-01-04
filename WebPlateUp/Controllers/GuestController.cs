@@ -22,7 +22,7 @@ namespace WebPlateUp.Controllers
             return View(reviews);
         }
         [HttpGet]
-        public IActionResult Menu(string foodTypeId = "-1", int pageNumber = 0,  string mealNameSearch = "", bool? priceSort = null, int pages = 0)
+        public IActionResult Menu(string foodTypeId = "-1", int pageNumber = 1,  string mealNameSearch = "", bool? priceSort = null, int pages = 0)
         {
             //1 get data from Web Server
             WebClient<MenuViewModel> client = new WebClient<MenuViewModel>();
@@ -47,7 +47,7 @@ namespace WebPlateUp.Controllers
             menuViewModel.PageNumber = pageNumber;
             menuViewModel.MealNameSearch = mealNameSearch;
             menuViewModel.PriceSort = priceSort;
-            menuViewModel.Pages = menuViewModel.TotalMeals / 8;
+          
 
             return View(menuViewModel);
         }

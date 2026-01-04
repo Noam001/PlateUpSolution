@@ -7,8 +7,9 @@
 }
 <link href="~/stylesheet/menu.css" rel="stylesheet" />
 <script>
-    function GoLink()
+    function GoLink(sort)
     {
+        document.getElementById("sort").value = sort;
         document.getElementById("filterForm").submit();
     }
     function handleCartClick() 
@@ -49,15 +50,15 @@
                 <h3>Price</h3>
                 <div class="price-sort">
                     <label>
-                        <input type="radio" name="priceSort" value="false" onchange="GoLink()"
+                        <input type="radio"  name="aaa" value="false" onchange="GoLink(false)"
                                @(Model.PriceSort == false ? "checked" : "")>Low to High
                     </label><br>
                     <label>
-                        <input type="radio" name="priceSort" value="true" onchange="GoLink()"
+                        <input type="radio" value="true" name="aaa" onchange="GoLink(true)"
                                @(Model.PriceSort == true ? "checked" : "")>High to Low
                     </label>
-                    <input type="text" name="priceSort" value="@Model.PriceSort.ToString()" />
-                    
+                    <input type="text" name="priceSort" id="sort" value="@Model.PriceSort.ToString()" />
+                    <input type="pageNumber" name="pageNumber"  value="@Model.PageNumber"
                 </div>
             </form>
         </aside>
@@ -76,8 +77,11 @@
         </section>
     </div>
     <section class="pagination">
-        <a href="http://localhost:5290/Guest/Menu/?pageNumber=@(Model.PageNumber - 1)&priceSort=@Model.PriceSort"
-           class="@(Model.PageNumber == 1 ? "disabled" : "")">Prev</a>
+       
+        @if (Model.Pages >1)
+        {
+            <a href="http://localhost:5290/Guest/Menu/?pageNumber=@(Model.PageNumber - 1)&priceSort=@Model.PriceSort"
+               class="@(Model.PageNumber == 1 ? "disabled" : "")">Prev</a>
         @for(int i = 1; i <= Model.Pages; i++)
         {
             string url = "http://localhost:5290/Guest/Menu/?pageNumber="+i;
@@ -92,6 +96,8 @@
         }
         <a href="http://localhost:5290/Guest/Menu/?pageNumber=@(Model.PageNumber + 1)&priceSort=@Model.PriceSort"
            class="@(Model.PageNumber == Model.Pages ? "disabled" : "")">Next</a>
+        }
+       
 
     </section>
 </div>

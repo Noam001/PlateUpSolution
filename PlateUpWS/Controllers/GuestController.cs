@@ -38,54 +38,72 @@ namespace PlateUpWS
         {
             MenuViewModel menuViewModel = new MenuViewModel();
             int mealperPage = 8;
+
             menuViewModel.FoodTypeId = foodTypeId;
             menuViewModel.PageNumber = pageNumber;
             menuViewModel.MealNameSearch = mealNameSearch;
-            menuViewModel.Pages = pages;
             menuViewModel.PriceSort = priceSort;
             try//נסה לעשות את פקודות אלו
             {
                 this.repositoryFactory.ConnectDb();
-                List<Meal> allMeals = repositoryFactory.MealRepository.GetAll();
-                menuViewModel.TotalMeals = allMeals.Count;
+
+                int allpages = this.repositoryFactory.MealRepository.GetAll().Count;
                 // מקרה 1: לא נבחר שום סינון
                 if (foodTypeId == "-1" && pageNumber == 0 && mealNameSearch == "" && priceSort == null)
+                { 
                     menuViewModel.Meals = repositoryFactory.MealRepository.GetAll();
+                    menuViewModel.Pages = allpages / mealperPage;
+                }
 
                 // --- מקרה 2: רק עמוד נבחר ---
                 else if (foodTypeId == "-1" && pageNumber > 0 && mealNameSearch == "" && priceSort == null)
                 {
                     menuViewModel.Meals = repositoryFactory.MealRepository.FilterByPage(pageNumber, mealperPage);
+                    menuViewModel.Pages = allpages / mealperPage;
+                   
                 }
 
                 // ---  מקרה 3: נבחר גם סוג אוכל וסינון לפי מחיר ---
                 else if (foodTypeId != "-1" && pageNumber == 0 && mealNameSearch == "" && priceSort != null)
                 {
                     menuViewModel.Meals = repositoryFactory.MealRepository.SortByPriceFoodType(foodTypeId, priceSort);
+                    menuViewModel.Pages = allpages / mealperPage; ;
                 }
 
                 // --- מקרה 4: רק סוג אוכל נבחר ---
-                else if (foodTypeId != "-1" && pageNumber == 0 && mealNameSearch == "" && priceSort == null)
+                else if (foodTypeId != "-1" && pageNumber > 0 && mealNameSearch == "" && priceSort == null)
                 {
                     menuViewModel.Meals = repositoryFactory.MealRepository.GetMealsByFoodType(foodTypeId);
+                    if (menuViewModel.Meals.Count <= mealperPage)
+                        menuViewModel.Pages = 1;
+                    else
+                    {
+                    menuViewModel.Pages = menuViewModel.Meals.Count / mealperPage;
+                    if (menuViewModel.Meals.Count % mealperPage > 0)
+                        menuViewModel.Pages++; 
+                    }
+
                 }
 
                 // --- מקרה 5: חיפוש לפי שם מנה ---
                 else if (mealNameSearch != "")
                 {
                     Meal meal = repositoryFactory.MealRepository.GetMealByName(mealNameSearch);
-                    menuViewModel.Meals = new List<Meal>() { meal };                
+                    menuViewModel.Meals = new List<Meal>() { meal };
+                    menuViewModel.Pages = 1;
                 }
 
                 // ---  מקרה 7: מיון לפי מחיר ועמוד נבחר ---
                 else if (foodTypeId == "-1" && pageNumber > 0 && mealNameSearch == "" && priceSort != null)
                 {
                     menuViewModel.Meals = repositoryFactory.MealRepository.SortByPriceFilterByPage(pageNumber, mealperPage, priceSort);
+                    menuViewModel.Pages = allpages / mealperPage; 
                 }
                 // ---  מקרה 6: מיון לפי מחיר ---
-                else if (priceSort != null) 
+                else if (foodTypeId == "-1" && pageNumber == 0 && mealNameSearch == "" && priceSort != null) 
                 {
                     menuViewModel.Meals = repositoryFactory.MealRepository.SortByPrice(priceSort);
+                    menuViewModel.Pages = allpages / mealperPage; 
                 }
                 menuViewModel.FoodTypes = repositoryFactory.FoodTypeRepository.GetAll();
                 return menuViewModel;
@@ -100,6 +118,8 @@ namespace PlateUpWS
                 this.repositoryFactory.DisconnectDb();
             }
         }
+
+    
 
         [HttpGet]
         public Meal GetMealDetails(int mealId)

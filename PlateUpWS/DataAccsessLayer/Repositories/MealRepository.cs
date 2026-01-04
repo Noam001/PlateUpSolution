@@ -54,12 +54,13 @@ namespace PlateUpWS
         {
             string sql = $@"SELECT FoodTypesMeals.FoodTypeId, Meals.MealId, Meals.MealName, Meals.MealPhoto, Meals.MealPrice, MealDescription, MealStatus
                           FROM Meals INNER JOIN FoodTypesMeals ON Meals.MealId = FoodTypesMeals.MealId
-                           WHERE FoodTypesMeals.FoodTypeId = @FoodTypeId";
+                          WHERE FoodTypesMeals.FoodTypeId = @FoodTypeId";
             this.dbContext.AddParameter("@FoodTypeId", foodTypeId);
             return GetMeals(sql);
         }
         public List<Meal> FilterByPage(int pageNumber, int mealsPerPage)
         {
+
             List<Meal> allMeals = GetAll(); // מביא את כל המנות
             int skip = (pageNumber - 1) * mealsPerPage; //כמות המנות של העמודים הקודמים שצריך לדלג
             return allMeals.Skip(skip).Take(mealsPerPage).ToList();
