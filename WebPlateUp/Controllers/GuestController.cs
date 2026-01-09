@@ -91,16 +91,6 @@ namespace WebPlateUp.Controllers
             } 
             return View();
         }
-        //public IActionResult Login()
-        //{
-        //    WebClient<Client> client = new WebClient<Client>();
-        //    client.Schema = "http";
-        //    client.Host = "localhost";
-        //    client.Port = 5035;
-        //    client.Path = "api/Guest/LoginGetId";
-        //    Client client1 = client.Get();
-        //    return View(client1);
-        //}
 
     }
 }

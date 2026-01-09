@@ -32,26 +32,34 @@
             <h1 class="Title">Sign Up</h1>
             <ul class="fields">
                 <li class="field">
-                    <input asp-for="Client.ClientId" id="id" type="text" placeholder="ID" />
-                    <img class="icon" src="../Photos/Id.png" />
+                    <div class="input-wrapper">
+                        <input asp-for="Client.ClientId" id="id" type="text" placeholder="ID" />
+                        <img class="icon" src="~/images/id.png" />
+                    </div>
                     <span asp-validation-for="Client.ClientId" class="errorData" id="ClientError"></span>
                 </li>
                 <li class="double-field">
                     <div class="field">
-                        <input asp-for="Client.ClientName" id="firstname" type="text" placeholder="First Name" />
-                        <img class="icon" src="../Photos/profile.png" />
+                        <div class="input-wrapper">
+                            <input asp-for="Client.ClientName" id="firstname" type="text" placeholder="First Name" />
+                            <img class="icon" src="~/images/profile.png" />
+                        </div>
                         <span asp-validation-for="Client.ClientName" class="errorData" id="ClientError"></span>
                     </div>
 
                     <div class="field">
-                        <input asp-for="Client.ClientLastName" id="lastname" type="text" placeholder="Last Name" />
-                        <img class="icon" src="../Photos/profile.png" />
+                        <div class="input-wrapper">
+                            <input asp-for="Client.ClientLastName" id="lastname" type="text" placeholder="Last Name" />
+                            <img class="icon" src="~/images/profile.png" />
+                        </div>            
                         <span asp-validation-for="Client.ClientLastName" class="errorData" id="ClientError"></span>
                     </div>
                 </li>
                 <li class="field">
-                    <input asp-for="Client.ClientPhoneNumber" id="phonenumber" type="text" placeholder="Phone Number" />
-                    <img class="icon" src="../Photos/Phone.png" />
+                    <div class="input-wrapper">
+                        <input asp-for="Client.ClientPhoneNumber" id="phonenumber" type="text" placeholder="Phone Number" />
+                        <img class="icon" src="~/images/phone.png" />
+                    </div>
                     <span asp-validation-for="Client.ClientPhoneNumber" class="errorData" id="ClientError"></span>
                 </li>
                 <li class="field">
@@ -65,18 +73,24 @@
                     <span asp-validation-for="Client.CityId" class="errorData" id="ClientError"></span>
                 </li>
                 <li class="field">
-                    <input asp-for="Client.ClientAddress" id="Address" type="text" placeholder="Address" />
-                    <img class="icon" src="../Photos/Address.png" />
+                    <div class="input-wrapper">
+                        <input asp-for="Client.ClientAddress" id="Address" type="text" placeholder="Address" />
+                        <img class="icon" src="~/images/address.png" />
+                    </div>
                     <span asp-validation-for="Client.ClientAddress" class="errorData" id="ClientError"></span>
                 </li>
                 <li class="field">
-                    <input asp-for="Client.ClientEmail" id="email" type="text" placeholder="Email" />
-                    <img class="icon" src="../Photos/Email.png" />
+                    <div class="input-wrapper">
+                        <input asp-for="Client.ClientEmail" id="email" type="text" placeholder="Email" />
+                        <img class="icon" src="~/images/email.png" />
+                    </div>
                     <span asp-validation-for="Client.ClientEmail" class="errorData" id="ClientError"></span>
                 </li>
                 <li class="field">
-                    <input asp-for="Client.Password" id="password" type="password" placeholder="Password" />
-                    <img class="icon" src="../Photos/lock.png" />
+                    <div class="input-wrapper">
+                        <input asp-for="Client.Password" id="password" type="password" placeholder="Password" />
+                        <img class="icon" src="~/images/lock.png" />
+                    </div>
                     <span asp-validation-for="Client.Password" class="errorData" id="ClientError"></span>
                 </li>
             </ul>

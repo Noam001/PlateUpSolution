@@ -20,7 +20,7 @@ body {
 .Signup {
     width: 600px;
     padding: 60px 30px;
-    margin-top: 70px;
+    margin-top: 20px;
     background: rgba(255, 255, 255, 0.25);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
     border-radius: 18px;
@@ -65,11 +65,13 @@ body {
     font-family: Arial;
     font-weight: 700;
 }
-.field {
-    display: flex;
+.input-wrapper {
     position: relative;
+    display: flex;
+}
+.field {
     width: 400px;
-    margin: 24px auto;
+    margin: 8px auto;
 }
 .field input {
     width: 100%;
@@ -127,7 +129,7 @@ select:focus {
 .double-field {
     display: flex;
     width: 400px;
-    margin: 24px auto;
+    margin: 8px auto;
     gap: 7px;
 }
 .double-field .field {
@@ -164,12 +166,19 @@ button:hover {
     font-family: "Roboto Slab", "Times New Roman", serif;
     font-weight: 500;
 }
-
+.errorData {
+    display: block;
+    margin-top: 6px;
+    font-size: 13px;
+    color: #d9534f;
+    min-height: 18px;
+}
 .Login-link a {
     text-decoration: none;
     color: #595149;
     font-weight: bold;
 }
+
 .footer {
     text-align: center;
     font-family: 'Open Sans', sans-serif;

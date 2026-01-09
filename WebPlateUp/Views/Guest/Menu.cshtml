@@ -20,6 +20,16 @@
 
         document.getElementById("filterForm").submit();
     }
+    function resetFilters() 
+    {
+        document.getElementById("foodType").value = "-1";
+        document.getElementById("sort").value = "";
+        document.getElementById("pageNum").value = 1;
+        // ביטול סימון רדיו
+        document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+
+        document.getElementById("filterForm").submit();
+    }
     function handleCartClick() 
     {
         window.location.href = "http://localhost:5290/Guest/Login/";
@@ -67,6 +77,7 @@
                     <input type="hidden" name="priceSort" id="sort" value="@Model.PriceSort.ToString()" />
                     <input type="hidden" name="pageNumber" id="pageNum" value="@Model.PageNumber" />
                 </div>
+                <button type="button" class="clearbtn" onclick="resetFilters()">Clear Filters</button>
             </form>
         </aside>
         <!-- Menu items grid -->

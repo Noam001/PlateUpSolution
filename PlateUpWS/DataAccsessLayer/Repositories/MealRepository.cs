@@ -86,8 +86,9 @@ namespace PlateUpWS
         {
             string sql = $@"SELECT Meals.MealId, Meals.MealName, Meals.MealPhoto, Meals.MealDescription, Meals.MealPrice, Meals.MealStatus, FoodTypesMeals.FoodTypeId
                            FROM Meals INNER JOIN FoodTypesMeals ON Meals.MealId = FoodTypesMeals.MealId
-                           WHERE (((FoodTypesMeals.FoodTypeId)=1))
+                           WHERE (((FoodTypesMeals.FoodTypeId)=@foodTypeId))
                            ORDER BY Meals.MealPrice";
+            this.dbContext.AddParameter("@foodTypeId", foodTypeId);
             if (option == true)
                 sql = sql + " DESC"; // מהמחיר הגבוה לנמוך
             return GetMeals(sql);

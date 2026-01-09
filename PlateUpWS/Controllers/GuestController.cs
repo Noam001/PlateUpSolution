@@ -47,27 +47,35 @@ namespace PlateUpWS
             {
                 this.repositoryFactory.ConnectDb();
 
-                int allpages = this.repositoryFactory.MealRepository.GetAll().Count;
+                int mealsCount = this.repositoryFactory.MealRepository.GetAll().Count;
                 // מקרה 1: לא נבחר שום סינון
                 if (foodTypeId == "-1" && pageNumber == 0 && mealNameSearch == "" && priceSort == null)
                 { 
                     menuViewModel.Meals = repositoryFactory.MealRepository.GetAll();
-                    menuViewModel.Pages = allpages / mealperPage;
+                    menuViewModel.Pages = mealsCount / mealperPage;
                 }
 
                 // --- מקרה 2: רק עמוד נבחר ---
                 else if (foodTypeId == "-1" && pageNumber > 0 && mealNameSearch == "" && priceSort == null)
                 {
                     menuViewModel.Meals = repositoryFactory.MealRepository.FilterByPage(repositoryFactory.MealRepository.GetAll(),pageNumber, mealperPage);
-                    menuViewModel.Pages = allpages / mealperPage;
+                    menuViewModel.Pages = mealsCount / mealperPage;
                    
                 }
 
                 // ---  מקרה 3: נבחר גם סוג אוכל וסינון לפי מחיר ---
-                else if (foodTypeId != "-1" && pageNumber == 1 && mealNameSearch == "" && priceSort != null)
+                else if (foodTypeId != "-1" && mealNameSearch == "" && priceSort != null)
                 {
-                    menuViewModel.Meals = repositoryFactory.MealRepository.SortByPriceFoodType(foodTypeId, priceSort);
-                    menuViewModel.Pages = allpages / mealperPage;
+                    List<Meal> meals = repositoryFactory.MealRepository.SortByPriceFoodType(foodTypeId, priceSort);
+                    if (meals.Count <= mealperPage)
+                        menuViewModel.Pages = 1;
+                    else
+                    {
+                        menuViewModel.Pages = meals.Count / mealperPage;
+                        if (meals.Count % mealperPage > 0)
+                            menuViewModel.Pages++;
+                    }
+                    menuViewModel.Meals = repositoryFactory.MealRepository.FilterByPage(meals, pageNumber, mealperPage);
                 }
 
                 // --- מקרה 4: סוג אוכל + עמוד ---
@@ -97,13 +105,13 @@ namespace PlateUpWS
                 else if (foodTypeId == "-1" && pageNumber > 0 && mealNameSearch == "" && priceSort != null)
                 {
                     menuViewModel.Meals = repositoryFactory.MealRepository.SortByPriceFilterByPage(pageNumber, mealperPage, priceSort);
-                    menuViewModel.Pages = allpages / mealperPage; 
+                    menuViewModel.Pages = mealsCount / mealperPage; 
                 }
                 // ---  מקרה 6: מיון לפי מחיר ---
                 else if (foodTypeId == "-1" && pageNumber == 0 && mealNameSearch == "" && priceSort != null) 
                 {
                     menuViewModel.Meals = repositoryFactory.MealRepository.SortByPrice(priceSort);
-                    menuViewModel.Pages = allpages / mealperPage; 
+                    menuViewModel.Pages = mealsCount / mealperPage; 
                 }
                 menuViewModel.FoodTypes = repositoryFactory.FoodTypeRepository.GetAll();
                 return menuViewModel;
