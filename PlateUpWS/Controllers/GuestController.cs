@@ -34,7 +34,7 @@ namespace PlateUpWS
         }
 
         [HttpGet]
-        public MenuViewModel GetMenu(string foodTypeId = "-1", int pageNumber = 0, string mealNameSearch = "", bool? priceSort =null, int pages = 0)
+        public MenuViewModel GetMenu(string foodTypeId = "-1", int pageNumber = 1, string mealNameSearch = "", bool? priceSort =null, int pages = 0)
         {
             MenuViewModel menuViewModel = new MenuViewModel();
             int mealperPage = 8;
@@ -58,31 +58,31 @@ namespace PlateUpWS
                 // --- מקרה 2: רק עמוד נבחר ---
                 else if (foodTypeId == "-1" && pageNumber > 0 && mealNameSearch == "" && priceSort == null)
                 {
-                    menuViewModel.Meals = repositoryFactory.MealRepository.FilterByPage(pageNumber, mealperPage);
+                    menuViewModel.Meals = repositoryFactory.MealRepository.FilterByPage(repositoryFactory.MealRepository.GetAll(),pageNumber, mealperPage);
                     menuViewModel.Pages = allpages / mealperPage;
                    
                 }
 
                 // ---  מקרה 3: נבחר גם סוג אוכל וסינון לפי מחיר ---
-                else if (foodTypeId != "-1" && pageNumber == 0 && mealNameSearch == "" && priceSort != null)
+                else if (foodTypeId != "-1" && pageNumber == 1 && mealNameSearch == "" && priceSort != null)
                 {
                     menuViewModel.Meals = repositoryFactory.MealRepository.SortByPriceFoodType(foodTypeId, priceSort);
-                    menuViewModel.Pages = allpages / mealperPage; ;
+                    menuViewModel.Pages = allpages / mealperPage;
                 }
 
-                // --- מקרה 4: רק סוג אוכל נבחר ---
+                // --- מקרה 4: סוג אוכל + עמוד ---
                 else if (foodTypeId != "-1" && pageNumber > 0 && mealNameSearch == "" && priceSort == null)
                 {
-                    menuViewModel.Meals = repositoryFactory.MealRepository.GetMealsByFoodType(foodTypeId);
-                    if (menuViewModel.Meals.Count <= mealperPage)
+                    List<Meal> meals = repositoryFactory.MealRepository.GetMealsByFoodType(foodTypeId);               
+                    if (meals.Count <= mealperPage)
                         menuViewModel.Pages = 1;
                     else
                     {
-                    menuViewModel.Pages = menuViewModel.Meals.Count / mealperPage;
-                    if (menuViewModel.Meals.Count % mealperPage > 0)
-                        menuViewModel.Pages++; 
+                        menuViewModel.Pages = meals.Count / mealperPage;
+                        if (meals.Count % mealperPage > 0)
+                            menuViewModel.Pages++;
                     }
-
+                    menuViewModel.Meals = repositoryFactory.MealRepository.FilterByPage(meals, pageNumber, mealperPage);
                 }
 
                 // --- מקרה 5: חיפוש לפי שם מנה ---

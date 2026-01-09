@@ -58,12 +58,11 @@ namespace PlateUpWS
             this.dbContext.AddParameter("@FoodTypeId", foodTypeId);
             return GetMeals(sql);
         }
-        public List<Meal> FilterByPage(int pageNumber, int mealsPerPage)
+        public List<Meal> FilterByPage(List<Meal> meals, int pageNumber, int mealsPerPage)
         {
 
-            List<Meal> allMeals = GetAll(); // מביא את כל המנות
             int skip = (pageNumber - 1) * mealsPerPage; //כמות המנות של העמודים הקודמים שצריך לדלג
-            return allMeals.Skip(skip).Take(mealsPerPage).ToList();
+            return meals.Skip(skip).Take(mealsPerPage).ToList();
         }
         public Meal GetMealByName(string mealName)
         {
@@ -95,7 +94,7 @@ namespace PlateUpWS
         }
         public List<Meal> SortByPriceFilterByPage(int pageNumber, int mealsPerPage, bool? option)
         {
-            List<Meal> meals = FilterByPage(pageNumber, mealsPerPage);
+            List<Meal> meals = FilterByPage(GetAll(),pageNumber, mealsPerPage);
             meals.Sort((meal1, meal2) => meal1.MealPrice.CompareTo(meal2.MealPrice));
             if (option == true)
                 meals.Reverse();

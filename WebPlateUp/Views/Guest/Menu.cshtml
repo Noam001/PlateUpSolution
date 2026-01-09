@@ -9,7 +9,15 @@
 <script>
     function GoLink(sort)
     {
-        document.getElementById("sort").value = sort;
+        if (sort !== undefined) //אם נלחץ מיון מחיר
+        {
+            document.getElementById("sort").value = sort;
+        }
+        else {
+            //אם שונה סוג האוכל- כברירת מחדל העמוד יהיה 1
+            document.getElementById("pageNum").value = 1;
+        }
+
         document.getElementById("filterForm").submit();
     }
     function handleCartClick() 
@@ -26,8 +34,7 @@
 }
 <div class="MenuWrapper">
     <div class="page-layout">
-        <aside class="filters">
-        
+        <aside class="filters">       
             <form action="http://localhost:5290/Guest/Menu/" method="get" id="filterForm">
                 <section class="search-section">
                     <input type="text" name="mealNameSearch" placeholder="Search" class="search-bar" value="@Model.MealNameSearch">
@@ -50,15 +57,15 @@
                 <h3>Price</h3>
                 <div class="price-sort">
                     <label>
-                        <input type="radio"  name="aaa" value="false" onchange="GoLink(false)"
+                        <input type="radio" name="temp" value="false" onchange="GoLink(false)"
                                @(Model.PriceSort == false ? "checked" : "")>Low to High
                     </label><br>
                     <label>
-                        <input type="radio" value="true" name="aaa" onchange="GoLink(true)"
+                        <input type="radio" name="temp" value="true" onchange="GoLink(true)"
                                @(Model.PriceSort == true ? "checked" : "")>High to Low
                     </label>
-                    <input type="text" name="priceSort" id="sort" value="@Model.PriceSort.ToString()" />
-                    <input type="pageNumber" name="pageNumber"  value="@Model.PageNumber"
+                    <input type="hidden" name="priceSort" id="sort" value="@Model.PriceSort.ToString()" />
+                    <input type="hidden" name="pageNumber" id="pageNum" value="@Model.PageNumber" />
                 </div>
             </form>
         </aside>
@@ -80,25 +87,28 @@
        
         @if (Model.Pages >1)
         {
-            <a href="http://localhost:5290/Guest/Menu/?pageNumber=@(Model.PageNumber - 1)&priceSort=@Model.PriceSort"
+            <a href="http://localhost:5290/Guest/Menu/?pageNumber=@(Model.PageNumber - 1)&priceSort=@Model.PriceSort&foodTypeId=@Model.FoodTypeId"
                class="@(Model.PageNumber == 1 ? "disabled" : "")">Prev</a>
-        @for(int i = 1; i <= Model.Pages; i++)
-        {
-            string url = "http://localhost:5290/Guest/Menu/?pageNumber="+i;
-            if(Model.PriceSort != null)
+            @for (int i = 1; i <= Model.Pages; i++)
             {
-                url = url + "&priceSort=" + Model.PriceSort;
+                string url = "http://localhost:5290/Guest/Menu/?pageNumber=" + i;
+                if (Model.PriceSort != null)
+                {
+                    url = url + "&priceSort=" + Model.PriceSort;
+                }
+                if (Model.FoodTypeId != "-1")
+                {
+                    url += "&foodTypeId=" + Model.FoodTypeId;
+                }
+                <a href="@url"
+                   class="@(Model.PageNumber == i ? "active" : "")">
+                    @i @* תנאי ? ערך_אם_אמת : ערך_אם_שקר *@
+                </a>
+
             }
-            <a href="@url"
-               class="@(Model.PageNumber == i ? "active" : "")">@i @* תנאי ? ערך_אם_אמת : ערך_אם_שקר *@
-            </a>
-
+            <a href="http://localhost:5290/Guest/Menu/?pageNumber=@(Model.PageNumber + 1)&priceSort=@Model.PriceSort&foodTypeId=@Model.FoodTypeId"
+               class="@(Model.PageNumber == Model.Pages ? "disabled" : "")">Next</a>
         }
-        <a href="http://localhost:5290/Guest/Menu/?pageNumber=@(Model.PageNumber + 1)&priceSort=@Model.PriceSort"
-           class="@(Model.PageNumber == Model.Pages ? "disabled" : "")">Next</a>
-        }
-       
-
     </section>
 </div>
 
