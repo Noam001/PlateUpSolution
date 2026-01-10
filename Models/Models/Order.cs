@@ -27,6 +27,7 @@ namespace Models
             set { this.clientId = value; }
         }
         [Required(ErrorMessage = "Order date is required")]
+        //[DataType(DataType.Date)]
         [RegularExpression(@"^\d{2}/\d{2}/\d{4}$", ErrorMessage = "Date must be in the format DD/MM/YYYY")]
         public string OrderDate
         {
