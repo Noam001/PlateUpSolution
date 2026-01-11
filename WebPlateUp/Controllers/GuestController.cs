@@ -88,7 +88,15 @@ namespace WebPlateUp.Controllers
                 RegistrationViewModel signUpVM = webClient.Get();
                 signUpVM.Client = client;
                 return View("ViewRegistration", signUpVM);
-            } 
+            }
+            WebClient<Client> webClient2 = new WebClient<Client>();
+            webClient2.Schema = "http";
+            webClient2.Host = "localhost";
+            webClient2.Port = 5035;
+            webClient2.Path = "api/Guest/Registration";
+            bool ok = webClient2.Post(client);
+            if (ok)
+                return View();
             return View();
         }
 
