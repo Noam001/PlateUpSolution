@@ -123,7 +123,7 @@ namespace WebApiClient
             }
         }
 
-        public bool Post(T data, FileStream file)
+        public bool Post(T data, Stream file)
         {
             using (HttpRequestMessage requestMessage = new HttpRequestMessage())
             {
@@ -143,7 +143,7 @@ namespace WebApiClient
             }
         }
 
-        public bool Post(T data, List<FileStream> files)
+        public bool Post(T data, List<Stream> files)
         {
             using (HttpRequestMessage requestMessage = new HttpRequestMessage())
             {
@@ -181,7 +181,7 @@ namespace WebApiClient
             }
         }
 
-        public async Task<bool> PostAsync(T data, FileStream file)
+        public async Task<bool> PostAsync(T data, Stream file)
         {
             using (HttpRequestMessage requestMessage = new HttpRequestMessage())
             {
@@ -201,7 +201,7 @@ namespace WebApiClient
             }
         }
 
-        public async Task<bool> PostAsync(T data, List<FileStream> files)
+        public async Task<bool> PostAsync(T data, List<Stream> files)
         {
             using (HttpRequestMessage requestMessage = new HttpRequestMessage())
             {

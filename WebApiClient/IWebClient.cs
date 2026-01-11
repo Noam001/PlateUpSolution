@@ -11,14 +11,14 @@ namespace WebApiClient
         //sycronous methods
         T Get();
         bool Post(T data);
-        bool Post(T data, FileStream file);
-        bool Post(T data, List<FileStream> files);
+        bool Post(T data, Stream file);
+        bool Post(T data, List<Stream> files);
 
         //asyncronous
         Task<T> GetAsync();
         Task<bool> PostAsync(T data);
-        Task<bool> PostAsync(T data, FileStream file);
-        Task<bool> PostAsync(T data, List<FileStream> files);
+        Task<bool> PostAsync(T data, Stream file);
+        Task<bool> PostAsync(T data, List<Stream> files);
 
     }
 }

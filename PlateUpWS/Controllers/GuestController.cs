@@ -149,7 +149,7 @@ namespace PlateUpWS
         }
 
         [HttpPost]
-        public bool Registration(Client client)
+        public bool Registration([FromBody] Client client)
         {
             try
             {

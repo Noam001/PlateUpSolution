@@ -77,6 +77,6 @@ namespace Models
             get { return cityId; }
             set { cityId = value; }
         }
-        public string ClientSalt { get; set; } 
+        public string ClientSalt { get; set; } = "";
     }
 }

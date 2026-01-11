@@ -79,26 +79,35 @@ namespace WebPlateUp.Controllers
         public IActionResult Registration(Client client)
         {
             if (!ModelState.IsValid)
-            {
-                WebClient<RegistrationViewModel> webClient = new WebClient<RegistrationViewModel>();
-                webClient.Schema = "http";
-                webClient.Host = "localhost";
-                webClient.Port = 5035;
-                webClient.Path = "api/Guest/GetRegistrationViewModel";
-                RegistrationViewModel signUpVM = webClient.Get();
-                signUpVM.Client = client;
-                return View("ViewRegistration", signUpVM);
-            }
-            WebClient<Client> webClient2 = new WebClient<Client>();
-            webClient2.Schema = "http";
-            webClient2.Host = "localhost";
-            webClient2.Port = 5035;
-            webClient2.Path = "api/Guest/Registration";
-            bool ok = webClient2.Post(client);
+                return View("ViewRegistration", GetRegistrationViewModel(client));
+            bool ok = PostClient(client);
             if (ok)
-                return View();
-            return View();
+            {
+                HttpContext.Session.SetString("clientId", client.ClientId);
+                return RedirectToAction("HomePage", "Guest"); //מעביר לדף הבא
+            }
+            ViewBag.ErrorMessage = "Registration faild, Try Again.";
+            return View("ViewRegistration", GetRegistrationViewModel(client));
         }
-
+        private RegistrationViewModel GetRegistrationViewModel(Client client)
+        {
+            WebClient<RegistrationViewModel> webClient = new WebClient<RegistrationViewModel>();
+            webClient.Schema = "http";
+            webClient.Host = "localhost";
+            webClient.Port = 5035;
+            webClient.Path = "api/Guest/GetRegistrationViewModel";
+            RegistrationViewModel signUpVM = webClient.Get();
+            signUpVM.Client = client;
+            return signUpVM;
+        }
+        private bool PostClient(Client client)
+        {
+            WebClient<Client> webClient = new WebClient<Client>();
+            webClient.Schema = "http";
+            webClient.Host = "localhost";
+            webClient.Port = 5035;
+            webClient.Path = "api/Guest/Registration";
+            return webClient.Post(client);
+        }
     }
 }
