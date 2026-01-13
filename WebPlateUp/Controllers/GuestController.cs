@@ -100,6 +100,7 @@ namespace WebPlateUp.Controllers
             signUpVM.Client = client;
             return signUpVM;
         }
+        //get client from ws
         private bool PostClient(Client client)
         {
             WebClient<Client> webClient = new WebClient<Client>();
