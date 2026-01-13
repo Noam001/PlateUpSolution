@@ -15,8 +15,19 @@
                 <li class="item"><a href="http://localhost:5290/Guest/HomePage/">H O M E</a></li>
                 <li class="item"><a href="http://localhost:5290/Guest/Menu/">M E N U</a></li>
                 <li class="item"><a href="">T A B L E &#160 R E S E R V A T I O N</a></li>
-                <li class="item"><a href="http://localhost:5290/Guest/LoginGetId/">L O G I N</a></li>
-                <li class="item"><a href="http://localhost:5290/Guest/ViewRegistration/">S I G N U P</a></li>
+                @* בדיקה האם המשתמש מחובר *@
+                @if (Context.Session.GetString("clientId") == null)
+                {
+                    @* יוצג רק אם המשתמש לא מחובר *@
+                    <li class="item"><a href="/Guest/ViewLogin">L O G I N</a></li>
+                    <li class="item"><a href="/Guest/ViewRegistration">S I G N U P</a></li>
+                }
+                else
+                {
+                    @* יוצג רק אם המשתמש מחובר *@
+                    <li class="item"><a href="/Guest/Logout">L O G O U T</a></li>
+                    <li class="item"><span>Welcome <br> @Context.Session.GetString("clientName")</span></li>
+                }
             </ul>
             <div class="cart-section-header">
                 @RenderSection("CartIcon", required: false)

@@ -41,7 +41,7 @@ namespace PlateUpWS
             return cities;
         }
 
-        public City GetById(int id)
+        public City GetById(string id)
         {
             string sql = @"SELECT * FROM Cities WHERE CityId = @CityId";
             this.dbContext.AddParameter("@CityId", id);

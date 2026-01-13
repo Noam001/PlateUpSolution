@@ -51,7 +51,7 @@ namespace PlateUpWS
             return orders;
         }
 
-        public Order GetById(int id)
+        public Order GetById(string id)
         {
             string sql = @"SELECT * FROM Orders WHERE OrderId = @OrderId";
             this.dbContext.AddParameter("@OrderId", id);

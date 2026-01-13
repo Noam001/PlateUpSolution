@@ -4,7 +4,7 @@
     {
         List<T> GetAll(); //רשימה של המודל
 
-        T GetById(int id);
+        T GetById(string id);
         bool Create(T item);
         bool Update(T item);
         bool Delete(string id);

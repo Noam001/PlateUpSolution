@@ -78,17 +78,18 @@ namespace WebPlateUp.Controllers
         [HttpPost]
         public IActionResult Registration(Client client)
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid) //בדיקת תקינות הקלט
                 return View("ViewRegistration", GetRegistrationViewModel(client));
-            bool ok = PostClient(client);
+            bool ok = PostClient(client); //האם שליחה למסד נתונים עבד
             if (ok)
             {
                 HttpContext.Session.SetString("clientId", client.ClientId);
-                return RedirectToAction("HomePage", "Guest"); //מעביר לדף הבא
+                return RedirectToAction("HomePage", "Guest"); //מעביר דף במידה והצליח
             }
-            ViewBag.ErrorMessage = "Registration faild, Try Again.";
+            ViewBag.ErrorMessage = "Registration faild, Try Again."; //אם לא הצליח להירשם, יוסף לו הודעת שגיאה 
             return View("ViewRegistration", GetRegistrationViewModel(client));
         }
+        //Get RegistrationViewModel from WS
         private RegistrationViewModel GetRegistrationViewModel(Client client)
         {
             WebClient<RegistrationViewModel> webClient = new WebClient<RegistrationViewModel>();
@@ -100,7 +101,7 @@ namespace WebPlateUp.Controllers
             signUpVM.Client = client;
             return signUpVM;
         }
-        //get client from ws
+        //send client to ws/database
         private bool PostClient(Client client)
         {
             WebClient<Client> webClient = new WebClient<Client>();

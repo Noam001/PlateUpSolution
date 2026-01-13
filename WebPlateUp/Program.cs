@@ -23,6 +23,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Guest}/{action=ViewRegistration}/{id?}");
+    pattern: "{controller=Client}/{action=ViewLogin}/{id?}");
 
 app.Run();

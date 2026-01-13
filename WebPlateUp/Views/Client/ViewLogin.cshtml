@@ -1,0 +1,53 @@
+﻿
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="~/stylesheet/login.css" rel="stylesheet" />
+    <title></title>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <a href="HomePage.html">
+                <img src="~/images/logo.png" alt="Restaurant Logo">
+            </a>
+        </div>
+        <nav class="nav">
+            <ul class="navigation">
+                <li class="item"><a href="http://localhost:5290/Guest/HomePage/">H O M E</a></li>
+                <li class="item"><a href="http://localhost:5290/Guest/Menu/">M E N U</a></li>
+                <li class="item"><a href="">T A B L E &#160 R E S E R V A T I O N</a></li>
+                <li class="item"><a href="http://localhost:5290/Guest/ViewLogin/">L O G I N</a></li>
+                <li class="item"><a href="http://localhost:5290/Guest/ViewRegistration/">S I G N U P</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="page-container">
+        <form aspcontroller="Client" asp-action="Login" class="Login" method="post">
+            <h1 class="Title">Login</h1>
+            <ul class="fields">
+                <li class="field">
+                    <input name="email" id="email" type="text" placeholder="Email" required />
+                    <img class="icon" src="~/images/email.png" />
+                </li>
+                <li class="field">
+                    <input name="password" id="password" type="password" placeholder="Password" required />
+                    <img class="icon" src="~/images/lock.png" />
+                </li>
+            </ul>
+            <button class="buttonReset" type="reset">Reset</button>
+            <button class="buttonLogin" type="submit">Login</button>
+            <div class="register-link">
+                <p>Don't have an account? <a href="http://localhost:5290/Guest/ViewRegistration/">Signup</a></p>
+            </div>
+        </form>
+    </div>
+    <footer class="footer">
+        <p class="rights">All Rights Reserved</p>
+    </footer>
+</body>
+</html>

@@ -279,7 +279,7 @@ namespace PlateUpWS
                 // מקרה 2: חיפוש לפי תעודת זהות של הזמנה
                 if (orderStatus == null && orderID > 0)
                 {
-                    Order order = this.repositoryFactory.OrderRepository.GetById(orderID);
+                    Order order = this.repositoryFactory.OrderRepository.GetById(orderID.ToString());
                     movm.Orders = new List<Order>() { order };
                 }
                 // מקרה 3: חיפוש לפי סטטוס הזמנה- שולם\לא שולם
@@ -318,7 +318,7 @@ namespace PlateUpWS
             }
         }
         [HttpGet]
-        public Order ViewOrder(int orderID)
+        public Order ViewOrder(string orderID)
         {
             try
             {

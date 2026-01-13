@@ -130,7 +130,7 @@ namespace PlateUpWS
     
 
         [HttpGet]
-        public Meal GetMealDetails(int mealId)
+        public Meal GetMealDetails(string mealId)
         {
             try
             {

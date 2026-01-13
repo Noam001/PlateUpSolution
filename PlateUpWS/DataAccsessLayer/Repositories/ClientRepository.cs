@@ -46,7 +46,7 @@ namespace PlateUpWS
             byte[] pass = System.Text.Encoding.UTF8.GetBytes(s);
             using (SHA256 sha256 = SHA256.Create())
             {
-                byte[] bytes =  sha256.ComputeHash(pass);
+                byte[] bytes = sha256.ComputeHash(pass);
                 return Convert.ToBase64String(bytes);
             }
         }
@@ -71,7 +71,7 @@ namespace PlateUpWS
             return clients;
         }
 
-        public Client GetById(int id)
+        public Client GetById(string id)
         {
             string sql = $"SELECT * FROM Clients where ClientId=@ClientId";
             this.dbContext.AddParameter("@ClientId", id);
@@ -108,37 +108,38 @@ namespace PlateUpWS
 
             return this.dbContext.Update(sql) > 0;
         }
-        public string Login(string email, string password, bool isAdmin)
+        public LoginViewModel Login(LoginModel login)
         {
 
             string sql = @"SELECT ClientId, ClientPassword, ClientSalt FROM Clients 
                          WHERE ClientEmail = @ClientEmail";
-            this.dbContext.AddParameter("@ClientEmail", email);
+            this.dbContext.AddParameter("@ClientEmail", login.Email);
             string hash = string.Empty;
             string salt = string.Empty;
-            string id = string.Empty;
+            LoginViewModel loginViewModel = new LoginViewModel();
+            loginViewModel.Name = GetById(loginViewModel.ClientId).ClientName;
             using (IDataReader reader = this.dbContext.Select(sql))
             {
-                if(reader.Read())
+                if (reader.Read())
                 {
                     salt = reader["ClientSalt"].ToString();
-                    hash = reader["Password"].ToString();
-                    id = reader["ClientId"].ToString();
+                    hash = reader["ClientPassword"].ToString();
+                    loginViewModel.ClientId = reader["ClientId"].ToString();
                 }
-                if (hash == CalculateHash(password, salt))
+                if (hash == CalculateHash(login.Password, salt))
                 {
-                    if (isAdmin == false)
-                        return id;
+                    if (login.IsAdmin == false)
+                        return loginViewModel;
                     else
                     {
                         sql = "Select AdminId FROM ADMINS WHERE AdminId = @AdminId";
-                        this.dbContext.AddParameter("@AdminId", id);
-                        return this.dbContext.GetValue(sql) != null ? id : null;
+                        this.dbContext.AddParameter("@AdminId", loginViewModel.ClientId);
+                        return this.dbContext.GetValue(sql) != null ? loginViewModel : null;
                     }
                 }
                 return null;
-                
             }
+
         }
     }
 }

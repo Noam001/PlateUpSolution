@@ -101,7 +101,7 @@ namespace PlateUpWS
                 meals.Reverse();
             return meals;
         }
-        public Meal GetById(int id)
+        public Meal GetById(string id)
         {
             string sql = @"SELECT * FROM Meals WHERE MealId = @MealId";
             this.dbContext.AddParameter("@MealId", id);

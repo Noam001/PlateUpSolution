@@ -48,7 +48,7 @@ namespace PlateUpWS
             return reviews;
         }
 
-        public Review GetById(int id)
+        public Review GetById(string id)
         {
             string sql = @"SELECT * FROM Reviews WHERE ReviewId = @ReviewId";
             this.dbContext.AddParameter("@ReviewId", id);

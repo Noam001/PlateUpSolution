@@ -39,7 +39,7 @@ namespace PlateUpWS
             return foodTypes;
         }
 
-        public FoodType GetById(int id)
+        public FoodType GetById(string id)
         {
             string sql = @"SELECT * FROM FoodTypes WHERE FoodTypeId = @FoodTypeId";
             this.dbContext.AddParameter("@FoodTypeId", id);

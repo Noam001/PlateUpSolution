@@ -16,12 +16,13 @@ namespace PlateUpWS
             this.repositoryFactory = new RepositoryFactory();
         }
         [HttpPost]
-        public string LoginGetId(string email, string password, bool isAdmin)
+        public LoginViewModel LoginGetId([FromBody]LoginModel loginModel)
         {
             try
             {
                 this.repositoryFactory.ConnectDb();
-                return this.repositoryFactory.ClientRepository.Login(email, password, isAdmin);
+                LoginViewModel loginViewModel = this.repositoryFactory.ClientRepository.Login(loginModel);
+                return loginViewModel;
             }
             catch (Exception ex)
             {
@@ -34,7 +35,7 @@ namespace PlateUpWS
             }
         }
         [HttpGet]
-        public UpdateProfileViewModel GetUpdateProfileViewModel(int clientId)
+        public UpdateProfileViewModel GetUpdateProfileViewModel(string clientId)
         {
             try
             {
