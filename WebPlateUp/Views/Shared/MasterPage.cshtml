@@ -19,14 +19,22 @@
                 @if (Context.Session.GetString("clientId") == null)
                 {
                     @* יוצג רק אם המשתמש לא מחובר *@
-                    <li class="item"><a href="/Guest/ViewLogin">L O G I N</a></li>
-                    <li class="item"><a href="/Guest/ViewRegistration">S I G N U P</a></li>
+                    <li class="item"><a href="http://localhost:5290/Guest/ViewLogin/">L O G I N</a></li>
+                    <li class="item"><a href="http://localhost:5290/Guest/ViewRegistration/">S I G N U P</a></li>
                 }
                 else
                 {
                     @* יוצג רק אם המשתמש מחובר *@
-                    <li class="item"><a href="/Guest/Logout">L O G O U T</a></li>
-                    <li class="item"><span>Welcome <br> @Context.Session.GetString("clientName")</span></li>
+                    <li class="item">
+                        <span class="username">
+                            <img src="~/images/profile.png" />
+                            <span>@Context.Session.GetString("clientName") ▼</span>
+                        </span>
+                        <div class="dropdown">
+                            <a href="/Client/Profile">Update Profile</a>
+                            <a href="/Guest/Logout">Logout</a>
+                        </div>
+                    </li>
                 }
             </ul>
             <div class="cart-section-header">

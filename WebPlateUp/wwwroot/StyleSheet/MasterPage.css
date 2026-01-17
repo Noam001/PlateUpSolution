@@ -16,7 +16,6 @@
     margin-left: 55px;
     cursor: pointer;
 }
-
 .header {
     display: flex;
     justify-content: space-between;
@@ -31,6 +30,7 @@
     font-weight: bold;
     color: white;
     transition: 0.25s ease;
+    position: relative; /* חשוב כדי שהדרופדאון יופיע ביחס לפריט */
 }
 .item:hover {
     color: #8F6947;  /* subtle elegant hover */
@@ -41,6 +41,58 @@
 }
 .nav {
     margin-right: 100px;
+}
+.username {
+    display: inline-flex;
+    flex-direction: column; /* מסדר את האלמנטים אחד אחרי השני */
+    align-items: center; /* ממרכז אופקית */
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+.username:hover {
+    opacity: 0.8;
+}
+
+.username img {
+    width: 30px;
+    height: 30px;
+    filter: brightness(0) invert(1); /* הופך את התמונה ללבן */
+}
+
+/* הדרופדאון */
+.dropdown {
+    display: none; /* מוסתר כברירת מחדל */
+    position: absolute; /*מיקום חופשי, ללא השפעה על מיקום שאר האלמנטים.*/
+    margin-top: 17px;
+    background-color: #333;
+    top: 100%;
+    left: -50px;
+    width: 170px;
+    text-align: center;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+    border-radius: 5px;
+    overflow: hidden;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.dropdown a {
+    display: block;
+    padding: 12px 20px;
+    text-decoration: none;
+    color: white;
+    transition: all 0.3s ease; /* חשוב! */
+    text-align: center;
+    position: relative;
+}
+.dropdown a:hover {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding-left: 30px;
+}
+
+/* הצגת הדרופדאון בהובר */
+.item:hover .dropdown {
+    display: block;
 }
 .footer {
     position: fixed;

@@ -111,13 +111,13 @@ namespace PlateUpWS
         public LoginViewModel Login(LoginModel login)
         {
 
-            string sql = @"SELECT ClientId, ClientPassword, ClientSalt FROM Clients 
+            string sql = @"SELECT ClientId, ClientPassword, ClientSalt, ClientName FROM Clients 
                          WHERE ClientEmail = @ClientEmail";
             this.dbContext.AddParameter("@ClientEmail", login.Email);
             string hash = string.Empty;
             string salt = string.Empty;
             LoginViewModel loginViewModel = new LoginViewModel();
-            loginViewModel.Name = GetById(loginViewModel.ClientId).ClientName;
+
             using (IDataReader reader = this.dbContext.Select(sql))
             {
                 if (reader.Read())
@@ -125,6 +125,7 @@ namespace PlateUpWS
                     salt = reader["ClientSalt"].ToString();
                     hash = reader["ClientPassword"].ToString();
                     loginViewModel.ClientId = reader["ClientId"].ToString();
+                    loginViewModel.Name = reader["ClientName"].ToString();
                 }
                 if (hash == CalculateHash(login.Password, salt))
                 {
