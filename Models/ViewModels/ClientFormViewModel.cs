@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    public class UpdateProfileViewModel
+    public class ClientFormViewModel
     {
-        public List<City> City { get; set; }
+        public List<City> Cities {  get; set; }
         public Client Client { get; set; }
     }
 }

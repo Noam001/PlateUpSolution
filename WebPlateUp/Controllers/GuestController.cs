@@ -22,7 +22,7 @@ namespace WebPlateUp.Controllers
             return View(reviews);
         }
         [HttpGet]
-        public IActionResult Menu(string foodTypeId = "-1", int pageNumber = 1,  string mealNameSearch = "", bool? priceSort = null, int pages = 0)
+        public IActionResult Menu(string foodTypeId = "-1", int pageNumber = 1, string mealNameSearch = "", bool? priceSort = null, int pages = 0)
         {
             //1 get data from Web Server
             WebClient<MenuViewModel> client = new WebClient<MenuViewModel>();
@@ -47,7 +47,7 @@ namespace WebPlateUp.Controllers
             menuViewModel.PageNumber = pageNumber;
             menuViewModel.MealNameSearch = mealNameSearch;
             menuViewModel.PriceSort = priceSort;
-          
+
 
             return View(menuViewModel);
         }
@@ -67,37 +67,49 @@ namespace WebPlateUp.Controllers
         [HttpGet]
         public IActionResult ViewRegistration()
         {
-            WebClient<RegistrationViewModel> client = new WebClient<RegistrationViewModel>();
+            WebClient<ClientFormViewModel> client = new WebClient<ClientFormViewModel>();
             client.Schema = "http";
             client.Host = "localhost";
             client.Port = 5035;
             client.Path = "api/Guest/GetRegistrationViewModel";
-            RegistrationViewModel signUpVM = client.Get();
-            return View(signUpVM);
+            string sessionId = HttpContext.Session.GetString("clientId");
+
+            if (sessionId != null)
+            {
+                client.Path = "api/Client/GetUpdateProfileViewModel";
+                client.AddParameter("clientId", sessionId);
+            }
+            ClientFormViewModel clientFormViewModel = client.Get();
+            if (ViewBag.Error != null)
+            {
+                clientFormViewModel.Client = TempData["client"] as Client;
+            }
+            return View("ClientForm", clientFormViewModel);
         }
         [HttpPost]
+
         public IActionResult Registration(Client client)
         {
             if (!ModelState.IsValid) //בדיקת תקינות הקלט
-                return View("ViewRegistration", GetRegistrationViewModel(client));
-            bool ok = PostClient(client); //האם שליחה למסד נתונים עבד
+                return View("ClientForm", GetRegistrationViewModel(client));
+            bool ok = PostClient(client); //האם שליחה למסד נתונים עבדה
             if (ok)
             {
                 HttpContext.Session.SetString("clientId", client.ClientId);
                 return RedirectToAction("HomePage", "Guest"); //מעביר דף במידה והצליח
             }
             ViewBag.ErrorMessage = "Registration faild, Try Again."; //אם לא הצליח להירשם, יוסף לו הודעת שגיאה 
-            return View("ViewRegistration", GetRegistrationViewModel(client));
+            return View("ClientForm", GetRegistrationViewModel(client));
         }
         //Get RegistrationViewModel from WS
-        private RegistrationViewModel GetRegistrationViewModel(Client client)
+        private ClientFormViewModel GetRegistrationViewModel(Client client)
         {
-            WebClient<RegistrationViewModel> webClient = new WebClient<RegistrationViewModel>();
+            WebClient<ClientFormViewModel> webClient = new WebClient<ClientFormViewModel>();
             webClient.Schema = "http";
             webClient.Host = "localhost";
             webClient.Port = 5035;
             webClient.Path = "api/Guest/GetRegistrationViewModel";
-            RegistrationViewModel signUpVM = webClient.Get();
+            ClientFormViewModel signUpVM = webClient.Get();
             signUpVM.Client = client;
             return signUpVM;
         }

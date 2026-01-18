@@ -35,14 +35,14 @@ namespace PlateUpWS
             }
         }
         [HttpGet]
-        public UpdateProfileViewModel GetUpdateProfileViewModel(string clientId)
+        public ClientFormViewModel GetUpdateProfileViewModel(string clientId)
         {
             try
             {
                 this.repositoryFactory.ConnectDb();
-                UpdateProfileViewModel vm = new UpdateProfileViewModel();
+                ClientFormViewModel vm = new ClientFormViewModel();
                 vm.Client = this.repositoryFactory.ClientRepository.GetById(clientId);
-                vm.City = this.repositoryFactory.CityRepository.GetAll();
+                vm.Cities = this.repositoryFactory.CityRepository.GetAll();
                 return vm;
             }
             catch (Exception ex)

@@ -39,7 +39,21 @@ namespace WebPlateUp.Controllers
                 return View("ViewLogin");
             }
         }
-
+        [HttpPost]
+        public IActionResult UpdateProfile(Client client)
+        {
+            WebClient<Client> webClient = new WebClient<Client>();
+            webClient.Schema = "http";
+            webClient.Host = "localhost";
+            webClient.Port = 5035;
+            webClient.Path = "api/Client/UpdateProfile";
+            bool ok = webClient.Post(client);
+            if (ok) //בדיקת תקינות הקלט
+                return RedirectToAction("homePage", "guest");
+            TempData["client"] = client;
+            ViewBag.Error = true;
+            return RedirectToAction("ViewRegistration", "Guest");
+        }
 
         private LoginViewModel ClientLogin(LoginModel loginModel)
         {

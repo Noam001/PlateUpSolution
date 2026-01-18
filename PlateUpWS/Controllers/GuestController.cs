@@ -167,9 +167,9 @@ namespace PlateUpWS
             }
         }
         [HttpGet]
-        public RegistrationViewModel GetRegistrationViewModel()
+        public ClientFormViewModel GetRegistrationViewModel()
         {
-            RegistrationViewModel viewModel = new RegistrationViewModel();
+            ClientFormViewModel viewModel = new ClientFormViewModel();
             try
             {
                 this.repositoryFactory.ConnectDb();
