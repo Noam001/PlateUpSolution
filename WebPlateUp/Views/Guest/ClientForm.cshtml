@@ -47,21 +47,21 @@
         </nav>
     </header>
     <div class="page-container">
-        <form aspcontroller="Guest" asp-action="Registration" class="Signup" method="post" >
+        <form aspcontroller="Guest" asp-action="Registration" class="Signup" method="post">
             <h1 class="Title">@(Model.Client.ClientId == "" ? "SignUp" : "Update Your Profile")</h1>
             <ul class="fields">
                 <li class="field">
                     <div class="input-wrapper">
-                        @if (Model.Client.ClientId== "")
+                        @if (Model.Client.ClientId == "")
                         {
-                        <input asp-for="Client.ClientId" id="id" type="text" placeholder="ID" required />
+                            <input asp-for="Client.ClientId" id="id" type="text" placeholder="ID" required />
                         }
                         else
                         {
-                        <input asp-for="Client.ClientId" id="id" type="text" placeholder="ID"  disabled  />
+                            <input asp-for="Client.ClientId" id="id" type="text" placeholder="ID" disabled />
                         }
-                       
-                        <img class="icon" src="~/images/@(Model.Client.ClientId== "" ? "id.png" :"edit.png")" />
+
+                        <img class="icon" src="~/images/@(Model.Client.ClientId == "" ? "id.png" : "edit.png")" />
                     </div>
                     <span asp-validation-for="Client.ClientId" class="errorData" id="ClientError"></span>
                 </li>
@@ -69,7 +69,7 @@
                     <div class="field">
                         <div class="input-wrapper">
                             <input asp-for="Client.ClientName" id="firstname" type="text" placeholder="First Name" required />
-                            <img class="icon" src="~/images/@(Model.Client.ClientId== "" ? "profile.png" :"edit.png")" />
+                            <img class="icon" src="~/images/@(Model.Client.ClientId == "" ? "profile.png" : "edit.png")" />
                         </div>
                         <span asp-validation-for="Client.ClientName" class="errorData" id="ClientError"></span>
                     </div>
@@ -77,15 +77,15 @@
                     <div class="field">
                         <div class="input-wrapper">
                             <input asp-for="Client.ClientLastName" id="lastname" type="text" placeholder="Last Name" required />
-                            <img class="icon" src="~/images/@(Model.Client.ClientId== "" ? "profile.png" :"edit.png")" />
-                        </div>            
+                            <img class="icon" src="~/images/@(Model.Client.ClientId == "" ? "profile.png" : "edit.png")" />
+                        </div>
                         <span asp-validation-for="Client.ClientLastName" class="errorData" id="ClientError"></span>
                     </div>
                 </li>
                 <li class="field">
                     <div class="input-wrapper">
                         <input asp-for="Client.ClientPhoneNumber" id="phonenumber" type="text" placeholder="Phone Number" required />
-                        <img class="icon" src="~/images/@(Model.Client.ClientId== "" ? "phone.png" :"edit.png")" />
+                        <img class="icon" src="~/images/@(Model.Client.ClientId == "" ? "phone.png" : "edit.png")" />
                     </div>
                     <span asp-validation-for="Client.ClientPhoneNumber" class="errorData" id="ClientError"></span>
                 </li>
@@ -102,21 +102,21 @@
                 <li class="field">
                     <div class="input-wrapper">
                         <input asp-for="Client.ClientAddress" id="Address" type="text" placeholder="Address" required />
-                        <img class="icon" src="~/images/@(Model.Client.ClientId== "" ? "address.png" :"edit.png")" />
+                        <img class="icon" src="~/images/@(Model.Client.ClientId == "" ? "address.png" : "edit.png")" />
                     </div>
                     <span asp-validation-for="Client.ClientAddress" class="errorData" id="ClientError"></span>
                 </li>
                 <li class="field">
                     <div class="input-wrapper">
                         <input asp-for="Client.ClientEmail" id="email" type="text" placeholder="Email" required />
-                        <img class="icon" src="~/images/@(Model.Client.ClientId== "" ? "email.png" :"edit.png")" />
+                        <img class="icon" src="~/images/@(Model.Client.ClientId == "" ? "email.png" : "edit.png")" />
                     </div>
                     <span asp-validation-for="Client.ClientEmail" class="errorData" id="ClientError"></span>
                 </li>
                 <li class="field">
                     <div class="input-wrapper">
                         <input asp-for="Client.Password" id="password" type="password" placeholder="Password" required />
-                        <img class="icon" src="~/images/@(Model.Client.ClientId== "" ? "lock.png" :"edit.png")" />
+                        <img class="icon" src="~/images/@(Model.Client.ClientId == "" ? "lock.png" : "edit.png")" />
                     </div>
                     <span asp-validation-for="Client.Password" class="errorData" id="ClientError"></span>
                 </li>
@@ -128,7 +128,7 @@
                 <div class="Login-link">
                     <p>Already have an account? <a href="http://localhost:5290/Guest/ViewLogin/">Login</a></p>
                 </div>
-            }           
+            }
         </form>
     </div>
     <footer class="footer">

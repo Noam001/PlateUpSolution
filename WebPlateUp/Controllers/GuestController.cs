@@ -80,6 +80,11 @@ namespace WebPlateUp.Controllers
                 client.AddParameter("clientId", sessionId);
             }
             ClientFormViewModel clientFormViewModel = client.Get();
+            // תיקון - אתחול אם null
+            if (clientFormViewModel.Client == null)
+            {
+                clientFormViewModel.Client = new Client();
+            }
             if (ViewBag.Error != null)
             {
                 clientFormViewModel.Client = TempData["client"] as Client;

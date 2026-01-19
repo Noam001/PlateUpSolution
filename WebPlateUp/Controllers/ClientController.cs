@@ -49,7 +49,7 @@ namespace WebPlateUp.Controllers
             webClient.Path = "api/Client/UpdateProfile";
             bool ok = webClient.Post(client);
             if (ok) //בדיקת תקינות הקלט
-                return RedirectToAction("homePage", "guest");
+                return RedirectToAction("HomePage", "Guest");
             TempData["client"] = client;
             ViewBag.Error = true;
             return RedirectToAction("ViewRegistration", "Guest");
