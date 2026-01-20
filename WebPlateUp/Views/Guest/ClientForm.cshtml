@@ -48,7 +48,7 @@
     </header>
     <div class="page-container">
         <form aspcontroller="Guest" asp-action="Registration" class="Signup" method="post">
-            <h1 class="Title">@(Model.Client.ClientId == "" ? "SignUp" : "Update Your Profile")</h1>
+            <h1 class="Title">@(Model.Client?.ClientId == "" ? "SignUp" : "Update Your Profile")</h1>
             <ul class="fields">
                 <li class="field">
                     <div class="input-wrapper">
@@ -60,7 +60,6 @@
                         {
                             <input asp-for="Client.ClientId" id="id" type="text" placeholder="ID" disabled />
                         }
-
                         <img class="icon" src="~/images/@(Model.Client.ClientId == "" ? "id.png" : "edit.png")" />
                     </div>
                     <span asp-validation-for="Client.ClientId" class="errorData" id="ClientError"></span>
