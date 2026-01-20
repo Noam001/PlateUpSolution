@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Models;
+using System.Text.Json;
 
 namespace PlateUpWS
 {
@@ -55,9 +56,10 @@ namespace PlateUpWS
                 this.repositoryFactory.DisconnectDb();
             }
         }
+
         [HttpPost]
         public bool UpdateProfile(Client client)
-        {
+        {  
             try
             {
                 this.repositoryFactory.ConnectDb();

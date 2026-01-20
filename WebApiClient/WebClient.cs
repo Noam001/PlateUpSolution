@@ -114,7 +114,7 @@ namespace WebApiClient
             {
                 requestMessage.Method = HttpMethod.Post;
                 requestMessage.RequestUri = this.uriBuilder.Uri;
-                string jsondata = JsonSerializer.Serialize(data); //מעביר את הפורמט של האובייקט לפורמט גייסון
+                string jsondata = JsonSerializer.Serialize<T>(data); //מעביר את הפורמט של האובייקט לפורמט גייסון
                 requestMessage.Content = new StringContent(jsondata, Encoding.UTF8, "application/json");
                 using (HttpResponseMessage responseMessage = this.httpClient.SendAsync(requestMessage).Result)
                 {

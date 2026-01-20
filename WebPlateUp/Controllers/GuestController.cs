@@ -86,8 +86,8 @@ namespace WebPlateUp.Controllers
             }
             return View("ClientForm", clientFormViewModel);
         }
-        [HttpPost]
 
+        [HttpPost]
         public IActionResult Registration(Client client)
         {
             if (!ModelState.IsValid) //בדיקת תקינות הקלט
