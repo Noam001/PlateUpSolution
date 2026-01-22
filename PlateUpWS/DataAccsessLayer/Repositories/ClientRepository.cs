@@ -90,7 +90,6 @@ namespace PlateUpWS
                            ClientName = @ClientName,
                            ClientLastName = @ClientLastName,
                            ClientEmail = @ClientEmail,
-                           ClientPassword = @ClientPassword,
                            ClientAddress = @ClientAddress,
                            ClientPhoneNumber = @ClientPhoneNumber,
                            CityId = @CityId
@@ -100,7 +99,6 @@ namespace PlateUpWS
             this.dbContext.AddParameter("@ClientName", item.ClientName);
             this.dbContext.AddParameter("@ClientLastName", item.ClientLastName);
             this.dbContext.AddParameter("@ClientEmail", item.ClientEmail);
-            this.dbContext.AddParameter("@ClientPassword", item.Password);
             this.dbContext.AddParameter("@ClientAddress", item.ClientAddress);
             this.dbContext.AddParameter("@ClientPhoneNumber", item.ClientPhoneNumber);
             this.dbContext.AddParameter("@CityId", item.CityId);

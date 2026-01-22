@@ -96,6 +96,7 @@ namespace WebPlateUp.Controllers
             if (ok)
             {
                 HttpContext.Session.SetString("clientId", client.ClientId);
+                HttpContext.Session.SetString("clientName", client.ClientName);
                 return RedirectToAction("HomePage", "Guest"); //מעביר דף במידה והצליח
             }
             ViewBag.ErrorMessage = "Registration faild, Try Again."; //אם לא הצליח להירשם, יוסף לו הודעת שגיאה 

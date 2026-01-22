@@ -39,20 +39,61 @@ namespace WebPlateUp.Controllers
                 return View("ViewLogin");
             }
         }
+        [HttpGet]
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("HomePage", "Guest");
+        }
+        [HttpPost]
+        public IActionResult LeaveAReview(Review review)
+        {
+            WebClient<Review> client = new WebClient<Review>();
+            client.Schema = "http";
+            client.Host = "localhost";
+            client.Port = 5035;
+            client.Path = "api/Client/LeaveAReview";
+            bool ok = client.Post(review);
+            if (ok) //האם שליחה למסד נתונים עבדה
+                return RedirectToAction("HomePage", "Guest");
+            return RedirectToAction("HomePage", "Guest");
+        }
         [HttpPost]
         public IActionResult UpdateProfile(Client client)
         {
+            ModelState.Remove("client.Password");
+            if (!ModelState.IsValid) //בדיקת תקינות הקלט
+            {
+                TempData["client"] = JsonSerializer.Serialize<Client>(client);
+                return RedirectToAction("ViewRegistration", "Guest");
+            }
+            client.Password = "XXXXX5"; // נדרשת סיסמה ברירת מחדל למילוי שדות החובה לצורך עדכון המשתמש
             WebClient<Client> webClient = new WebClient<Client>();
             webClient.Schema = "http";
             webClient.Host = "localhost";
             webClient.Port = 5035;
             webClient.Path = "api/Client/UpdateProfile";
             bool ok = webClient.Post(client);
-            if (ok) //בדיקת תקינות הקלט
+            if (ok) //האם שליחה למסד נתונים עבדה
+            {
+                HttpContext.Session.SetString("clientName", client.ClientName);
                 return RedirectToAction("HomePage", "Guest");
-            TempData["client"] = client;
+            }
             ViewBag.Error = true;
             return RedirectToAction("ViewRegistration", "Guest");
+        }
+        [HttpGet]
+        public IActionResult View(Review review)
+        {
+            WebClient<Review> client = new WebClient<Review>();
+            client.Schema = "http";
+            client.Host = "localhost";
+            client.Port = 5035;
+            client.Path = "api/Client/LeaveAReview";
+            bool ok = client.Post(review);
+            if (ok) //האם שליחה למסד נתונים עבדה
+                return RedirectToAction("HomePage", "Guest");
+            return RedirectToAction("HomePage", "Guest");
         }
 
         private LoginViewModel ClientLogin(LoginModel loginModel)

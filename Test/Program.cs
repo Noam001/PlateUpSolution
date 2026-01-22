@@ -10,8 +10,7 @@ namespace Test
     {
         static void Main(string[] args)
         {
-            Console.ReadLine();
-            TestWebClient();
+            Console.WriteLine(CalculateHash("Trial20", "6EflPs5A2r9zbP"));
             Console.ReadLine();
         }
         static void TestWebClient()  
