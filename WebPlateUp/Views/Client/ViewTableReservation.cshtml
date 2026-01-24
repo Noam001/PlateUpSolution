@@ -1,0 +1,50 @@
+﻿@using Models;
+@model Order;
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="~/stylesheet/tablereservation.css" rel="stylesheet" />
+</head>
+<body>
+    <form asp-controller="Client" asp-action="MakeAReservation" class="TableReservation" method="post">
+        <h1 class="PlateUp">PlateUp</h1>
+        <h2 class="Title">Reserve a table</h2>
+        <ul class="fields">
+            <li class="field">
+                <input asp-for="@Model.OrderDate" id="id" type="date" placeholder="Reservation Date" />
+                <span asp-validation-for="@Model.OrderDate" class="errorData" id="OrderError"></span>
+            </li>
+            <li class="field">
+                <input asp-for="@Model.OrderTime" id="id" type="time" placeholder="Reservation Time" />
+                <span asp-validation-for="@Model.OrderTime" class="errorData" id="OrderError"></span>
+            </li>
+            <li class="field">
+                <select name="NumOfPeople" id="guests">
+                    @for(int i = 1; i <= 12; i++)
+                    {
+                        <option value="@i">@i Guests</option>
+                    }
+                </select>
+                <img src="~/images/guests.png" class="guest-icon" />
+            </li>
+        </ul>
+        <p class="reserve-text">
+            To reserve a table at PlateUp choose a date, time, and number of guests.
+        </p>
+        <button class="Reserve-Button" type="submit">Reserve a table</button>
+        <div class="Extra-Buttons">
+            <a href="http://localhost:5290/Guest/Menu/">Menu</a>
+            <a href="http://localhost:5290/Guest/HomePage/">Home</a>
+        </div>
+    </form>
+    <footer class="footer">
+        <p class="rights">All Rights Reserved</p>
+    </footer>
+</body>
+</html>

@@ -7,7 +7,7 @@
 
 body {
     height: 100vh;
-    background-image: url('../Photos/TableBackGround.png');
+    background-image: url('../images/tablebackground.png');
     background-size: cover;
     background-position: center;
     display: flex;
@@ -89,6 +89,7 @@ button {
     cursor: pointer;
     background-color: #009ca6; /* teal turquoise */
     border: none;
+    transition: 0.25s ease; /*גורם לHOVER להיות חלק יותר*/
 }
 .Extra-Buttons {
     display: flex;
@@ -96,17 +97,27 @@ button {
     gap: 23px; /* space between buttons */
     margin-top: 50px;
 }
-    .Extra-Buttons a {
-        padding: 14px 22px;
-        border-radius: 10px;
-        background-color: #ffffffa0;
-        font-family: 'Open Sans';
-        font-weight: bold;
-        color: #000;
-        font-size: 18px;
-        outline: 3px solid #009ca6;
-        text-decoration: none;
-    }
+.Extra-Buttons a {
+    padding: 14px 22px;
+    border-radius: 10px;
+    background-color: #ffffffa0;
+    font-family: 'Open Sans';
+    font-weight: bold;
+    color: #000;
+    font-size: 18px;
+    outline: 3px solid #009ca6;
+    text-decoration: none;
+    transition: 0.25s ease;
+}
+.Extra-Buttons a:hover{
+    transform: translateY(-2px);
+    cursor: pointer;
+}
+button:hover {
+    background-color: #008189; /* slightly darker */
+    transform: translateY(-2px);
+    cursor: pointer;
+}
 .footer {
     text-align: center;
     font-family: 'Open Sans', sans-serif;

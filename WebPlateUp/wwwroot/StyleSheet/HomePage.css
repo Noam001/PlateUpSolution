@@ -14,6 +14,7 @@
     font-family: Rubik;
     font-weight: 500;
     font-size: 180px;
+    pointer-events: none;
 }
 .description {
     text-align: center;
@@ -47,7 +48,6 @@
     border: none;
     outline: none;
     background: transparent;
-    color: #f0e6d8;
     font-size: 17px;
     padding: 12px;
 }
@@ -63,6 +63,7 @@
     border: 1px solid #2C2927;
     margin-left: 8px;
     color: white;
+    transition: 0.25s ease;
 }
 button:hover {
     background-color: #8F6947; /* slightly darker */

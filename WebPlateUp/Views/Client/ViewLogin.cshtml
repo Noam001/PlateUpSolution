@@ -20,14 +20,14 @@
             <ul class="navigation">
                 <li class="item"><a href="http://localhost:5290/Guest/HomePage/">H O M E</a></li>
                 <li class="item"><a href="http://localhost:5290/Guest/Menu/">M E N U</a></li>
-                <li class="item"><a href="">T A B L E &#160 R E S E R V A T I O N</a></li>
+                <li class="item"><a href="http://localhost:5290/Client/ViewTableReservation/">T A B L E &#160 R E S E R V A T I O N</a></li>
                 <li class="item"><a href="http://localhost:5290/Guest/ViewLogin/">L O G I N</a></li>
                 <li class="item"><a href="http://localhost:5290/Guest/ViewRegistration/">S I G N U P</a></li>
             </ul>
         </nav>
     </header>
     <div class="page-container">
-        <form aspcontroller="Client" asp-action="Login" class="Login" method="post">
+        <form asp-controller="Client" asp-action="Login" class="Login" method="post">
             <h1 class="Title">Login</h1>
             <ul class="fields">
                 <li class="field">

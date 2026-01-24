@@ -83,19 +83,30 @@ namespace WebPlateUp.Controllers
             return RedirectToAction("ViewRegistration", "Guest");
         }
         [HttpGet]
-        public IActionResult View(Review review)
+        public IActionResult ViewTableReservation()
         {
-            WebClient<Review> client = new WebClient<Review>();
+            return View();
+        }
+        [HttpPost]
+        public IActionResult MakeAReservation(Order order)
+        {
+            WebClient<Order> client = new WebClient<Order>();
             client.Schema = "http";
             client.Host = "localhost";
             client.Port = 5035;
-            client.Path = "api/Client/LeaveAReview";
-            bool ok = client.Post(review);
-            if (ok) //האם שליחה למסד נתונים עבדה
+            client.Path = "api/Client/MakeAnOrder";
+            order.OrderStatus = false;
+            order.ClientId = HttpContext.Session.GetString("clientId");
+            if (!ModelState.IsValid) //בדיקת תקינות הקלט
+                return View("ViewTableReservation",order);
+            bool ok = client.Post(order);
+            if(ok)
+            {
                 return RedirectToAction("HomePage", "Guest");
-            return RedirectToAction("HomePage", "Guest");
+            }
+            ViewBag.ErrorMessage = "Reservation Request faild, Try Again.";
+            return View("ViewTableReservation", order);
         }
-
         private LoginViewModel ClientLogin(LoginModel loginModel)
         {
 
