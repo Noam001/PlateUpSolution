@@ -20,7 +20,7 @@ namespace Models
             get { return this.orderId; }
             set { this.orderId = value; }
         }
-        //[Required(ErrorMessage = "Client ID is required")]
+        [Required(ErrorMessage = "Client ID is required")]
         public string ClientId
         {
             get { return this.clientId; }

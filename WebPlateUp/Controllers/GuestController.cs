@@ -18,7 +18,7 @@ namespace WebPlateUp.Controllers
             client.Port = 5035;
             client.Path = "api/Guest/GetReviews";
             List<Review> reviews = client.Get();
-
+            ViewBag.ClientId = HttpContext.Session.GetString("clientId");
             return View(reviews);
         }
         [HttpGet]

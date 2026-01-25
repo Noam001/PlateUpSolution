@@ -10,10 +10,29 @@
     <p class="description">Lorem ipsum dolor sit amet, consectetur adipi- <br>scing elit, sed do iusmod tempor incididunt ut <br> labore et dolore magna.</p>
     <div class="ReviewBlock">
         <h2 class="Reviews">Reviews</h2>
-        <div class="reviewBox">
-            <textarea name="review" id="review" placeholder="Write a Review..." class="reviewInput" rows="2"></textarea>
+@*         <input asp-for="@Model.ClientId" id="id" type="hidden" value="@ViewBag.ClientId" />
+ *@        <form asp-controller="Client" asp-action="LeaveAReview" class="reviewBox" method="post">
+            <div class="rating-selector">
+                <div class="stars-input">
+                    <input type="radio" id="star1" name="ReviewRating" value="1">
+                    <label for="star1">★</label>
+
+                    <input type="radio" id="star2" name="ReviewRating" value="2">
+                    <label for="star2">★</label>
+
+                    <input type="radio" id="star3" name="ReviewRating" value="3">
+                    <label for="star3">★</label>
+
+                    <input type="radio" id="star4" name="ReviewRating" value="4">
+                    <label for="star4">★</label>
+
+                    <input type="radio" id="star5" name="ReviewRating" value="5">
+                    <label for="star5">★</label>
+                </div>
+            </div>
+            <textarea name="ReviewComment" id="review" placeholder="Write a Review..." class="reviewInput" rows="2"></textarea>
             <button class="Send" type="submit">Send</button>
-        </div>
+        </form>
         <div class="allReviews">
             @foreach (Review review in Model)
             {

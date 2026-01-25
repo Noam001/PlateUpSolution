@@ -53,10 +53,13 @@ namespace WebPlateUp.Controllers
             client.Host = "localhost";
             client.Port = 5035;
             client.Path = "api/Client/LeaveAReview";
+            review.ClientId = HttpContext.Session.GetString("clientId");
+            review.ReviewDate = Convert.ToString(DateTime.Now.Date);
             bool ok = client.Post(review);
             if (ok) //האם שליחה למסד נתונים עבדה
                 return RedirectToAction("HomePage", "Guest");
-            return RedirectToAction("HomePage", "Guest");
+            ViewBag.ErrorMessage = "Review Request faild, Try Again.";
+            return View("HomePage", review);
         }
         [HttpPost]
         public IActionResult UpdateProfile(Client client)
@@ -85,6 +88,7 @@ namespace WebPlateUp.Controllers
         [HttpGet]
         public IActionResult ViewTableReservation()
         {
+            ViewBag.ClientId = HttpContext.Session.GetString("clientId");
             return View();
         }
         [HttpPost]

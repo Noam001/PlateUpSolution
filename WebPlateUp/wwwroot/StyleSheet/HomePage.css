@@ -31,25 +31,55 @@
     text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
 }
 .ReviewBlock {
-    width: 470px;
+    width: 400px;
     margin-top: 260px;
 }
 .reviewBox {
+    background: #ffffff;
+    padding: 10px 22px;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
     display: flex;
-    width: 400px;
-    background: #fff;
-    margin-left: 13px;
-    border: 2px solid #d8b89c;
-    border-radius: 25px;
-    padding: 5px 7px;
+    flex-direction: column;
+    gap: 14px;
 }
 .reviewInput {
-    flex: 1;
-    border: none;
+    width: 100%;
+    min-height: 7px;
+    resize: none;
+    border-radius: 12px;
+    padding: 10px 12px;
+    border: 1px solid #d6c6b6;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
     outline: none;
-    background: transparent;
-    font-size: 17px;
-    padding: 12px;
+    transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+.rating-selector {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.stars-input {
+    direction: rtl;
+    display: inline-flex;
+    font-size: 2rem;
+}
+.stars-input input {
+    display: none;
+}
+.stars-input label {
+    color: #ccc;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.stars-input label:hover,
+.stars-input label:hover ~ label {
+    color: #FFD700;
+}
+
+.stars-input input:checked ~ label {
+    color: #FFD700;
 }
 .reviewInput::placeholder {
     color: #8e8377;
