@@ -12,14 +12,16 @@ namespace WebPlateUp.Controllers
         public IActionResult HomePage()
         {
             //1 get data from Web Server
-            WebClient<List<Review>> client = new WebClient<List<Review>>();
+            WebClient<HomePageViewModel> client = new WebClient<HomePageViewModel>();
             client.Schema = "http";
             client.Host = "localhost";
             client.Port = 5035;
             client.Path = "api/Guest/GetReviews";
-            List<Review> reviews = client.Get();
+            HomePageViewModel viewModel = client.Get();
+
             ViewBag.ClientId = HttpContext.Session.GetString("clientId");
-            return View(reviews);
+            ViewBag.ReviewDate = DateTime.Today.ToString("dd/MM/yyyy");
+            return View(viewModel);
         }
         [HttpGet]
         public IActionResult Menu(string foodTypeId = "-1", int pageNumber = 1, string mealNameSearch = "", bool? priceSort = null, int pages = 0)

@@ -2,9 +2,10 @@
 using Models;
 using NuGet.Protocol.Core.Types;
 using System.Net;
-using System.Text.Json;
 using System.Text;
+using System.Text.Json;
 using WebApiClient;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace WebPlateUp.Controllers
 {
@@ -48,18 +49,29 @@ namespace WebPlateUp.Controllers
         [HttpPost]
         public IActionResult LeaveAReview(Review review)
         {
+            if (!ModelState.IsValid)
+            {
+                WebClient<HomePageViewModel> clientReviews = new WebClient<HomePageViewModel>();
+                clientReviews.Schema = "http";
+                clientReviews.Host = "localhost";
+                clientReviews.Port = 5035;
+                clientReviews.Path = "api/Guest/GetReviews";
+                HomePageViewModel viewModel = clientReviews.Get();
+                viewModel.Review = review;
+
+                return View("~/Views/Guest/HomePage.cshtml", viewModel);
+            }
             WebClient<Review> client = new WebClient<Review>();
             client.Schema = "http";
             client.Host = "localhost";
             client.Port = 5035;
             client.Path = "api/Client/LeaveAReview";
-            review.ClientId = HttpContext.Session.GetString("clientId");
-            review.ReviewDate = Convert.ToString(DateTime.Now.Date);
+
             bool ok = client.Post(review);
             if (ok) //האם שליחה למסד נתונים עבדה
                 return RedirectToAction("HomePage", "Guest");
             ViewBag.ErrorMessage = "Review Request faild, Try Again.";
-            return View("HomePage", review);
+            return View("HomePage", "Guest");
         }
         [HttpPost]
         public IActionResult UpdateProfile(Client client)
@@ -100,7 +112,6 @@ namespace WebPlateUp.Controllers
             client.Port = 5035;
             client.Path = "api/Client/MakeAnOrder";
             order.OrderStatus = false;
-            order.ClientId = HttpContext.Session.GetString("clientId");
             if (!ModelState.IsValid) //בדיקת תקינות הקלט
                 return View("ViewTableReservation",order);
             bool ok = client.Post(order);

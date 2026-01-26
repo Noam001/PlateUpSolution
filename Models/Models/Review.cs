@@ -19,14 +19,13 @@ namespace Models
             get { return this.reviewId; }
             set { this.reviewId = value; }
         }
-        [Required(ErrorMessage = "Client ID is required")]
+        [Required(ErrorMessage = "Authentication is required to submit a review.")]
         public string ClientId
         {
             get { return this.clientId; }
             set { this.clientId = value; }
         }
-        [Required(ErrorMessage = "Review date is required")]
-        [RegularExpression(@"^\d{2}/\d{2}/\d{4}$", ErrorMessage = "Date must be in the format DD/MM/YYYY")]
+        [DataType(DataType.Date)]
         public string ReviewDate
         {
             get { return this.reviewDate; }

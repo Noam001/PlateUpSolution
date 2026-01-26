@@ -8,7 +8,7 @@ namespace Models
 {
     public class HomePageViewModel
     {
-        List<Review> Reviews { get; set; }
-        Review Review { get; set; }
+        public List<Review> Reviews { get; set; }
+        public Review Review { get; set; }
     }
 }

@@ -10,7 +10,8 @@ namespace Test
     {
         static void Main(string[] args)
         {
-            Console.WriteLine(CalculateHash("Trial20", "6EflPs5A2r9zbP"));
+            string date = DateTime.Today.ToString("yyyy-MM-dd");
+            Console.WriteLine(date);
             Console.ReadLine();
         }
         static void TestWebClient()  

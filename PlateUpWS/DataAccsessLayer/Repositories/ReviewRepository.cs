@@ -41,7 +41,6 @@ namespace PlateUpWS
             {
                 while (reader.Read())
                 {
-                    reader.Read();
                     reviews.Add(this.modelFactory.ReviewCreator.CreateModel(reader));
                 }
             }

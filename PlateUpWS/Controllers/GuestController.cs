@@ -15,12 +15,15 @@ namespace PlateUpWS
             this.repositoryFactory = new RepositoryFactory();
         }
         [HttpGet]
-        public List<Review> GetReviews()
+        public HomePageViewModel GetReviews()
         {
+            HomePageViewModel viewModel = new HomePageViewModel();
             try
             {
                 this.repositoryFactory.ConnectDb();
-                return this.repositoryFactory.ReviewRepository.GetAll();
+                viewModel.Reviews = this.repositoryFactory.ReviewRepository.GetAll();
+                viewModel.Review = null;
+                return viewModel;
             }
             catch (Exception ex)
             {
