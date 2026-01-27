@@ -6,15 +6,9 @@
     Layout = "~/Views/Shared/MasterPage.cshtml";
 }
 <link href="~/stylesheet/mealdetails.css" rel="stylesheet" />
-<script>
-    function handleCartClick()
-    {
-        window.location.href = "http://localhost:5290/Guest/Login/";
-    }
-</script>
 @section CartIcon
 {
-    <div class="cart-container" onclick="handleCartClick()">
+    <div class="cart-container">
         <img src="~/images/shopping-cart.png" class="cart-icon" alt="Cart" />
         <span class="cart-badge">0</span> 
     </div>
@@ -28,21 +22,22 @@
     <div class="meal-info">
         <h1 class="meal-name">@Model.MealName</h1>
 
-        <p class="meal-description">
-            @Model.MealDescription
-        </p>
+        <p class="meal-description">@Model.MealDescription</p>
 
-        <p class="meal-price">
-            $@Model.MealPrice
-        </p>
+        <p class="meal-price">$@Model.MealPrice</p>
 
-        <div class="meal-actions">
-            <input type="number" min="1" value="1" class="meal-quantity" />
-
-            <button class="add-to-cart">
-                Add to Cart
-            </button>
-        </div>
+        <input type="number" min="1" value="1" class="meal-quantity" />
+        @if (Context.Session.GetString("clientId") != null)
+        {
+            <button class="add-to-cart">Add to Cart</button>
+        }           
+        else
+        {
+            <button class="add-to-cart" disabled>Add to Cart</button>
+            <p class="errorData">
+                You must log in to add items to your cart.
+            </p>    
+        }
     </div>
 
 </div>

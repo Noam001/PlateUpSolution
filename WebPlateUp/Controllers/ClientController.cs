@@ -122,6 +122,17 @@ namespace WebPlateUp.Controllers
             ViewBag.ErrorMessage = "Reservation Request faild, Try Again.";
             return View("ViewTableReservation", order);
         }
+        [HttpPost]
+        public IActionResult AddMealToOrder(string mealId, string orderId, int price, int quantity, string? notes = "")
+        {
+            WebClient<Meal> client = new WebClient<Meal>();
+            client.Schema = "http";
+            client.Host = "localhost";
+            client.Port = 5035;
+            client.Path = "api/Client/AddMealToOrder";
+
+            return View();
+        }
         private LoginViewModel ClientLogin(LoginModel loginModel)
         {
 
