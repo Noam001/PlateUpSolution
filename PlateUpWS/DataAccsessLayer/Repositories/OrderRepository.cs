@@ -107,12 +107,12 @@ namespace PlateUpWS
             return this.dbContext.Update(sql) > 0;
         }
 
-        public bool AddMealToOrder(CartItem cartItem)
+        public bool AddMealToOrder(OrderItem cartItem)
         {
             string sql = @"SELECT OrderId FROM Orders 
                              WHERE ClientId = @ClientId AND OrderStatus = False";
 
-            this.dbContext.AddParameter("@ClientId", cartItem.ClientId);
+            this.dbContext.AddParameter("@ClientId", cartItem.c;
             string orderId = null;
 
             using (IDataReader reader = this.dbContext.Select(sql))

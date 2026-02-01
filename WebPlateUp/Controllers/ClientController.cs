@@ -123,9 +123,9 @@ namespace WebPlateUp.Controllers
             return View("ViewTableReservation", order);
         }
         [HttpPost]
-        public IActionResult AddMealToOrder(CartItem cartItem)
+        public IActionResult AddMealToOrder(OrderItem cartItem)
         {
-            WebClient<CartItem> client = new WebClient<CartItem>();
+            WebClient<OrderItem> client = new WebClient<OrderItem>();
             client.Schema = "http";
             client.Host = "localhost";
             client.Port = 5035;

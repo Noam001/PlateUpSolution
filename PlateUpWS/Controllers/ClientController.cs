@@ -94,7 +94,7 @@ namespace PlateUpWS
             }
         }
         [HttpPost]
-        public bool AddMealToOrder(CartItem cartItem)
+        public bool AddMealToOrder(OrderItem cartItem)
         {
             try
             {
