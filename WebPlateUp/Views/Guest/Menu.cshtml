@@ -30,18 +30,7 @@
 
         document.getElementById("filterForm").submit();
     }
-    function handleCartClick() 
-    {
-        window.location.href = "http://localhost:5290/Guest/Login/";
-    }
 </script>
-@section CartIcon
-{
-    <div class="cart-container" onclick="handleCartClick()">
-        <img src="~/images/shopping-cart.png" class="cart-icon" alt="Cart" />
-        <span class="cart-badge">0</span> @* ה"עיגול" הקטן שיושב על האייקון ומראה כמה מוצרים יש בעגלה *@
-    </div>
-}
 <div class="MenuWrapper">
     <div class="page-layout">
         <aside class="filters">       

@@ -1,0 +1,95 @@
+﻿@using Models;
+@model CartViewModel
+@{
+    ViewData["Title"] = "Cart";
+    Layout = "~/Views/Shared/MasterPage.cshtml";
+}
+<link href="~/stylesheet/cart.css" rel="stylesheet" />
+<div class="cart-page">
+    <h1>My Shopping Cart</h1>
+
+    @if (Model?.CartItems != null && Model.CartItems.Count > 0)
+    {
+        <div class="cart-layout">
+            @* צד שמאל - רשימת המנות *@
+            <div class="cart-items-section">
+                @foreach (var item in Model.CartItems)
+                {
+                    <div class="cart-item-card">
+                        @* קישור למנה *@
+                        <a href="http://localhost:5290/Guest/MealDetails/?id=@item.MealId" class="meal-link">
+                            @* תמונה *@
+                            <div class="item-image">
+                                <img src="http://localhost:5035/DataImages/@(item.MealId).jpg" alt="@item.MealName" />
+                            </div>
+
+                            @* שם המנה *@
+                            <div class="item-name">
+                                <h3>@item.MealName</h3>                                
+                                <p class="item-price">$@item.MealPrice</p>
+                                @if (!string.IsNullOrEmpty(item.MealNotes))
+                                {
+                                    <p class="item-notes">Notes: @item.MealNotes</p>
+                                }
+                            </div>
+                        </a>
+
+                        <div class="item-controls">
+                            @* SELECT לכמות *@
+                            <form asp-controller="Client" asp-action="UpdateQuantity" method="post" class="quantity-form">
+                                <input type="hidden" name="mealId" value="@item.MealId" />
+                                <input type="hidden" name="orderId" value="@item.OrderID" />
+                                <select name="quantity" onchange="this.form.submit()" class="quantity-select"> @* שומר באופן אוטומטי את הערך שהשתנה *@
+                                    @for (int i = 1; i <= 10; i++)
+                                    {
+                                        <option value="@i" selected="@(i == item.Quantity)">@i</option>
+                                    }
+                                </select>
+                            </form>
+
+                            @* כפתור מחיקה *@
+                            <form asp-controller="Client" asp-action="RemoveMealFromOrder" method="post" class="delete-form">
+                                <input type="hidden" name="mealId" value="@item.MealId" />
+                                <input type="hidden" name="orderId" value="@item.OrderID" />
+                                <button type="submit" class="delete-btn" title="Remove">🗑️</button>
+                            </form>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            @* צד ימין - סיכום *@
+            <div class="cart-summary">
+                <h2>Order Summary</h2>
+
+                <div class="summary-details">
+                    <div class="summary-row">
+                        <span>Total Meals:</span>
+                        <span class="total-meals">@Model.TotalItems</span>
+                    </div>
+
+                    <div class="summary-row total-price">
+                        <span>Total Price:</span>
+                        <span class="price">$@Model.TotalPrice.ToString("F2")</span>
+                    </div>
+                </div>
+
+                <form asp-controller="Client" asp-action="Checkout" method="post">
+                    <button type="submit" class="checkout-btn">Checkout</button>
+                </form>
+
+                <a href="http://localhost:5290/Guest/Menu/" class="continue-shopping">← Continue Shopping</a>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="empty-cart">
+            <div class="empty-icon">🛒</div>
+            <h2>Your cart is empty</h2>
+            <p>Add some delicious meals to get started!</p>
+            <a href="http://localhost:5290/Guest/Menu/" class="browse-menu-btn">Browse Menu</a>
+        </div>
+    }
+</div>
+

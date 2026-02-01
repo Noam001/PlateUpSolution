@@ -8,8 +8,12 @@ namespace Models
 {
     public class CartItem
     {
-        public Meal Meal { get; set; }
+        public int MealId { get; set; }
+        public string MealName { get; set; }
         public int Quantity { get; set; }
-
+        public int OrderID { get; set; }
+        public double MealPrice { get; set; }
+        public string? MealNotes { get; set; }
+        public string ClientId { get; set; }
     }
 }

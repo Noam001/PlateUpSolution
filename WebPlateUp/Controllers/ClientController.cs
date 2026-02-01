@@ -123,7 +123,40 @@ namespace WebPlateUp.Controllers
             return View("ViewTableReservation", order);
         }
         [HttpPost]
-        public IActionResult AddMealToOrder(string mealId, string orderId, int price, int quantity, string? notes = "")
+        public IActionResult AddMealToOrder(CartItem cartItem)
+        {
+            WebClient<CartItem> client = new WebClient<CartItem>();
+            client.Schema = "http";
+            client.Host = "localhost";
+            client.Port = 5035;
+            client.Path = "api/Client/AddMealToOrder";
+            bool ok = client.Post(cartItem);
+            if (ok)
+            {
+                TempData["Message"] = "Successfully added to cart!";
+                TempData["MessageType"] = "success";
+            }
+            else
+            {
+                TempData["Message"] = "Failed to add meal.";
+                TempData["MessageType"] = "error";
+            }
+            return RedirectToAction("MealDetails", "Guest");
+        }
+        [HttpGet]
+        public IActionResult RemoveMeaFromOrder(string mealId, string orderId)
+        {
+            WebClient<Meal> client = new WebClient<Meal>();
+            client.Schema = "http";
+            client.Host = "localhost";
+            client.Port = 5035;
+            client.Path = "api/Client/RemoveMeaFromOrder";
+            client.AddParameter("mealId", mealId.ToString());
+            client.AddParameter("orderId", orderId.ToString());
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Checkout(string orderId)
         {
             WebClient<Meal> client = new WebClient<Meal>();
             client.Schema = "http";
@@ -132,6 +165,34 @@ namespace WebPlateUp.Controllers
             client.Path = "api/Client/AddMealToOrder";
 
             return View();
+        }
+        [HttpPost]
+        public IActionResult UpdateQuantity(int mealId, int orderId, int quantity)
+        {
+            WebClient<object> client = new WebClient<object>();
+            client.Schema = "http";
+            client.Host = "localhost";
+            client.Port = 5035;
+            client.Path = "api/Client/UpdateQuantity";
+            client.AddParameter("mealId", mealId.ToString());
+            client.AddParameter("orderId", orderId.ToString());
+            client.AddParameter("quantity", quantity.ToString());
+
+
+            return RedirectToAction("Cart");
+        }
+        [HttpGet]
+        public IActionResult Cart(string clientId)
+        {
+            WebClient<CartViewModel> client = new WebClient<CartViewModel>();
+            client.Schema = "http";
+            client.Host = "localhost";
+            client.Port = 5035;
+            client.Path = "api/Client/GetCart";
+            clientId = HttpContext.Session.GetString("clientId");
+            client.AddParameter("clientId", clientId);
+            CartViewModel vm = client.Get();
+            return View(vm);
         }
         private LoginViewModel ClientLogin(LoginModel loginModel)
         {

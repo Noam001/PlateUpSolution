@@ -94,6 +94,22 @@
 .item:hover .dropdown {
     display: block;
 }
+.cart-container {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    position: absolute;
+    right: 35px; /* מרחק מהצד הימני של המסך */
+    top: 55px; /* גובה שמתאים מתחת לשורת הניווט */
+    z-index: 1000; /* מוודא שזה מעל כל שאר האלמנטים */
+}
+
+.cart-icon {
+    width: 35px;
+    height: auto;
+    /* מחקתי את ה-color:white כי תמונה לא מקבלת צבע טקסט */
+    filter: brightness(0) invert(1); /* זה יהפוך תמונה שחורה ללבנה ב-CSS */
+}
 .footer {
     position: fixed;
     bottom: 8px;

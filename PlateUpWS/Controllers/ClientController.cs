@@ -94,12 +94,12 @@ namespace PlateUpWS
             }
         }
         [HttpPost]
-        public bool AddMealToOrder(string mealId, string orderId, int price, int quantity, string? notes ="")
+        public bool AddMealToOrder(CartItem cartItem)
         {
             try
             {
                 this.repositoryFactory.ConnectDb();
-                return this.repositoryFactory.OrderRepository.AddMealToOrder(mealId,orderId,price,quantity,notes);
+                return this.repositoryFactory.OrderRepository.AddMealToOrder(cartItem);
             }
             catch (Exception ex)
             {
@@ -185,17 +185,36 @@ namespace PlateUpWS
             }
         }
         [HttpGet]
-        public List<CartItem> GetCart(string clientId)
+        public CartViewModel GetCart(string clientId)
         {
             try
             {
                 this.repositoryFactory.ConnectDb();
-                return this.repositoryFactory.OrderRepository.GetCart(clientId);
+                CartViewModel vm = this.repositoryFactory.OrderRepository.GetCart(clientId);
+                return vm;
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 return null;
+            }
+            finally
+            {
+                this.repositoryFactory.DisconnectDb();
+            }
+        }
+        [HttpGet]
+        public bool UpdateQuantity(int mealId, int orderId, int quantity)
+        {
+            try
+            {
+                this.repositoryFactory.ConnectDb();
+                return this.repositoryFactory.OrderRepository.UpdateQuantity(mealId, orderId, quantity);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
             }
             finally
             {

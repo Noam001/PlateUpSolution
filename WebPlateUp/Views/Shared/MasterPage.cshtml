@@ -1,8 +1,8 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "MasterPage";
 }
 <link href="~/stylesheet/masterpage.css" rel="stylesheet" />
+
 <div class="wrapper">
     <header class="header">
         <div class="logo">
@@ -37,9 +37,14 @@
                     </li>
                 }
             </ul>
-            <div class="cart-section-header">
-                @RenderSection("CartIcon", required: false)
-            </div>
+            @if (Context.Session.GetString("clientId") != null)
+            {
+                <div class="cart-container">
+                    <a href="http://localhost:5290/Client/Cart">
+                        <img src="~/images/shopping-cart.png" class="cart-icon" alt="Cart" />
+                    </a>
+                </div>
+            }
         </nav>
     </header>
     <main class="main">

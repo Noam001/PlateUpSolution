@@ -23,7 +23,7 @@ namespace PlateUpWS
             this.dbContext.AddParameter("@MealPhoto", item.MealPhoto);
             this.dbContext.AddParameter("@MealDescription", item.MealDescription);
             this.dbContext.AddParameter("@MealPrice", item.MealPrice);
-            this.dbContext.AddParameter("@MealStatus", item.MealStatus);
+            this.dbContext.AddParameter("@MealStatus",$"{item.MealId}.jpg");
 
             return this.dbContext.Insert(sql) > 0;
         }

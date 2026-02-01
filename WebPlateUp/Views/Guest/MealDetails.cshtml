@@ -6,13 +6,6 @@
     Layout = "~/Views/Shared/MasterPage.cshtml";
 }
 <link href="~/stylesheet/mealdetails.css" rel="stylesheet" />
-@section CartIcon
-{
-    <div class="cart-container">
-        <img src="~/images/shopping-cart.png" class="cart-icon" alt="Cart" />
-        <span class="cart-badge">0</span> 
-    </div>
-}
 <div class="MealWrapper">
     <div class="meal-image">
         <img src="http://localhost:5035/DataImages/@Model.MealPhoto" alt="@Model.MealName" />
@@ -21,23 +14,34 @@
     <!-- Left side: Info -->
     <div class="meal-info">
         <h1 class="meal-name">@Model.MealName</h1>
-
+        @if (TempData["Message"] != null)
+        {
+            <div class="alert-message @(TempData["MessageType"]?.ToString() == "success" ? "msg-success" : "msg-error")">
+                @TempData["Message"]
+            </div>
+        }
         <p class="meal-description">@Model.MealDescription</p>
 
         <p class="meal-price">$@Model.MealPrice</p>
 
-        <input type="number" min="1" value="1" class="meal-quantity" />
-        @if (Context.Session.GetString("clientId") != null)
-        {
-            <button class="add-to-cart">Add to Cart</button>
-        }           
-        else
-        {
-            <button class="add-to-cart" disabled>Add to Cart</button>
-            <p class="errorData">
-                You must log in to add items to your cart.
-            </p>    
-        }
+        <form asp-controller="Client" asp-action="AddMealToOrder" method="post">
+            <input type="number" min="1" value="1" class="meal-quantity" />
+            <div class="notes-wrapper">
+                <label for="meal-notes" class="notes-label">Special Notes:</label>
+                <textarea id="meal-notes" name="notes" class="meal-notes"
+                          placeholder="Add special instructions..."
+                          rows="2" maxlength="100"></textarea>
+                <span class="notes-hint">Up to 100 characters</span>
+            </div>
+            @if (Context.Session.GetString("clientId") != null)
+            {
+                <button class="add-to-cart" type="submit">Add to Cart</button>
+            }
+            else
+            {
+                <button class="add-to-cart" disabled title="Please login first">Add to Cart</button>
+            }
+        </form>    
     </div>
 
 </div>

@@ -107,16 +107,66 @@ namespace PlateUpWS
             return this.dbContext.Update(sql) > 0;
         }
 
-        public bool AddMealToOrder(string mealId, string orderId, int price, int quantity, string? notes ="")
+        public bool AddMealToOrder(CartItem cartItem)
         {
-            string sql = @$"INSERT INTO MealsOrders (MealID, OrderID, Quantity, MealPrice, MealNotes)
-                            VALUES (@MealID, @OrderID, @Quantity, @MealPrice, @MealNotes)";
-            this.dbContext.AddParameter("@MealID", mealId);
+            string sql = @"SELECT OrderId FROM Orders 
+                             WHERE ClientId = @ClientId AND OrderStatus = False";
+
+            this.dbContext.AddParameter("@ClientId", cartItem.ClientId);
+            string orderId = null;
+
+            using (IDataReader reader = this.dbContext.Select(sql))
+            {
+                if (reader.Read())
+                {
+                    orderId = reader["OrderId"].ToString();
+                }
+            }
+            if (orderId == null) //אם אין עגלה(הזמנה) קיימת לאותו לקוח - יוצרים חדשה 
+            {
+                string sqlCreateOrder = @"INSERT INTO Orders(ClientId, OrderDate, OrderTime, NumOfPeople, OrderStatus)
+                                  VALUES (@ClientId, @OrderDate, @OrderTime, @NumOfPeople, @OrderStatus)"; //הוספת עגלה
+
+                this.dbContext.AddParameter("@ClientId", cartItem.ClientId);
+                this.dbContext.AddParameter("@OrderDate", DBNull.Value);
+                this.dbContext.AddParameter("@OrderTime", DBNull.Value);
+                this.dbContext.AddParameter("@NumOfPeople", 0);
+                this.dbContext.AddParameter("@OrderStatus", false);
+
+                if (this.dbContext.Insert(sqlCreateOrder) > 0) //אם נוצר הזמנה חדשה
+                {
+                    this.dbContext.AddParameter("@ClientId", cartItem.ClientId);
+                    using (IDataReader reader = this.dbContext.Select(sql))
+                    {
+                        if (reader.Read())
+                        {
+                            orderId = reader["OrderId"].ToString(); //שמור ID שלה
+                        }
+                    }
+                }
+                if (orderId == null)//לא הוצלח
+                    return false; 
+            }
+            string sqlGetPrice = @"SELECT MealPrice FROM Meals WHERE MealId = @MealID";
+            this.dbContext.AddParameter("@MealID", cartItem.MealId);
+
+            double realMealPrice = 0;
+
+            using (IDataReader reader = this.dbContext.Select(sqlGetPrice))
+            {
+                if (reader.Read())
+                {
+                    realMealPrice = Convert.ToDouble(reader["MealPrice"]);//שמירת המחיר לתוך המנה החדשה
+                }
+            }
+            string sqlInsertMeal = @"INSERT INTO MealsOrders (MealID, OrderID, Quantity, MealPrice, MealNotes)
+                             VALUES (@MealID, @OrderID, @Quantity, @MealPrice, @MealNotes)";
+            this.dbContext.AddParameter("@MealID", cartItem.MealId);
             this.dbContext.AddParameter("@OrderID", orderId);
-            this.dbContext.AddParameter("@Quantity", quantity);
-            this.dbContext.AddParameter("@MealPrice", price);
-            this.dbContext.AddParameter("@MealNotes", notes);
-            return this.dbContext.Insert(sql) > 0;
+            this.dbContext.AddParameter("@Quantity", cartItem.Quantity);
+            this.dbContext.AddParameter("@MealPrice", realMealPrice);
+            this.dbContext.AddParameter("@MealNotes", cartItem.MealNotes ?? "");
+            return this.dbContext.Insert(sqlInsertMeal) > 0;
         }
         public bool RemoveMealFromOrder(string mealId, string orderId)
         {
@@ -128,29 +178,59 @@ namespace PlateUpWS
         public bool CheckoutUpdateStatus(string orderId)
         {
             string sql = $@"UPDATE Orders
-                            SET OrderStatus = True
+                            SET                              
+                               OrderDate = @OrderDate,
+                               OrderTime = @OrderTime,
+                               OrderStatus = True
                             WHERE OrderId = @OrderId;";
+            this.dbContext.AddParameter("@OrderDate", DateTime.Today.ToString("dd/MM/yyyy"));
+            this.dbContext.AddParameter("@OrderTime", DateTime.Now.ToString("HH:mm"));
             this.dbContext.AddParameter("@OrderId", orderId);
             return this.dbContext.Update(sql) > 0;
         }
-        public List<CartItem> GetCart(string clientId)
+        public CartViewModel GetCart(string clientId)
         {
-            string sql = @"SELECT Meals.MealId, Meals.MealName, Meals.MealPhoto, Meals.MealDescription, Meals.MealPrice, Meals.MealStatus, MealsOrders.Quantity, MealsOrders.OrderID, Orders.ClientId, Orders.OrderStatus
+            string sql = @"SELECT Meals.MealId, Meals.MealName, MealsOrders.Quantity, MealsOrders.OrderID, MealsOrders.MealPrice, MealsOrders.MealNotes, Orders.ClientId, Orders.OrderStatus
                            FROM Orders INNER JOIN (Meals INNER JOIN MealsOrders ON Meals.MealId = MealsOrders.MealID) ON Orders.OrderId = MealsOrders.OrderID
                            WHERE Orders.ClientId = @ClientId AND Orders.OrderStatus = False;";
             this.dbContext.AddParameter("@ClientId", clientId);
             List<CartItem> cartItems = new List<CartItem>();
+            double totalPrice = 0;
             using (IDataReader reader = this.dbContext.Select(sql))
             {
                 while (reader.Read())
                 {
-                    CartItem cartItem = new CartItem();
-                    cartItem.Meal = this.modelFactory.MealCreator.CreateModel(reader);
-                    cartItem.Quantity = Convert.ToInt16(reader["Quantity"]);
+                    CartItem cartItem = new CartItem
+                    {
+                        MealId = Convert.ToInt32(reader["MealId"]),
+                        MealName = reader["MealName"].ToString(),
+                        Quantity = Convert.ToInt32(reader["Quantity"]),
+                        OrderID = Convert.ToInt32(reader["OrderID"]),
+                        MealPrice = Convert.ToDouble(reader["MealPrice"]),
+                        MealNotes = reader["MealNotes"]?.ToString() ?? "",
+                        ClientId = reader["ClientId"].ToString()
+                    };
                     cartItems.Add(cartItem);
+                    totalPrice += cartItem.Quantity * cartItem.MealPrice;
                 }
             }
-            return cartItems;
+            CartViewModel cart = new CartViewModel();
+            cart.CartItems = cartItems;
+            cart.TotalItems = cartItems.Sum(x => x.Quantity);
+            cart.TotalPrice = totalPrice;
+            return cart;
+        }
+        public bool UpdateQuantity(int mealId, int orderId, int quantity)
+        {
+            string sql = @"UPDATE MealsOrders 
+                   SET Quantity = @Quantity
+                   WHERE MealID = @MealID AND OrderID = @OrderID";
+
+            this.dbContext.AddParameter("@Quantity", quantity);
+            this.dbContext.AddParameter("@MealID", mealId);
+            this.dbContext.AddParameter("@OrderID", orderId);
+
+            return this.dbContext.Update(sql) > 0;
         }
         public int GetTotalOrdersInDateRange(string fromDate, string toDate)
         {
