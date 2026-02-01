@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiClient", "WebApiClien
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAppPlateUp", "WebPlateUp\WebAppPlateUp.csproj", "{859CBD47-A492-4329-9D7E-7DAD38B66CFC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlateUpWinApp", "PlateUpWinApp\PlateUpWinApp.csproj", "{50CC4450-0116-4425-AA04-E2A34A75F38D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{859CBD47-A492-4329-9D7E-7DAD38B66CFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{859CBD47-A492-4329-9D7E-7DAD38B66CFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{859CBD47-A492-4329-9D7E-7DAD38B66CFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50CC4450-0116-4425-AA04-E2A34A75F38D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50CC4450-0116-4425-AA04-E2A34A75F38D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50CC4450-0116-4425-AA04-E2A34A75F38D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50CC4450-0116-4425-AA04-E2A34A75F38D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
