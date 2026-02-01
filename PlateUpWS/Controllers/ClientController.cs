@@ -94,12 +94,12 @@ namespace PlateUpWS
             }
         }
         [HttpPost]
-        public bool AddMealToOrder(OrderItem cartItem)
+        public bool AddMealToOrder(AddMealRequest addMealRequest)
         {
             try
             {
                 this.repositoryFactory.ConnectDb();
-                return this.repositoryFactory.OrderRepository.AddMealToOrder(cartItem);
+                return this.repositoryFactory.OrderRepository.AddMealToOrder(addMealRequest);
             }
             catch (Exception ex)
             {

@@ -123,14 +123,19 @@ namespace WebPlateUp.Controllers
             return View("ViewTableReservation", order);
         }
         [HttpPost]
-        public IActionResult AddMealToOrder(OrderItem cartItem)
+        public IActionResult AddMealToOrder(int mealId,int quantity, string? mealNotes, string clientId)
         {
-            WebClient<OrderItem> client = new WebClient<OrderItem>();
+            WebClient<AddMealRequest> client = new WebClient<AddMealRequest>();
             client.Schema = "http";
             client.Host = "localhost";
             client.Port = 5035;
             client.Path = "api/Client/AddMealToOrder";
-            bool ok = client.Post(cartItem);
+            AddMealRequest addMeal = new AddMealRequest();
+            addMeal.MealId = mealId;
+            addMeal.Quantity = quantity;
+            addMeal.MealNotes = mealNotes;
+            addMeal.ClientId = HttpContext.Session.GetString("clientId");
+            bool ok = client.Post(addMeal);
             if (ok)
             {
                 TempData["Message"] = "Successfully added to cart!";
@@ -141,7 +146,7 @@ namespace WebPlateUp.Controllers
                 TempData["Message"] = "Failed to add meal.";
                 TempData["MessageType"] = "error";
             }
-            return RedirectToAction("MealDetails", "Guest");
+            return RedirectToAction("MealDetails", "Guest", new { id = mealId });
         }
         [HttpGet]
         public IActionResult RemoveMeaFromOrder(string mealId, string orderId)

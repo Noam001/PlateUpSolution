@@ -107,14 +107,13 @@ namespace PlateUpWS
             return this.dbContext.Update(sql) > 0;
         }
 
-        public bool AddMealToOrder(OrderItem cartItem)
+        public bool AddMealToOrder(AddMealRequest addMealReq)
         {
             string sql = @"SELECT OrderId FROM Orders 
                              WHERE ClientId = @ClientId AND OrderStatus = False";
 
-            this.dbContext.AddParameter("@ClientId", cartItem.c;
+            this.dbContext.AddParameter("@ClientId", addMealReq.ClientId);
             string orderId = null;
-
             using (IDataReader reader = this.dbContext.Select(sql))
             {
                 if (reader.Read())
@@ -127,15 +126,15 @@ namespace PlateUpWS
                 string sqlCreateOrder = @"INSERT INTO Orders(ClientId, OrderDate, OrderTime, NumOfPeople, OrderStatus)
                                   VALUES (@ClientId, @OrderDate, @OrderTime, @NumOfPeople, @OrderStatus)"; //הוספת עגלה
 
-                this.dbContext.AddParameter("@ClientId", cartItem.ClientId);
-                this.dbContext.AddParameter("@OrderDate", DBNull.Value);
-                this.dbContext.AddParameter("@OrderTime", DBNull.Value);
+                this.dbContext.AddParameter("@ClientId", addMealReq.ClientId);
+                this.dbContext.AddParameter("@OrderDate", DateTime.Today.ToString("dd/MM/yyyy"));
+                this.dbContext.AddParameter("@OrderTime", DateTime.Now.ToString("HH:mm"));
                 this.dbContext.AddParameter("@NumOfPeople", 0);
                 this.dbContext.AddParameter("@OrderStatus", false);
 
                 if (this.dbContext.Insert(sqlCreateOrder) > 0) //אם נוצר הזמנה חדשה
                 {
-                    this.dbContext.AddParameter("@ClientId", cartItem.ClientId);
+                    this.dbContext.AddParameter("@ClientId", addMealReq.ClientId);
                     using (IDataReader reader = this.dbContext.Select(sql))
                     {
                         if (reader.Read())
@@ -148,10 +147,8 @@ namespace PlateUpWS
                     return false; 
             }
             string sqlGetPrice = @"SELECT MealPrice FROM Meals WHERE MealId = @MealID";
-            this.dbContext.AddParameter("@MealID", cartItem.MealId);
-
+            this.dbContext.AddParameter("@MealID", addMealReq.MealId);
             double realMealPrice = 0;
-
             using (IDataReader reader = this.dbContext.Select(sqlGetPrice))
             {
                 if (reader.Read())
@@ -161,11 +158,11 @@ namespace PlateUpWS
             }
             string sqlInsertMeal = @"INSERT INTO MealsOrders (MealID, OrderID, Quantity, MealPrice, MealNotes)
                              VALUES (@MealID, @OrderID, @Quantity, @MealPrice, @MealNotes)";
-            this.dbContext.AddParameter("@MealID", cartItem.MealId);
+            this.dbContext.AddParameter("@MealID", addMealReq.MealId);
             this.dbContext.AddParameter("@OrderID", orderId);
-            this.dbContext.AddParameter("@Quantity", cartItem.Quantity);
+            this.dbContext.AddParameter("@Quantity", addMealReq.Quantity);
             this.dbContext.AddParameter("@MealPrice", realMealPrice);
-            this.dbContext.AddParameter("@MealNotes", cartItem.MealNotes ?? "");
+            this.dbContext.AddParameter("@MealNotes", addMealReq.MealNotes ?? "");
             return this.dbContext.Insert(sqlInsertMeal) > 0;
         }
         public bool RemoveMealFromOrder(string mealId, string orderId)
