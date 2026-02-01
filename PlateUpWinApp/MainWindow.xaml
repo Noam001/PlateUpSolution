@@ -7,7 +7,8 @@
         mc:Ignorable="d"
         Title="MainWindow" 
         Height="450" Width="800"
-        ResizeMode="NoResize">
+        ResizeMode="NoResize"
+        WindowStyle="None" MouseDown="Window_MouseDown">
     <!--<StackPanel Orientation="Horizontal" Width="800">
         <StackPanel Orientation="Vertical" Width="180" Background="#FF150B48">
             
@@ -23,12 +24,18 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="80">
-                
             </RowDefinition>
             <RowDefinition Height="*">
             </RowDefinition>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Grid.ColumnSpan="2" Background="Beige"></StackPanel>
-        <StackPanel Grid.Row="1" Grid.Column="0" Background="Azure"></StackPanel>
+        <StackPanel Grid.Row="0" Grid.ColumnSpan="2" Background="Beige">
+            <Button x:Name="btnLogout" Content="Logout" FontSize="14" Foreground="Gray" Margin="700,20,10,10" Padding="5" Width="78" Click="btnLogout_Click"></Button>
+            <Label Content="PlateUp | Admin"></Label>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="0" Background="Azure">
+            <TextBlock>
+                <Hyperlink x:Name="Reports">View Reports</Hyperlink>
+            </TextBlock>
+        </StackPanel>
     </Grid>
 </Window>
