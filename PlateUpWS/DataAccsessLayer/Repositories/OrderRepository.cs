@@ -106,11 +106,10 @@ namespace PlateUpWS
             this.dbContext.AddParameter("@OrderId", orderId);
             return this.dbContext.Update(sql) > 0;
         }
-
         public bool AddMealToOrder(AddMealRequest addMealReq)
         {
             string sql = @"SELECT OrderId FROM Orders 
-                             WHERE ClientId = @ClientId AND OrderStatus = False";
+                             WHERE ClientId = @ClientId AND OrderStatus = False"; // 1. מציאת ה-OrderId של העגלה הפעילה
 
             this.dbContext.AddParameter("@ClientId", addMealReq.ClientId);
             string orderId = null;
@@ -121,7 +120,7 @@ namespace PlateUpWS
                     orderId = reader["OrderId"].ToString();
                 }
             }
-            if (orderId == null) //אם אין עגלה(הזמנה) קיימת לאותו לקוח - יוצרים חדשה 
+            if (orderId == null) //יצירת עגלה חדשה אם לא קיימת 
             {
                 string sqlCreateOrder = @"INSERT INTO Orders(ClientId, OrderDate, OrderTime, NumOfPeople, OrderStatus)
                                   VALUES (@ClientId, @OrderDate, @OrderTime, @NumOfPeople, @OrderStatus)"; //הוספת עגלה
@@ -143,8 +142,22 @@ namespace PlateUpWS
                         }
                     }
                 }
-                if (orderId == null)//לא הוצלח
-                    return false; 
+                if (orderId == null) return false; 
+            }
+            // ניסיון לעדכן מנה קיימת הכמות גדלה, ההערה מתעדכנת להכי חדשה
+            string sqlUpdateQuantity = @"UPDATE MealsOrders 
+                         SET Quantity = Quantity + @NewQty, 
+                             MealNotes = @NewNotes
+                         WHERE OrderID = @OID AND MealID = @MID";
+            this.dbContext.AddParameter("@NewQty", addMealReq.Quantity);
+            this.dbContext.AddParameter("@NewNotes", addMealReq.MealNotes ?? "");
+            this.dbContext.AddParameter("@OID", orderId);
+            this.dbContext.AddParameter("@MID", addMealReq.MealId);
+
+            // בודק האם קיים מנה באותה עגלה של הלקוח עם אותה מנה והערה זהות לאלה שביקש
+            if (this.dbContext.Update(sqlUpdateQuantity) > 0)
+            {
+                return true;
             }
             string sqlGetPrice = @"SELECT MealPrice FROM Meals WHERE MealId = @MealID";
             this.dbContext.AddParameter("@MealID", addMealReq.MealId);

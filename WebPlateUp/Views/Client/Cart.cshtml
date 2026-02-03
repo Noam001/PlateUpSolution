@@ -36,10 +36,10 @@
 
                         <div class="item-controls">
                             @* SELECT לכמות *@
-                            <form asp-controller="Client" asp-action="UpdateQuantity" method="post" class="quantity-form">
+                            <form asp-controller="Client" asp-action="UpdateQuantity" method="get" class="quantity-form">
                                 <input type="hidden" name="mealId" value="@item.MealId" />
                                 <input type="hidden" name="orderId" value="@item.OrderID" />
-                                <select name="quantity" onchange="this.form.submit()" class="quantity-select"> @* שומר באופן אוטומטי את הערך שהשתנה *@
+                                <select name="quantity" class="quantity-select"> @* שומר באופן אוטומטי את הערך שהשתנה *@
                                     @for (int i = 1; i <= 10; i++)
                                     {
                                         <option value="@i" selected="@(i == item.Quantity)">@i</option>
@@ -48,7 +48,7 @@
                             </form>
 
                             @* כפתור מחיקה *@
-                            <form asp-controller="Client" asp-action="RemoveMealFromOrder" method="post" class="delete-form">
+                            <form asp-controller="Client" asp-action="RemoveMealFromOrder" method="get" class="delete-form">
                                 <input type="hidden" name="mealId" value="@item.MealId" />
                                 <input type="hidden" name="orderId" value="@item.OrderID" />
                                 <button type="submit" class="delete-btn" title="Remove">🗑️</button>

@@ -149,32 +149,35 @@ namespace WebPlateUp.Controllers
             return RedirectToAction("MealDetails", "Guest", new { id = mealId });
         }
         [HttpGet]
-        public IActionResult RemoveMeaFromOrder(string mealId, string orderId)
+        public IActionResult RemoveMealFromOrder(string mealId, string orderId)
         {
-            WebClient<Meal> client = new WebClient<Meal>();
+            WebClient<bool> client = new WebClient<bool>();
             client.Schema = "http";
             client.Host = "localhost";
             client.Port = 5035;
-            client.Path = "api/Client/RemoveMeaFromOrder";
-            client.AddParameter("mealId", mealId.ToString());
-            client.AddParameter("orderId", orderId.ToString());
-            return View();
+            client.Path = "api/Client/RemoveMealFromOrder";
+            client.AddParameter("mealId", mealId);
+            client.AddParameter("orderId", orderId);
+            bool success = client.Get();
+            if (!success)
+                TempData["Message"] = "Failed to remove item.";
+            return RedirectToAction("Cart");
         }
         [HttpPost]
         public IActionResult Checkout(string orderId)
         {
-            WebClient<Meal> client = new WebClient<Meal>();
+            WebClient<string> client = new WebClient<string>();
             client.Schema = "http";
             client.Host = "localhost";
             client.Port = 5035;
             client.Path = "api/Client/AddMealToOrder";
-
+            bool ok = client.Post(orderId);
             return View();
         }
-        [HttpPost]
+        [HttpGet]
         public IActionResult UpdateQuantity(int mealId, int orderId, int quantity)
         {
-            WebClient<object> client = new WebClient<object>();
+            WebClient<bool> client = new WebClient<bool>();
             client.Schema = "http";
             client.Host = "localhost";
             client.Port = 5035;
@@ -182,8 +185,9 @@ namespace WebPlateUp.Controllers
             client.AddParameter("mealId", mealId.ToString());
             client.AddParameter("orderId", orderId.ToString());
             client.AddParameter("quantity", quantity.ToString());
-
-
+            bool success = client.Get();
+            if (!success)
+                TempData["Message"] = "Failed to remove item.";
             return RedirectToAction("Cart");
         }
         [HttpGet]
