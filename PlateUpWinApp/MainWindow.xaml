@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PlateUpWinApp"
         mc:Ignorable="d"
         Title="MainWindow" 
-        Height="450" Width="800"
+        Height="450" Width="900"
         ResizeMode="NoResize"
         WindowStyle="None" MouseDown="Window_MouseDown">
     <!--<StackPanel Orientation="Horizontal" Width="800">
@@ -28,9 +28,15 @@
             <RowDefinition Height="*">
             </RowDefinition>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Grid.ColumnSpan="2" Background="Beige">
-            <Button x:Name="btnLogout" Content="Logout" FontSize="14" Foreground="Gray" Margin="700,20,10,10" Padding="5" Width="78" Click="btnLogout_Click"></Button>
-            <Label Content="PlateUp | Admin"></Label>
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.ColumnSpan="2" Background="Beige" >
+            <Canvas>
+                <Label  Content="PlateUp | Admin" Height="28" HorizontalAlignment="Left" Canvas.Left="422" Canvas.Top="29" VerticalAlignment="Center" RenderTransformOrigin="-0.052,0.357"/>
+                <Button
+                x:Name="btnLogout" Content="Logout" FontSize="14" Foreground="Gray"
+                HorizontalAlignment="Left" VerticalAlignment="Center"  Padding="5" Width="78"
+                Click="btnLogout_Click" Canvas.Left="802" Canvas.Top="26" >
+                </Button>
+            </Canvas>
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="0" Background="Azure">
             <TextBlock>
