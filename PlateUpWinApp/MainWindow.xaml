@@ -17,45 +17,132 @@
 
         </StackPanel>
     </StackPanel>-->
-    <Grid>
+    <Grid Background="#0B1026">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150"/>
             <ColumnDefinition Width="750"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="80">
-            </RowDefinition>
-            <RowDefinition Height="370">
-            </RowDefinition>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="370"/>
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.ColumnSpan="2" Background="Beige" >
+
+        <!-- Top Bar -->
+        <!-- Top Bar -->
+        <StackPanel Orientation="Horizontal"
+                    Grid.Row="0"
+                    Grid.ColumnSpan="2"
+                    Background="#12194A">
+
             <Canvas>
-                <Image Source="/Images/Logo.png" Width="90" Margin="15,-5,0,0"/>
-                <Label  Content="PlateUp | Admin" Height="28" HorizontalAlignment="Left" Canvas.Left="412" Canvas.Top="29" VerticalAlignment="Center" RenderTransformOrigin="-0.052,0.357"/>
-                <Button
-                x:Name="btnLogout" Content="Logout" FontSize="14" Foreground="Gray"
-                HorizontalAlignment="Left" VerticalAlignment="Center"  Padding="5" Width="78"
-                Click="btnLogout_Click" Canvas.Left="802" Canvas.Top="26" >
+                <Image Source="/Images/Logo2.png" Width="90" Margin="15,-5,0,0"/>
+
+                <Label Content="PlateUp | Admin"
+                       Foreground="White"
+                       FontSize="13"
+                       FontWeight="SemiBold"
+                       Canvas.Left="412"
+                       Canvas.Top="29"/>
+
+                <!-- Modern Logout Button -->
+                <Button x:Name="btnLogout"
+                        Content="Logout"
+                        FontSize="13"
+                        FontWeight="SemiBold"
+                        Foreground="White"
+                        Background="#2E3B72"
+                        BorderThickness="0"
+                        Padding="7,6"
+                        Width="78"
+                        Canvas.Left="802"
+                        Canvas.Top="26"
+                        Cursor="Hand">
                 </Button>
             </Canvas>
         </StackPanel>
-        <StackPanel Grid.Row="1" Grid.Column="0" Background="Azure">
-            <StackPanel Margin="40,15,0,0">
+
+        <!-- Sidebar -->
+        <StackPanel Grid.Row="1"
+                    Grid.Column="0"
+                    Background="#0E1233">
+
+            <Label x:Name="adminName"
+                   Content="Admin Name"
+                   Foreground="#FFFFFF"
+                   FontWeight="SemiBold"
+                   Margin="30,15,0,0"/>
+
+            <StackPanel Margin="30,15,0,0">
                 <TextBlock>
-                    <Hyperlink x:Name="Reports">View Reports</Hyperlink>
+                    <Hyperlink x:Name="Reports"
+                               Foreground="#B0B0B0"
+                               TextDecorations="None">
+                        View Reports
+                    </Hyperlink>
                 </TextBlock>
+
                 <TextBlock Margin="0,15,0,0">
-                    <Hyperlink x:Name="Menu" Click="Menu_Click">Manage Menu</Hyperlink>
+                    <Hyperlink x:Name="Menu"
+                               Foreground="#B0B0B0"
+                               TextDecorations="None"
+                               Click="Menu_Click">
+                        Manage Menu
+                    </Hyperlink>
                 </TextBlock>
+
                 <TextBlock Margin="0,15,0,0">
-                    <Hyperlink x:Name="FoodTypes" Click="FoodTypes_Click">Manage FoodTypes</Hyperlink>
+                    <Hyperlink x:Name="FoodTypes"
+                               Foreground="#B0B0B0"
+                               TextDecorations="None"
+                               Click="FoodTypes_Click">
+                        Manage FoodTypes
+                    </Hyperlink>
                 </TextBlock>
-                
+
+                <TextBlock Margin="0,15,0,0">
+                    <Hyperlink x:Name="Orders"
+                               Foreground="#B0B0B0"
+                               TextDecorations="None"
+                               Click="Orders_Click">
+                        Manage Orders
+                    </Hyperlink>
+                </TextBlock>
+
+                <TextBlock Margin="0,15,0,0">
+                    <Hyperlink x:Name="Cities"
+                               Foreground="#B0B0B0"
+                               TextDecorations="None"
+                               Click="FoodTypes_Click">
+                        Manage Cities
+                    </Hyperlink>
+                </TextBlock>
+
+                <TextBlock Margin="0,15,0,0">
+                    <Hyperlink x:Name="Reviews"
+                               Foreground="#B0B0B0"
+                               TextDecorations="None"
+                               Click="FoodTypes_Click">
+                        Manage Reviews
+                    </Hyperlink>
+                </TextBlock>
+
+                <TextBlock Margin="0,15,0,0">
+                    <Hyperlink x:Name="Login"
+                               Foreground="#B0B0B0"
+                               TextDecorations="None"
+                               Click="Login_Click">
+                        Login
+                    </Hyperlink>
+                </TextBlock>
             </StackPanel>
-
         </StackPanel>
-        <Frame x:Name="FrameContent" Grid.Row="1" Grid.Column="1" Background="#1c0a3e">
 
-        </Frame>
+        <!-- Content -->
+        <Frame x:Name="FrameContent"
+               Grid.Row="1"
+               Grid.Column="1"
+               Background="#171F4F"
+               NavigationUIVisibility="Hidden"
+               Navigated="FrameContent_Navigated"/>
     </Grid>
 </Window>

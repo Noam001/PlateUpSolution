@@ -7,11 +7,60 @@
              mc:Ignorable="d" 
              d:DesignHeight="370" d:DesignWidth="750">
     <Canvas>
-        <TextBox x:Name="textBox" TextWrapping="Wrap" Text="TextBox" Width="120" TextChanged="textBox_TextChanged" Canvas.Left="325" Canvas.Top="127"/>
-        <Label x:Name="label" Content="Email" Foreground="White" Canvas.Left="260" Canvas.Top="123" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <TextBox x:Name="textBox1" TextWrapping="Wrap" Text="TextBox" Width="120" Canvas.Left="325" Canvas.Top="167"/>
-        <Label x:Name="label1" Foreground="White" Content="Password" Canvas.Left="260" Canvas.Top="163"/>
-        <Button x:Name="button" Content="Login" RenderTransformOrigin="8.495,10.682" Canvas.Left="345" Canvas.Top="214"/>
 
+        <!-- Title -->
+        <Label
+        Content="Login"
+        Foreground="White"
+        FontSize="24"
+        FontWeight="Bold"
+        Canvas.Left="340"
+        Canvas.Top="60"/>
+
+        <!-- Email -->
+        <Label
+        Content="Email"
+        Foreground="LightGray"
+        FontSize="12"
+        Canvas.Left="275"
+        Canvas.Top="120"/>
+
+        <TextBox
+        x:Name="txtBoxEmail"
+        Width="180"
+        Height="30"
+        FontSize="13"
+        Canvas.Left="280"
+        Canvas.Top="140"/>
+
+        <!-- Password -->
+        <Label
+        Content="Password"
+        Foreground="LightGray"
+        FontSize="12"
+        Canvas.Left="275"
+        Canvas.Top="185"/>
+
+        <TextBox
+        x:Name="txtBoxPass"
+        Width="180"
+        Height="30"
+        FontSize="13"
+        Canvas.Left="280"
+        Canvas.Top="205"/>
+
+        <!-- Button -->
+        <Button
+        Content="Login"
+        Width="180"
+        Height="34"
+        FontSize="14"
+        FontWeight="SemiBold"
+        Background="#007ACC"
+        Foreground="White"
+        BorderThickness="0"
+        Cursor="Hand"
+        Canvas.Left="280"
+        Canvas.Top="255"/>
     </Canvas>
 </UserControl>

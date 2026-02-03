@@ -75,5 +75,20 @@ namespace PlateUpWinApp
         {
 
         }
+
+        private void Orders_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void FrameContent_Navigated(object sender, NavigationEventArgs e)
+        {
+
+        }
+
+        private void Login_Click(object sender, RoutedEventArgs e)
+        {
+            ViewLogin();
+        }
     }
 }
