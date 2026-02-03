@@ -20,17 +20,18 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="750"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="80">
             </RowDefinition>
-            <RowDefinition Height="*">
+            <RowDefinition Height="370">
             </RowDefinition>
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.ColumnSpan="2" Background="Beige" >
             <Canvas>
-                <Label  Content="PlateUp | Admin" Height="28" HorizontalAlignment="Left" Canvas.Left="422" Canvas.Top="29" VerticalAlignment="Center" RenderTransformOrigin="-0.052,0.357"/>
+                <Image Source="/Images/Logo.png" Width="90" Margin="15,-5,0,0"/>
+                <Label  Content="PlateUp | Admin" Height="28" HorizontalAlignment="Left" Canvas.Left="412" Canvas.Top="29" VerticalAlignment="Center" RenderTransformOrigin="-0.052,0.357"/>
                 <Button
                 x:Name="btnLogout" Content="Logout" FontSize="14" Foreground="Gray"
                 HorizontalAlignment="Left" VerticalAlignment="Center"  Padding="5" Width="78"
@@ -39,9 +40,22 @@
             </Canvas>
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="0" Background="Azure">
-            <TextBlock>
-                <Hyperlink x:Name="Reports">View Reports</Hyperlink>
-            </TextBlock>
+            <StackPanel Margin="40,15,0,0">
+                <TextBlock>
+                    <Hyperlink x:Name="Reports">View Reports</Hyperlink>
+                </TextBlock>
+                <TextBlock Margin="0,15,0,0">
+                    <Hyperlink x:Name="Menu" Click="Menu_Click">Manage Menu</Hyperlink>
+                </TextBlock>
+                <TextBlock Margin="0,15,0,0">
+                    <Hyperlink x:Name="FoodTypes" Click="FoodTypes_Click">Manage FoodTypes</Hyperlink>
+                </TextBlock>
+                
+            </StackPanel>
+
         </StackPanel>
+        <Frame x:Name="FrameContent" Grid.Row="1" Grid.Column="1" Background="#1c0a3e">
+
+        </Frame>
     </Grid>
 </Window>
