@@ -5,8 +5,173 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PlateUpWinApp.Frames"
              mc:Ignorable="d" 
-             d:DesignHeight="370" d:DesignWidth="750">
+             d:DesignHeight="540" d:DesignWidth="930">
     <Canvas>
-            
+
+        <!-- Title -->
+        <TextBlock Text="View Reports"
+                   FontSize="32"
+                   FontWeight="Bold"
+                   Foreground="#E0E1F1"
+                   FontFamily="Montserrat"
+                   Canvas.Left="360"
+                   Canvas.Top="30"/>
+
+        <!-- Orders & Income Card -->
+        <Border Canvas.Left="230"
+                Canvas.Top="100"
+                Width="470"
+                Height="170"
+                CornerRadius="25"
+                BorderThickness="1">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#f99fad" Offset="0"/>
+                    <GradientStop Color="#d588e1" Offset="0.5"/>
+                    <GradientStop Color="#7ea1fa" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+            <Border.Effect>
+                <DropShadowEffect Color="#000000" BlurRadius="20" ShadowDepth="5" Opacity="0.3"/>
+            </Border.Effect>
+
+            <StackPanel Margin="30,25">
+                <TextBlock Text="Orders &amp; Income"
+                           FontSize="24.4"
+                           FontWeight="SemiBold"
+                           Foreground="White"
+                           FontFamily="Montserrat"
+                           HorizontalAlignment="Center"
+                           Margin="0,0,0,15"/>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,10">
+                    <TextBlock Text="Select Date Range:"
+                               FontSize="15"
+                               FontWeight="SemiBold"
+                               Foreground="White"
+                               VerticalAlignment="Center"
+                               Margin="0,0,10,0"/>
+                    <DatePicker x:Name="datePickerRange"
+                                Width="150"
+                                Height="30"
+                                Background="White"
+                                BorderBrush="Transparent"
+                                FontSize="14"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock Text="Total Orders: "
+                               FontSize="18"
+                               FontWeight="SemiBold"
+                               Foreground="White"
+                               Margin="0,0,5,0"/>
+                    <TextBlock x:Name="txtOrders"
+                               Text="10"
+                               FontSize="18"
+                               FontWeight="Bold"
+                               Foreground="#FFD700"/>
+
+                    <TextBlock Text="Income: "
+                               FontSize="18"
+                               FontWeight="SemiBold"
+                               Foreground="White"
+                               Margin="40,0,5,0"/>
+                    <TextBlock x:Name="txtIncome"
+                               Text="300$"
+                               FontSize="18"
+                               FontWeight="Bold"
+                               Foreground="#7FFF00"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+        <!-- Most Favorite Meals Card -->
+        <Border Canvas.Left="100"
+                Canvas.Top="290"
+                Width="340"
+                Height="200"
+                CornerRadius="20"
+                BorderThickness="1">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#6366f1" Offset="0"/>
+                    <GradientStop Color="#a855f7" Offset="0.5"/>
+                    <GradientStop Color="#3b82f6" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+            <Border.Effect>
+                <DropShadowEffect Color="#000000" BlurRadius="20" ShadowDepth="5" Opacity="0.3"/>
+            </Border.Effect>
+
+            <StackPanel Margin="25,20">
+                <TextBlock Text="Most Favorite Meals"
+                           FontSize="20"
+                           FontWeight="SemiBold"
+                           Foreground="White"
+                           FontFamily="Montserrat"
+                           HorizontalAlignment="Center"
+                           Margin="0,0,0,15"/>
+
+                <StackPanel x:Name="mostFavoriteMeals">
+                    <TextBlock Text="1. Meal Name 1"
+                               FontSize="15"
+                               Foreground="White"
+                               Margin="20,5"/>
+                    <TextBlock Text="2. Meal Name 2"
+                               FontSize="15"
+                               Foreground="White"
+                               Margin="20,5"/>
+                    <TextBlock Text="3. Meal Name 3"
+                               FontSize="15"
+                               Foreground="White"
+                               Margin="20,5"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+        <!-- Least Favorite Meals Card -->
+        <Border Canvas.Left="490"
+                Canvas.Top="290"
+                Width="340"
+                Height="200"
+                CornerRadius="20"
+                BorderThickness="1">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#6366f1" Offset="0"/>
+                    <GradientStop Color="#a855f7" Offset="0.5"/>
+                    <GradientStop Color="#3b82f6" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+            <Border.Effect>
+                <DropShadowEffect Color="#000000" BlurRadius="20" ShadowDepth="5" Opacity="0.3"/>
+            </Border.Effect>
+
+            <StackPanel Margin="25,20">
+                <TextBlock Text="Least Favorite Meals"
+                           FontSize="20"
+                           FontWeight="SemiBold"
+                           Foreground="White"
+                           FontFamily="Montserrat"
+                           HorizontalAlignment="Center"
+                           Margin="0,0,0,15"/>
+
+                <StackPanel x:Name="leastFavoriteMeals">
+                    <TextBlock Text="1. Meal Name 1"
+                               FontSize="15"
+                               Foreground="White"
+                               Margin="20,5"/>
+                    <TextBlock Text="2. Meal Name 2"
+                               FontSize="15"
+                               Foreground="White"
+                               Margin="20,5"/>
+                    <TextBlock Text="3. Meal Name 3"
+                               FontSize="15"
+                               Foreground="White"
+                               Margin="20,5"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
     </Canvas>
 </UserControl>

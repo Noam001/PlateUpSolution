@@ -1,0 +1,220 @@
+﻿<UserControl x:Class="PlateUpWinApp.Frames.ManageFoodTypesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PlateUpWinApp.Frames"
+             mc:Ignorable="d" 
+             d:DesignHeight="540" d:DesignWidth="930">
+    <Canvas Background="Transparent">
+
+        <!-- Title -->
+        <Label Content="Manage Food Types"
+                   FontSize="32"
+                   FontWeight="Bold"
+                   Foreground="#E0E1F1"
+                   FontFamily="Montserrat"
+                   Canvas.Left="300"
+                   Canvas.Top="18"/>
+
+        <!-- Add Food Type Section -->
+        <StackPanel Canvas.Left="200" Canvas.Top="90" Orientation="Horizontal">
+
+            <!-- TextBox for new food type -->
+            <Border Width="400"
+                    Height="45"
+                    CornerRadius="10"
+                    Background="#1C1448"
+                    BorderBrush="#9497CD"
+                    BorderThickness="1"
+                    Margin="0,0,15,0">
+                <TextBox x:Name="txtNewFoodType"
+                         Background="Transparent"
+                         Foreground="#E0E1F1"
+                         BorderThickness="0"
+                         FontSize="14"
+                         VerticalContentAlignment="Center"
+                         Padding="15,0">
+                    <TextBox.Style>
+                        <Style TargetType="TextBox">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="TextBox">
+                                        <Grid>
+                                            <ScrollViewer x:Name="PART_ContentHost" />
+                                            <TextBlock Text="Add Food Type"
+                                                       Foreground="#5F5E84"
+                                                       FontSize="14"
+                                                       VerticalAlignment="Center"
+                                                       Margin="15,0"
+                                                       IsHitTestVisible="False"
+                                                       Visibility="Collapsed"
+                                                       x:Name="placeholder"/>
+                                        </Grid>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="Text" Value="">
+                                                <Setter TargetName="placeholder" Property="Visibility" Value="Visible" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </TextBox.Style>
+                </TextBox>
+            </Border>
+
+            <!-- Add Button -->
+            <Button x:Name="btnAddFoodType" Content="Add"
+                    Width="100"
+                    Height="45"
+                    FontSize="14"
+                    FontWeight="SemiBold"
+                    Foreground="#E0E1F1"
+                    BorderThickness="0"
+                    Cursor="Hand">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="btnBorder"
+                                Background="#7B68EE"
+                                CornerRadius="10"
+                                Padding="20,10">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="btnBorder" Property="Background" Value="#9D7FEA"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+
+        </StackPanel>
+
+        <!-- Food Types Table -->
+        <Border Canvas.Left="150"
+                Canvas.Top="165"
+                Width="630"
+                CornerRadius="15"
+                Background="#1C1448"
+                BorderBrush="#9497CD"
+                BorderThickness="1"
+                Padding="0">
+
+            <StackPanel>
+
+                <!-- Table Header -->
+                <Grid Height="50" Background="#281269">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="400"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="Food Type's Name"
+                               Grid.Column="0"
+                               FontSize="16"
+                               FontWeight="SemiBold"
+                               Foreground="#E0E1F1"
+                               VerticalAlignment="Center"
+                               Margin="30,0,0,0"/>
+
+                    <TextBlock Text="Actions"
+                               Grid.Column="1"
+                               FontSize="16"
+                               FontWeight="SemiBold"
+                               Foreground="#E0E1F1"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Center"/>
+                </Grid>
+
+                <!-- Separator Line -->
+                <Rectangle Height="1" Fill="#9497CD"/>
+
+                <!-- Food Type Items -->
+                <ScrollViewer Height="280" VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+                        <Grid Height="60" Background="Transparent">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="400"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="Food Type's Name 1"
+                                       Grid.Column="0"
+                                       FontSize="14"
+                                       Foreground="#D5CFF5"
+                                       VerticalAlignment="Center"
+                                       Margin="30,0,0,0"/>
+
+                            <StackPanel Grid.Column="1"
+                                        Orientation="Horizontal"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center">
+
+                                <Button x:Name="btnEdit1"
+                                        Content="Edit"
+                                        Width="70"
+                                        Height="32"
+                                        FontSize="12"
+                                        FontWeight="SemiBold"
+                                        Foreground="#E0E1F1"
+                                        BorderThickness="0"
+                                        Cursor="Hand"
+                                        Margin="0,0,10,0">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border x:Name="editBorder"
+                                                    Background="#4FC3F7"
+                                                    CornerRadius="6">
+                                                <ContentPresenter HorizontalAlignment="Center"
+                                                                  VerticalAlignment="Center"/>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="editBorder" Property="Background" Value="#29B6F6"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+
+                                <Button x:Name="btnDelete1"
+                                        Content="Delete"
+                                        Width="70"
+                                        Height="32"
+                                        FontSize="12"
+                                        FontWeight="SemiBold"
+                                        Foreground="#E0E1F1"
+                                        BorderThickness="0"
+                                        Cursor="Hand">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border x:Name="deleteBorder"
+                                                    Background="#FF6B9D"
+                                                    CornerRadius="6">
+                                                <ContentPresenter HorizontalAlignment="Center"
+                                                                  VerticalAlignment="Center"/>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="deleteBorder" Property="Background" Value="#F06292"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+
+                            </StackPanel>
+                        </Grid>
+
+                    </StackPanel>
+                </ScrollViewer>
+
+            </StackPanel>
+
+        </Border>
+
+    </Canvas>
+</UserControl>

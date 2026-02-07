@@ -6,143 +6,273 @@
         xmlns:local="clr-namespace:PlateUpWinApp"
         mc:Ignorable="d"
         Title="MainWindow" 
-        Height="450" Width="900"
+        Height="600" Width="1200"
         ResizeMode="NoResize"
-        WindowStyle="None" MouseDown="Window_MouseDown">
-    <!--<StackPanel Orientation="Horizontal" Width="800">
-        <StackPanel Orientation="Vertical" Width="180" Background="#FF150B48">
-            
-        </StackPanel>
-        <StackPanel Orientation="Horizontal" Width="600">
+        WindowStyle="None" 
+        MouseDown="Window_MouseDown"
+        Background="Transparent"
+        AllowsTransparency="True">
+    <Border CornerRadius="10" BorderThickness="1">
 
-        </StackPanel>
-    </StackPanel>-->
-    <Grid Background="#0B1026">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="150"/>
-            <ColumnDefinition Width="750"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="80"/>
-            <RowDefinition Height="370"/>
-        </Grid.RowDefinitions>
+        <Border.BorderBrush>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#6D2FFF" Offset="0"/>
+                <GradientStop Color="#FB539B" Offset="0.75"/>
+                <GradientStop Color="#836EFB" Offset="1"/>
+            </LinearGradientBrush>
+        </Border.BorderBrush>
 
-        <!-- Top Bar -->
-        <!-- Top Bar -->
-        <StackPanel Orientation="Horizontal"
-                    Grid.Row="0"
-                    Grid.ColumnSpan="2"
-                    Background="#12194A">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="270"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-            <Canvas>
-                <Image Source="/Images/Logo2.png" Width="90" Margin="15,-5,0,0"/>
+            <!-- Navigation Menu - הסיידבר משמאל -->
+            <Border CornerRadius="10" Grid.Column="0">
 
-                <Label Content="PlateUp | Admin"
-                       Foreground="White"
-                       FontSize="13"
-                       FontWeight="SemiBold"
-                       Canvas.Left="412"
-                       Canvas.Top="29"/>
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#24105F" Offset="0"/>
+                        <GradientStop Color="#210F55" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
 
-                <!-- Modern Logout Button -->
-                <Button x:Name="btnLogout"
-                        Content="Logout"
-                        FontSize="13"
-                        FontWeight="SemiBold"
-                        Foreground="White"
-                        Background="#2E3B72"
-                        BorderThickness="0"
-                        Padding="7,6"
-                        Width="78"
-                        Canvas.Left="802"
-                        Canvas.Top="26"
-                        Cursor="Hand">
-                </Button>
-            </Canvas>
-        </StackPanel>
+                <StackPanel>
 
-        <!-- Sidebar -->
-        <StackPanel Grid.Row="1"
-                    Grid.Column="0"
-                    Background="#0E1233">
+                    <!-- Logo -->
+                    <Image Source="/Images/AdminLogo.png" Margin="15,30,0,30" />
 
-            <Label x:Name="adminName"
-                   Content="Admin Name"
-                   Foreground="#FFFFFF"
-                   FontWeight="SemiBold"
-                   Margin="30,15,0,0"/>
+                    <!-- Menu Items -->
+                    <StackPanel Margin="0,0,0,0">
 
-            <StackPanel Margin="30,15,0,0">
-                <TextBlock>
-                    <Hyperlink x:Name="Reports"
-                               Foreground="#B0B0B0"
-                               TextDecorations="None">
-                        View Reports
-                    </Hyperlink>
-                </TextBlock>
+                        <!-- View Reports -->
+                        <TextBlock Margin="0,0,0,5">
+                            <Hyperlink x:Name="Reports"
+                                       Foreground="#9497CD"
+                                       TextDecorations="None"
+                                       Click="Reports_Click">
+                                <StackPanel Orientation="Horizontal" Margin="35,12,0,12">
+                                    <Image Source="/Images/report.png" Width="44"  Height="40" 
+                                     Stretch="Fill" Margin="0,0,15,0"/>
+                                    <TextBlock Text="View Reports" 
+                                               FontFamily="Montserrat"
+                                               FontWeight="Medium"
+                                               FontSize="16.4"
+                                               VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Hyperlink>
+                        </TextBlock>
 
-                <TextBlock Margin="0,15,0,0">
-                    <Hyperlink x:Name="Menu"
-                               Foreground="#B0B0B0"
-                               TextDecorations="None"
-                               Click="Menu_Click">
-                        Manage Menu
-                    </Hyperlink>
-                </TextBlock>
+                        <!-- Manage Menu -->
+                        <TextBlock Margin="0,0,0,5">
+                            <Hyperlink x:Name="Menu"
+                                       Foreground="#9497CD"
+                                       TextDecorations="None"
+                                       Click="Menu_Click">
+                                <StackPanel Orientation="Horizontal" Margin="35,12,0,12">
+                                    <Image Source="/Images/menu.png" Width="40" Height="40" Margin="0,0,17,0"
+                                           Stretch="Fill"/>
+                                    <TextBlock Text="Manage Menu" 
+                                               FontFamily="Montserrat"
+                                               FontWeight="Medium"
+                                               FontSize="16"
+                                               VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Hyperlink>
+                        </TextBlock>
 
-                <TextBlock Margin="0,15,0,0">
-                    <Hyperlink x:Name="FoodTypes"
-                               Foreground="#B0B0B0"
-                               TextDecorations="None"
-                               Click="FoodTypes_Click">
-                        Manage FoodTypes
-                    </Hyperlink>
-                </TextBlock>
+                        <!-- Manage FoodTypes -->
+                        <TextBlock Margin="0,0,0,5">
+                            <Hyperlink x:Name="FoodTypes"
+                                       Foreground="#9497CD"
+                                       TextDecorations="None"
+                                       Click="FoodTypes_Click">
+                                <StackPanel Orientation="Horizontal" Margin="35,12,0,12">
+                                    <Image Source="/Images/foodtype.png" Width="40" Height="40" Margin="0,0,17,0"
+                                           Stretch="Fill"/>
+                                    <TextBlock Text="Manage FoodTypes" 
+                                               FontFamily="Montserrat"
+                                               FontWeight="Medium"
+                                               FontSize="16"
+                                               VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Hyperlink>
+                        </TextBlock>
 
-                <TextBlock Margin="0,15,0,0">
-                    <Hyperlink x:Name="Orders"
-                               Foreground="#B0B0B0"
-                               TextDecorations="None"
-                               Click="Orders_Click">
-                        Manage Orders
-                    </Hyperlink>
-                </TextBlock>
+                        <!-- Manage Orders -->
+                        <TextBlock Margin="0,0,0,5">
+                            <Hyperlink x:Name="Orders"
+                                       Foreground="#9497CD"
+                                       TextDecorations="None"
+                                       Click="Orders_Click">
+                              <StackPanel Orientation="Horizontal" Margin="35,12,0,12">
+                                    <Image Source="/Images/order.png" Width="40" Height="40" Margin="0,0,17,0"
+                                           Stretch="Fill" />
+                                    <TextBlock Text="Manage Orders" 
+                                               FontFamily="Montserrat"
+                                               FontWeight="Medium"
+                                               FontSize="16"
+                                               VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Hyperlink>
+                        </TextBlock>
 
-                <TextBlock Margin="0,15,0,0">
-                    <Hyperlink x:Name="Cities"
-                               Foreground="#B0B0B0"
-                               TextDecorations="None"
-                               Click="FoodTypes_Click">
-                        Manage Cities
-                    </Hyperlink>
-                </TextBlock>
+                        <!-- Manage Cities -->
+                        <TextBlock Margin="0,0,0,5">
+                            <Hyperlink x:Name="Cities"
+                                       Foreground="#9497CD"
+                                       TextDecorations="None"
+                                       Click="Cities_Click">
+                                <StackPanel Orientation="Horizontal" Margin="35,12,0,12">
+                                    <Image Source="/Images/city.png" Width="40" Height="40" Margin="0,0,17,0"
+                                           Stretch="Fill"/>
+                                    <TextBlock Text="Manage Cities" 
+                                               FontFamily="Montserrat"
+                                               FontWeight="Medium"
+                                               FontSize="16"
+                                               VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Hyperlink>
+                        </TextBlock>
 
-                <TextBlock Margin="0,15,0,0">
-                    <Hyperlink x:Name="Reviews"
-                               Foreground="#B0B0B0"
-                               TextDecorations="None"
-                               Click="FoodTypes_Click">
-                        Manage Reviews
-                    </Hyperlink>
-                </TextBlock>
+                        <!-- Manage Reviews -->
+                        <TextBlock Margin="0,0,0,5">
+                            <Hyperlink x:Name="Reviews"
+                                       Foreground="#9497CD"
+                                       TextDecorations="None"
+                                       Click="Reviews_Click">
+                                <StackPanel Orientation="Horizontal" Margin="35,12,0,12">
+                                    <Image Source="/Images/review.png" Width="40" Height="40" Margin="0,0,17,0"
+                                           Stretch="Fill"/>
+                                    <TextBlock Text="Manage Reviews" 
+                                               FontFamily="Montserrat"
+                                               FontWeight="Medium"
+                                               FontSize="16"
+                                               VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Hyperlink>
+                        </TextBlock>
 
-                <TextBlock Margin="0,15,0,0">
-                    <Hyperlink x:Name="Login"
-                               Foreground="#B0B0B0"
-                               TextDecorations="None"
-                               Click="Login_Click">
-                        Login
-                    </Hyperlink>
-                </TextBlock>
-            </StackPanel>
-        </StackPanel>
+                        <!-- Login -->
+                        <TextBlock Margin="0,0,0,5">
+                            <Hyperlink x:Name="Login"
+                                       Foreground="#9497CD"
+                                       TextDecorations="None"
+                                       Click="Login_Click">
+                                <StackPanel Orientation="Horizontal" Margin="35,12,0,12">
+                                    <TextBlock Text="🔐" FontSize="22" Margin="0,0,20,0"/>
+                                    <TextBlock Text="Login" 
+                                               FontFamily="Montserrat"
+                                               FontWeight="Medium"
+                                               FontSize="16"
+                                               VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Hyperlink>
+                        </TextBlock>
 
-        <!-- Content -->
-        <Frame x:Name="FrameContent"
-               Grid.Row="1"
-               Grid.Column="1"
-               Background="#171F4F"
-               NavigationUIVisibility="Hidden"
-               Navigated="FrameContent_Navigated"/>
-    </Grid>
+                    </StackPanel>
+
+                </StackPanel>
+            </Border>
+
+            <!-- Main Section - האזור הראשי -->
+            <Border CornerRadius="0,10,10,0"
+                    Grid.Column="1">
+
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="1,1" EndPoint="0,0">
+                        <GradientStop Color="#0A003A" Offset="0"/>
+                        <GradientStop Color="#1C0E49" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="60"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Header Bar -->
+                    <Grid Grid.Row="0">
+                        <TextBlock x:Name="adminName"
+                                   Text="Admin Name"
+                                   VerticalAlignment="Center"
+                                   Margin="700,0,100,0"
+                                   Foreground="#D5CFF5"
+                                   FontSize="13"
+                                   FontWeight="SemiBold"/>
+
+                        <Button x:Name="btnLogout"
+                                Content="Logout"
+                                VerticalAlignment="Center"
+                                Margin="750,0,15,0"
+                                Width="80"
+                                Height="30"
+                                FontSize="12"
+                                FontWeight="SemiBold"
+                                Foreground="#E0E1F1"
+                                Background="#281269"
+                                BorderThickness="0"
+                                Cursor="Hand">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Background="{TemplateBinding Background}"
+                                            CornerRadius="5"
+                                            Padding="15,5">
+                                        <ContentPresenter HorizontalAlignment="Center"
+                                                          VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                        <Button x:Name="btnClose"
+                            Content="✕"
+                            HorizontalAlignment="Right"
+                            Margin="0,0,15,0"
+                            Width="40"
+                            Height="30"
+                            FontSize="18"
+                            FontWeight="Bold"
+                            Foreground="#E0E1F1"
+                            Background="Transparent"
+                            Cursor="Hand"
+                            Click="btnClose_Click">
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="Button">
+                                                <Border x:Name="xbtn" Background="{TemplateBinding Background}">
+                                                    <ContentPresenter HorizontalAlignment="Center"
+                                                  VerticalAlignment="Center"/>
+                                                </Border>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="xbtn" Property="Background" Value="red"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                    </Grid>
+
+                    <!-- Main Content Frame -->
+                    <Frame x:Name="FrameContent"
+                           Grid.Row="1"
+                           Background="Transparent"
+                           NavigationUIVisibility="Hidden"
+                           Navigated="FrameContent_Navigated"
+                           />
+
+                </Grid>
+
+            </Border>
+
+        </Grid>
+    </Border>
 </Window>
