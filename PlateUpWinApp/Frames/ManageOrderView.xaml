@@ -101,7 +101,7 @@
                     Canvas.Top="80"
                     Width="580">
 
-            <!-- Order 1 -->
+            <!-- Order -->
             <Border Margin="0,0,0,15"
                     CornerRadius="15"
                     BorderThickness="1"

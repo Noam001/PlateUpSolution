@@ -6,7 +6,98 @@
              xmlns:local="clr-namespace:PlateUpWinApp.Frames"
              mc:Ignorable="d" 
              d:DesignHeight="540" d:DesignWidth="930">
-    <Grid>
-            
-    </Grid>
+    <Canvas Background="Transparent">
+
+        <!-- Title -->
+        <Label Content="Manage Menu"
+                   FontSize="32"
+                   FontWeight="Bold"
+                   Foreground="#E0E1F1"
+                   FontFamily="Montserrat"
+                   Canvas.Left="350"
+                   Canvas.Top="16"/>
+
+        <!-- Search Box -->
+        <Border Canvas.Left="50"
+                Canvas.Top="80"
+                Width="205"
+                Height="35"
+                CornerRadius="17"
+                Background="#1C1448"
+                BorderBrush="#9497CD"
+                BorderThickness="1">
+            <Grid>
+                <TextBlock Text="🔍" 
+                           FontSize="16"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Left"
+                           Margin="12,0,0,0"
+                           Foreground="#9497CD"/>
+                <TextBox x:Name="txtSearchMeal"
+                         Background="Transparent"
+                         Foreground="#E0E1F1"
+                         BorderThickness="0"
+                         FontSize="13"
+                         VerticalContentAlignment="Center"
+                         Padding="35,0,10,0">
+                    <TextBox.Style>
+                        <Style TargetType="TextBox">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="TextBox">
+                                        <Grid>
+                                            <ScrollViewer x:Name="PART_ContentHost" />
+                                            <!-- טקסט המים (Watermark) -->
+                                            <TextBlock Text="Search Meal ID"
+                                               Foreground="#5F5E84"
+                                               FontSize="13"
+                                               VerticalAlignment="Center"
+                                               Margin="35,0,10,0"
+                                               IsHitTestVisible="False"
+                                               Visibility="Collapsed"
+                                               x:Name="watermarkLabel"/>
+                                        </Grid>
+                                        <ControlTemplate.Triggers>
+                                            <!-- מציג את טקסט המים רק כשהתיבה ריקה -->
+                                            <Trigger Property="Text" Value="">
+                                                <Setter TargetName="watermarkLabel" Property="Visibility" Value="Visible" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </TextBox.Style>
+                </TextBox>
+
+            </Grid>
+        </Border>
+
+        <!-- FoodType Filter -->
+        <TextBlock Text="Food Type"
+                   Canvas.Left="50"
+                   Canvas.Top="130"
+                   FontSize="14"
+                   Foreground="#D5CFF5"
+                   FontWeight="SemiBold"/>
+
+        <ComboBox x:Name="cmbFoodTypes"
+                  Canvas.Left="50"
+                  Canvas.Top="155"
+                  Width="200"
+                  Padding="10,6,0,6"
+                  FontSize="13"
+                  Background="#1C1448"
+                  Foreground="Black"
+                  BorderBrush="#9497CD"
+                  BorderThickness="1">
+            <ComboBoxItem Content="Select" IsSelected="True"/>
+            <ComboBoxItem Content="FoodTypes Options"/>
+        </ComboBox>
+        <!-- ADD ITEM -->
+        
+
+        <!-- Meals List -->
+       
+    </Canvas>
 </UserControl>

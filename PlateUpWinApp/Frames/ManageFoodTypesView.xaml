@@ -106,34 +106,30 @@
             <StackPanel>
 
                 <!-- Table Header -->
-                <Grid Height="50" Background="#281269">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="400"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <TextBlock Text="Food Type's Name"
-                               Grid.Column="0"
+                <Border Height="50" Background="#281269" CornerRadius="15">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Food Type Name"
                                FontSize="16"
                                FontWeight="SemiBold"
                                Foreground="#E0E1F1"
                                VerticalAlignment="Center"
                                Margin="30,0,0,0"/>
 
-                    <TextBlock Text="Actions"
-                               Grid.Column="1"
+                        <TextBlock Text="Actions" Margin="330,0,0,0"
                                FontSize="16"
                                FontWeight="SemiBold"
                                Foreground="#E0E1F1"
                                VerticalAlignment="Center"
                                HorizontalAlignment="Center"/>
-                </Grid>
+                    </StackPanel>
+                </Border>
 
                 <!-- Separator Line -->
                 <Rectangle Height="1" Fill="#9497CD"/>
 
                 <!-- Food Type Items -->
-                <ScrollViewer Height="280" VerticalScrollBarVisibility="Auto">
+                <!--מאפשר גלילה ומציג את פס הגלילה רק כאשר יש בו צורך-->
+                <ScrollViewer Height="280" VerticalScrollBarVisibility="Auto"> 
                     <StackPanel>
                         <Grid Height="60" Background="Transparent">
                             <Grid.ColumnDefinitions>

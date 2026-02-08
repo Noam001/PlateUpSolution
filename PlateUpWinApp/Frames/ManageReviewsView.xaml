@@ -6,7 +6,62 @@
              xmlns:local="clr-namespace:PlateUpWinApp.Frames"
              mc:Ignorable="d" 
              d:DesignHeight="540" d:DesignWidth="930">
-    <Grid>
-            
-    </Grid>
+    <Canvas>
+        <!-- Title -->
+        <Label Content="Manage Reviews"
+           FontSize="32"
+           FontWeight="Bold"
+           Foreground="#E0E1F1"
+           FontFamily="Montserrat"
+           Canvas.Left="330"
+           Canvas.Top="16"/>
+        
+        <StackPanel Canvas.Left="140" Canvas.Top="100" Width="700">
+
+            <!-- Review -->
+            <Border Margin="0,0,0,15" CornerRadius="15" BorderThickness="1" BorderBrush="#9497CD"
+                    Background="#1C1448" Padding="20,15">
+                <Grid>
+                    <StackPanel Orientation="Vertical">
+                        
+                        <!-- Left Side: Client Name,Date -->
+                        <TextBlock Text="Client Name" FontSize="17" 
+                                   FontWeight="Bold" Foreground="#E0E1F1" VerticalAlignment="Center"/>
+                        <TextBlock Text="Review Date" FontSize="16" 
+                                   FontWeight="SemiBold" Foreground="#E0E1F1" VerticalAlignment="Center"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="130,0,0,0">
+                    <!-- תגובת הלקוח -->
+                    <TextBlock Text="Review Comment"
+                                FontSize="14" VerticalAlignment="Center" Margin="40,0,0,0" Foreground="#D5CFF5"/>
+                        <!-- כוכבי דירוג -->
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="100,0,0,0">
+                        <TextBlock Text="⭐" FontSize="28" Foreground="#FFD700" Margin="2,0"/>
+                        <TextBlock Text="⭐" FontSize="28" Foreground="#FFD700" Margin="2,0"/>
+                        <TextBlock Text="⭐" FontSize="28" Foreground="#FFD700" Margin="2,0"/>
+                        <TextBlock Text="⭐" FontSize="28" Foreground="#FFD700" Margin="2,0"/>
+                        <TextBlock Text="⭐" FontSize="28" Foreground="#FFD700" Margin="2,0"/>
+                    </StackPanel>
+
+                     <!-- Delete Button -->
+                    <Button x:Name="btnDelete1" Content="🗑️" FontSize="20" FontWeight="SemiBold"
+                             Background="Transparent" Foreground="DimGray" BorderThickness="0"
+                             Cursor="Hand" VerticalAlignment="Center" Margin="80,0,0,0">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Background="{TemplateBinding Background}" CornerRadius="5"  Padding="10,5">
+                                        <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                </StackPanel>
+                </Grid>
+            </Border>
+
+        </StackPanel>
+
+    </Canvas>
 </UserControl>

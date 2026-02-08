@@ -29,7 +29,7 @@
             </Grid.ColumnDefinitions>
 
             <!-- Navigation Menu - הסיידבר משמאל -->
-            <Border CornerRadius="10" Grid.Column="0">
+            <Border CornerRadius="10,0,0,10" Grid.Column="0">
 
                 <Border.Background>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
