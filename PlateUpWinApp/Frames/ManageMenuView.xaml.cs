@@ -24,5 +24,31 @@ namespace PlateUpWinApp.Frames
         {
             InitializeComponent();
         }
+
+        private void btnUploadImage_Click(object sender, RoutedEventArgs e)
+        {
+            // פתיחת חלון לבחירת תמונה
+            Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
+            openFileDialog.Filter = "Image files (*.png;*.jpeg;*.jpg)|*.png;*.jpeg;*.jpg";
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                string filePath = openFileDialog.FileName;
+                // כאן תוכלי לשמור את הנתיב או להציג את התמונה
+                MessageBox.Show($"Selected image: {filePath}");
+            }
+        }
+
+        private void btnEditImage_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
+            openFileDialog.Filter = "Image files (*.png;*.jpeg;*.jpg)|*.png;*.jpeg;*.jpg";
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                string filePath = openFileDialog.FileName;
+                MessageBox.Show($"Selected image: {filePath}");
+            }
+        }
     }
 }

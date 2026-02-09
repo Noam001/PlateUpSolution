@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiClient", "WebApiClien
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAppPlateUp", "WebPlateUp\WebAppPlateUp.csproj", "{859CBD47-A492-4329-9D7E-7DAD38B66CFC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlateUpWinApp", "PlateUpWinApp\PlateUpWinApp.csproj", "{50CC4450-0116-4425-AA04-E2A34A75F38D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlateUpWpf", "PlateUpWinApp\PlateUpWpf.csproj", "{50CC4450-0116-4425-AA04-E2A34A75F38D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -48,5 +48,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E67CE6D5-58BC-4EDC-879A-B1A0C0A7ECD8}
 	EndGlobalSection
 EndGlobal
