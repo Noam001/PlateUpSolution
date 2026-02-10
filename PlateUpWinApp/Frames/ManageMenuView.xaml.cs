@@ -65,6 +65,7 @@ namespace PlateUpWinApp.Frames
             client.AddParameter("foodTypeId", foodTypeId);
             this.menuViewModel = await client.GetAsync();
             this.lvMeals.ItemsSource = this.menuViewModel.Meals;
+            this.cmbFoodTypes.ItemsSource = this.menuViewModel.FoodTypes;
             this.DataContext = this.menuViewModel;
 
         }
