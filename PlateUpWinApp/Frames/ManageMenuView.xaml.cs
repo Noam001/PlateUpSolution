@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Models;
+using WebApiClient;
 
 namespace PlateUpWinApp.Frames
 {
@@ -20,9 +22,12 @@ namespace PlateUpWinApp.Frames
     /// </summary>
     public partial class ManageMenuView : UserControl
     {
+        ManageMenuViewModel menuViewModel;
+
         public ManageMenuView()
         {
             InitializeComponent();
+            GetManageMenuViewModel();
         }
 
         private void btnUploadImage_Click(object sender, RoutedEventArgs e)
@@ -49,6 +54,19 @@ namespace PlateUpWinApp.Frames
                 string filePath = openFileDialog.FileName;
                 MessageBox.Show($"Selected image: {filePath}");
             }
+        }
+        private async Task GetManageMenuViewModel(string foodTypeId = "-1")
+        {
+            WebClient<ManageMenuViewModel> client = new WebClient<ManageMenuViewModel>();
+            client.Schema = "http";
+            client.Host = "localhost";
+            client.Port = 5035;
+            client.Path = "api/Admin/GetManageMenuViewModel";
+            client.AddParameter("foodTypeId", foodTypeId);
+            this.menuViewModel = await client.GetAsync();
+            this.lvMeals.ItemsSource = this.menuViewModel.Meals;
+            this.DataContext = this.menuViewModel;
+
         }
     }
 }

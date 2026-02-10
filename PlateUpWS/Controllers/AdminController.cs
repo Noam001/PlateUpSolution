@@ -114,7 +114,7 @@ namespace PlateUpWS
 
         //ניהול סוגי מנות- מחיקה, הוספה ועדכון
         [HttpGet]
-        public ManageMenuViewModel GetManageMenuViewModel(string foodTypeId = "-1", string mealNameSearch = "")
+        public ManageMenuViewModel GetManageMenuViewModel(string foodTypeId = "-1")
         {
             try
             {
@@ -123,18 +123,10 @@ namespace PlateUpWS
                 gmmvm.FoodTypes = repositoryFactory.FoodTypeRepository.GetAll();
 
                 // מקרה 1: לא נבחר שום סינון
-                if (foodTypeId == "-1" && mealNameSearch =="")
+                if (foodTypeId == "-1")
                     gmmvm.Meals = this.repositoryFactory.MealRepository.GetAll();
-
-                // --- מקרה 2: חיפוש לפי שם מנה ---
-                if (foodTypeId == "-1" && mealNameSearch != "")
-                {
-                    Meal meal = repositoryFactory.MealRepository.GetMealByName(mealNameSearch);
-                    gmmvm.Meals = new List<Meal>() { meal };
-                }
-
-                // --- מקרה 3: חיפוש לפי סוג מזון ---
-                else if (foodTypeId != "-1" && mealNameSearch == "")
+           
+                else
                 {
                     gmmvm.Meals = repositoryFactory.MealRepository.GetMealsByFoodType(foodTypeId);
                 }

@@ -1,0 +1,228 @@
+﻿<UserControl x:Class="PlateUpWpf.Frames.MealTemp"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PlateUpWpf.Frames"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Canvas>
+        <TextBlock Text="Menu"
+           FontSize="22" Canvas.Left="285"
+           FontWeight="SemiBold"
+           Foreground="#E0E1F1"
+           Margin="0,25,0,15">
+            <TextBlock.Style>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Canvas.Top" Value="250"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsExpanded, ElementName=expanderAddItem}" Value="False">
+                            <!-- כשה־Expander סגור -->
+                            <Setter Property="Canvas.Top" Value="120"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+
+        <!-- Menu Items List -->
+        <ScrollViewer Canvas.Left="285" x:Name="svMeals"
+              Width="620"
+              Height="280" VerticalScrollBarVisibility="Auto">
+            <ScrollViewer.Style>
+                <Style TargetType="ScrollViewer">
+                    <Setter Property="Canvas.Top" Value="320"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsExpanded, ElementName=expanderAddItem}"
+                             Value="False">
+                            <!-- כשה־Expander סגור -->
+                            <Setter Property="Canvas.Top" Value="190"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ScrollViewer.Style>
+            <StackPanel>
+
+                <!-- Menu Item Example (מנה אחת לדוגמה) -->
+                <Border Background="#1C1448"
+                BorderBrush="#9497CD"
+                BorderThickness="1"
+                CornerRadius="0"
+                Padding="10,15">
+                    <Grid>
+                        <!-- First Row: Image, Item Name, Description -->
+                        <StackPanel Orientation="Horizontal">
+
+                            <!-- Image Display -->
+                            <Border Width="90" Height="90"
+                            Background="#3A2F6F"
+                            CornerRadius="8"
+                            BorderBrush="#9497CD"
+                            BorderThickness="1"
+                            Cursor="Hand"
+                            Margin="0,0,15,0">
+                                <Button x:Name="btnEditImage"
+                                Background="Transparent"
+                                BorderThickness="0">
+                                    <StackPanel>
+                                        <TextBlock Text="🖼️" FontSize="30" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="Edit" FontSize="10" Foreground="#ADACD2" HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
+                            </Border>
+
+                            <!-- Item Name (Editable) -->
+                            <Border Width="120" Height="40"
+                            Background="#3A2F6F"
+                            CornerRadius="8"
+                            BorderBrush="#9497CD"
+                            BorderThickness="1"
+                            Margin="0,0,15,44">
+                                <TextBox x:Name="txtEditItemName"
+                                 Text="Item Name"
+                                 Background="Transparent"
+                                 Foreground="#E0E1F1"
+                                 BorderThickness="0"
+                                 FontSize="13"
+                                 VerticalContentAlignment="Center"
+                                 Padding="10"/>
+                            </Border>
+
+                            <!-- Description (Editable) -->
+                            <Border Width="250" Height="40" 
+                            Background="#3A2F6F"
+                            CornerRadius="8"
+                            BorderBrush="#9497CD"
+                            BorderThickness="1"
+                            Margin="0,0,15,44">
+                                <TextBox x:Name="txtEditDescription" 
+                                 Background="Transparent"
+                                 Foreground="#E0E1F1"
+                                 BorderThickness="0"
+                                 FontSize="11"
+                                 TextWrapping="Wrap"
+                                 AcceptsReturn="True"
+                                 VerticalScrollBarVisibility="Auto"
+                                 Padding="10">
+                                    <TextBox.Text>
+                                        Lorem ipsum dolor sit amet.
+                                    </TextBox.Text>
+                                </TextBox>
+                            </Border>
+
+                        </StackPanel>
+
+                        <!-- Second Row: Price, FoodType, Status, Update & Delete Buttons -->
+                        <StackPanel Orientation="Horizontal">
+
+                            <!-- Price (Editable) -->
+                            <Border Width="120" Height="40"
+                            Background="#3A2F6F"
+                            CornerRadius="8"
+                            BorderBrush="#9497CD"
+                            BorderThickness="1"
+                            Margin="105,46,15,0">
+                                <TextBox x:Name="txtEditPrice"
+                                 Text="Price"
+                                 Background="Transparent"
+                                 Foreground="#E0E1F1"
+                                 BorderThickness="0"
+                                 FontSize="13"
+                                 VerticalContentAlignment="Center"
+                                 Padding="10"/>
+                            </Border>
+
+                            <!-- FoodType (Editable) -->
+                            <ComboBox x:Name="cmbEditFoodType"
+                              Width="118" Height="36" 
+                              Margin="1.5,46,0,0" 
+                              Padding="13,10,0,0"
+                              FontSize="13"
+                              Background="#1C1448"
+                              Foreground="Black" 
+                              BorderBrush="#9497CD" 
+                              BorderThickness="1">
+                                <ComboBoxItem Content="Pizza" IsSelected="True"/>
+                                <ComboBoxItem Content="Burger"/>
+                                <ComboBoxItem Content="Pasta"/>
+                            </ComboBox>
+
+                            <!-- Status (Editable) -->
+                            <ComboBox x:Name="cmbEditStatus"
+                              Width="118" 
+                              Height="36"
+                              FontSize="13"
+                              Background="#3A2F6F"
+                              Foreground="Black"
+                              BorderBrush="#9497CD"
+                              BorderThickness="1"
+                              Margin="10,46,0,0"
+                              Padding="13,10,0,0">
+                                <ComboBoxItem Content="Available" IsSelected="True"/>
+                                <ComboBoxItem Content="Unavailable"/>
+                            </ComboBox>
+
+                            <!-- Update Button -->
+                            <Button x:Name="btnUpdate" 
+                            Margin="27,50,0,0"
+                            Content="Update"
+                            Width="70"
+                            Height="35"
+                            FontSize="12"
+                            FontWeight="SemiBold"
+                            Foreground="#E0E1F1"
+                            BorderThickness="0"
+                            Cursor="Hand">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border x:Name="btnBorder"
+                                        Background="#4FC3F7"
+                                        CornerRadius="6">
+                                            <ContentPresenter HorizontalAlignment="Center"
+                                                      VerticalAlignment="Center"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="btnBorder" Property="Background" Value="#29B6F6"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+
+                            <!-- Delete Button -->
+                            <Button x:Name="btnDelete" 
+                            Margin="-70,0,0,40"
+                            Content="Delete"
+                            Width="70"
+                            Height="35"
+                            FontSize="12"
+                            FontWeight="SemiBold"
+                            Foreground="#E0E1F1"
+                            BorderThickness="0"
+                            Cursor="Hand">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border x:Name="btnBorder"
+                                        Background="#FF6B9D"
+                                        CornerRadius="6">
+                                            <ContentPresenter HorizontalAlignment="Center"
+                                                      VerticalAlignment="Center"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="btnBorder" Property="Background" Value="#F06292"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+            </StackPanel>
+        </ScrollViewer>
+    </Canvas>
+</UserControl>

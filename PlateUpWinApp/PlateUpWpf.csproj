@@ -34,6 +34,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Models\Models.csproj" />
+    <ProjectReference Include="..\WebApiClient\WebApiClient.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Images\city.png" />
     <Resource Include="Images\Email.png" />
     <Resource Include="Images\lock.png" />

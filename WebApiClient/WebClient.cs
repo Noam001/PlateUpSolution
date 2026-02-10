@@ -97,7 +97,11 @@ namespace WebApiClient
                     if (responseMessage.IsSuccessStatusCode == true) //האם הבקשה הצליחה (קיבלה קוד 200
                     {
                         string result = await responseMessage.Content.ReadAsStringAsync();
-                        T data = JsonSerializer.Deserialize<T>(result); //העברת פורמט מגייסון לאובייקט הספציפי
+                        var options = new JsonSerializerOptions
+                        {
+                            PropertyNameCaseInsensitive = true
+                        };
+                        T data = JsonSerializer.Deserialize<T>(result,options); //העברת פורמט מגייסון לאובייקט הספציפי
                         return data;
                     }
                     else
