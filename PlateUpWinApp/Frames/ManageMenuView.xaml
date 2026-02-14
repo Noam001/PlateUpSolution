@@ -37,9 +37,9 @@
                   Background="#1C1448"
                   Foreground="Black"
                   BorderBrush="#9497CD"
-                  BorderThickness="1">
-            <ComboBoxItem Content="Select" IsSelected="True"/>
-            <ComboBoxItem Content="FoodTypes Options"/>
+                  BorderThickness="1"
+                  DisplayMemberPath="FoodTypeName"
+                  SelectedValuePath="FoodTypeId">
         </ComboBox>
         <!-- Add Meal -->
         <StackPanel Canvas.Left="285" Canvas.Top="80" Width="620">
@@ -221,9 +221,9 @@
                                       FontSize="13"
                                       Background="#1C1448"
                                       Foreground="Black" 
-                                      BorderBrush="#9497CD" BorderThickness="1">
-                                <ComboBoxItem Content="Select" IsSelected="True"/>
-                                <ComboBoxItem Content="FoodTypes Options"/>
+                                      BorderBrush="#9497CD" BorderThickness="1" 
+                                      DisplayMemberPath="FoodTypeName"
+                                      SelectedValuePath="FoodTypeId">
                             </ComboBox>
 
                             <!-- Status Dropdown -->
