@@ -3,9 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:PlateUpWinApp.Frames"
+             xmlns:local="clr-namespace:PlateUpWpf.Frames"
              mc:Ignorable="d" 
              d:DesignHeight="540" d:DesignWidth="930">
+    <UserControl.Resources>
+        <local:StarColorConverter x:Key="StarColorConverter"/>
+    </UserControl.Resources>
     <Canvas>
         <!-- Title -->
         <Label Content="Manage Reviews"
@@ -16,49 +19,74 @@
            Canvas.Left="330"
            Canvas.Top="16"/>
         
-        <StackPanel Canvas.Left="140" Canvas.Top="100" Width="700">
+        <StackPanel Canvas.Left="35" Canvas.Top="100" Width="860">
 
-            <!-- Review -->
+            <!-- Reviews -->
             <Border Margin="0,0,0,15" CornerRadius="15" BorderThickness="1" BorderBrush="#9497CD"
-                    Background="#1C1448" Padding="20,15">
-                <Grid>
-                    <StackPanel Orientation="Vertical">
-                        
-                        <!-- Left Side: Client Name,Date -->
-                        <TextBlock Text="Client Name" FontSize="17" 
-                                   FontWeight="Bold" Foreground="#E0E1F1" VerticalAlignment="Center"/>
-                        <TextBlock Text="Review Date" FontSize="16" 
-                                   FontWeight="SemiBold" Foreground="#E0E1F1" VerticalAlignment="Center"/>
-                </StackPanel>
+                    Background="#1C1448" Padding="6">
+                <ListView x:Name="lvReviews" Height="400" Background="Transparent" BorderBrush="Transparent" ScrollViewer.VerticalScrollBarVisibility="Disabled" >
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Border Margin="0,5"
+                                    Padding="15"
+                                    CornerRadius="10"
+                                    Background="#241A5A">
 
-                <StackPanel Orientation="Horizontal" Margin="130,0,0,0">
-                    <!-- תגובת הלקוח -->
-                    <TextBlock Text="Review Comment"
-                                FontSize="14" VerticalAlignment="Center" Margin="40,0,0,0" Foreground="#D5CFF5"/>
-                        <!-- כוכבי דירוג -->
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="100,0,0,0">
-                        <TextBlock Text="⭐" FontSize="28" Foreground="#FFD700" Margin="2,0"/>
-                        <TextBlock Text="⭐" FontSize="28" Foreground="#FFD700" Margin="2,0"/>
-                        <TextBlock Text="⭐" FontSize="28" Foreground="#FFD700" Margin="2,0"/>
-                        <TextBlock Text="⭐" FontSize="28" Foreground="#FFD700" Margin="2,0"/>
-                        <TextBlock Text="⭐" FontSize="28" Foreground="#FFD700" Margin="2,0"/>
-                    </StackPanel>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="180"/>
+                                        <ColumnDefinition Width="430"/>
+                                        <ColumnDefinition Width="130"/>
+                                        <ColumnDefinition Width="60"/>
+                                    </Grid.ColumnDefinitions>
 
-                     <!-- Delete Button -->
-                    <Button x:Name="btnDelete1" Content="🗑️" FontSize="20" FontWeight="SemiBold"
-                             Background="Transparent" Foreground="DimGray" BorderThickness="0"
-                             Cursor="Hand" VerticalAlignment="Center" Margin="80,0,0,0">
-                            <Button.Template>
-                                <ControlTemplate TargetType="Button">
-                                    <Border Background="{TemplateBinding Background}" CornerRadius="5"  Padding="10,5">
-                                        <ContentPresenter HorizontalAlignment="Center"
-                                              VerticalAlignment="Center"/>
-                                    </Border>
-                                </ControlTemplate>
-                            </Button.Template>
-                        </Button>
-                </StackPanel>
-                </Grid>
+                                    <!-- Client Name + Date -->
+                                    <StackPanel Grid.Column="0">
+                                        <TextBlock Text="{Binding ClientId}"
+                                                   FontSize="17"
+                                                   FontWeight="Bold"
+                                                   Foreground="#E0E1F1"/>
+                                        <TextBlock Text="{Binding ReviewDate}"
+                                                   FontSize="14"
+                                                   Foreground="#B8B9E3"/>
+                                    </StackPanel>
+
+                                    <!-- Review Comment -->
+                                    <TextBlock Grid.Column="1"
+                                               Text="{Binding ReviewComment}"
+                                               TextWrapping="Wrap"
+                                               FontSize="14"
+                                               Foreground="#D5CFF5"
+                                               VerticalAlignment="Center"/>
+
+                                    <!-- Rating Stars -->
+                                    <StackPanel Grid.Column="2"
+                                                Orientation="Horizontal"
+                                                VerticalAlignment="Center"
+                                                HorizontalAlignment="Center">
+
+                                        <TextBlock Text="★" FontSize="20" Foreground="{Binding ReviewRating, Converter={StaticResource StarColorConverter},ConverterParameter=1}"/>
+                                        <TextBlock Text="★" FontSize="20" Foreground="{Binding ReviewRating, Converter={StaticResource StarColorConverter},ConverterParameter=2}"/>
+                                        <TextBlock Text="★" FontSize="20" Foreground="{Binding ReviewRating, Converter={StaticResource StarColorConverter},ConverterParameter=3}"/>
+                                        <TextBlock Text="★" FontSize="20" Foreground="{Binding ReviewRating, Converter={StaticResource StarColorConverter},ConverterParameter=4}"/>
+                                        <TextBlock Text="★" FontSize="20" Foreground="{Binding ReviewRating, Converter={StaticResource StarColorConverter},ConverterParameter=5}"/>
+                                    </StackPanel>
+
+                                    <!-- Delete Button -->
+                                    <Button Grid.Column="3"
+                                            Content="🗑️"
+                                            FontSize="18"
+                                            Background="Transparent"
+                                            Foreground="DimGray"
+                                            BorderThickness="0"
+                                            Cursor="Hand"
+                                            VerticalAlignment="Center"/>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+
+                </ListView>
             </Border>
 
         </StackPanel>

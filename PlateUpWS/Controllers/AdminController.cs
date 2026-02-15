@@ -16,10 +16,16 @@ namespace PlateUpWS
             this.repositoryFactory = new RepositoryFactory();
         }
         [HttpGet]
-        public ReportsViewModel GetReports(string fromDate, string toDate)
+        public ReportsViewModel GetReports(string? fromDate=null, string? toDate=null)
         {
             try
+               
             {
+                if (fromDate==null && toDate==null)
+                {
+                    fromDate = DateTime.Now.AddDays(-1).ToShortDateString();
+                    toDate = DateTime.Now.AddDays(-1).ToShortDateString(); ;
+                }
                 this.repositoryFactory.ConnectDb();
                 ReportsViewModel reportsViewModel = new ReportsViewModel();
                 reportsViewModel.Top3MostOrderedMeals = this.repositoryFactory.MealRepository.GetTop3MostOrdered();
@@ -38,6 +44,33 @@ namespace PlateUpWS
                 this.repositoryFactory.DisconnectDb();
             }
         }
+
+
+        [HttpGet]
+        public OrderReport GetOrderReport(string? fromDate , string? toDate )
+        {
+            try
+
+            {
+              
+                this.repositoryFactory.ConnectDb();
+                OrderReport reportsViewModel = new OrderReport();
+                reportsViewModel.TotalOrdersInDateRange = this.repositoryFactory.OrderRepository.GetTotalOrdersInDateRange(fromDate, toDate);
+                reportsViewModel.TotalIncomeInDateRange = this.repositoryFactory.OrderRepository.GetTotalIncomeInDateRange(fromDate, toDate);
+                return reportsViewModel;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+            finally
+            {
+                this.repositoryFactory.DisconnectDb();
+            }
+        }
+
+
         //ניהול סוגי מזון- מחיקה, הוספה ועדכון
         [HttpGet]
         public List<FoodType> GetFoodTypes()
@@ -198,6 +231,25 @@ namespace PlateUpWS
         }
 
         //ניהול ערים- מחיקה, הוספה ועדכון
+        [HttpGet]
+        public List<City> GetCities()
+        {
+            try
+            {
+                this.repositoryFactory.ConnectDb();
+                return this.repositoryFactory.CityRepository.GetAll();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+            finally
+            {
+                this.repositoryFactory.DisconnectDb();
+            }
+        }
+
         [HttpPost]
         public bool AddCity(City city)
         {
@@ -347,6 +399,24 @@ namespace PlateUpWS
         }
 
         // מחיקת ביקורת
+        [HttpGet]
+        public List<Review> GetReviews()
+        {
+            try
+            {
+                this.repositoryFactory.ConnectDb();
+                return this.repositoryFactory.ReviewRepository.GetAll();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+            finally
+            {
+                this.repositoryFactory.DisconnectDb();
+            }
+        }
         [HttpGet]
         public bool RemoveReview(string reviewID)
         {

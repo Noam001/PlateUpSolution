@@ -51,12 +51,18 @@
                                Foreground="White"
                                VerticalAlignment="Center"
                                Margin="0,0,10,0"/>
-                    <DatePicker x:Name="datePickerRange"
-                                Width="150"
+                    <DatePicker x:Name="datePickerRangefrom"
+                                Width="120"
                                 Height="30"
                                 Background="White"
                                 BorderBrush="Transparent"
-                                FontSize="14"/>
+                                FontSize="14" SelectedDateChanged="datePickerRangefrom_SelectedDateChanged"/>
+                    <DatePicker x:Name="datePickerRangeto"
+                        Width="120"
+                        Height="30"
+                        Background="White"
+                        BorderBrush="Transparent"
+                        FontSize="14" SelectedDateChanged="datePickerRangeto_SelectedDateChanged"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">

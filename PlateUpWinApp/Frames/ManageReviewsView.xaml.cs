@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WebApiClient;
 
 namespace PlateUpWinApp.Frames
 {
@@ -20,9 +22,21 @@ namespace PlateUpWinApp.Frames
     /// </summary>
     public partial class ManageReviewsView : UserControl
     {
+        List<Review> reviews;
         public ManageReviewsView()
         {
             InitializeComponent();
+            GetReviews();
+        }
+        private async Task GetReviews()
+        {
+            WebClient<List<Review>> client = new WebClient<List<Review>>();
+            client.Schema = "http";
+            client.Host = "localhost";
+            client.Port = 5035;
+            client.Path = "api/Admin/GetReviews";
+            this.reviews = await client.GetAsync();
+            this.lvReviews.ItemsSource = this.reviews;
         }
     }
 }
