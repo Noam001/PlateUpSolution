@@ -1,0 +1,264 @@
+﻿<Window x:Class="PlateUpWpf.Frames.UpdateMeal"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PlateUpWpf.Frames"
+             mc:Ignorable="d" ResizeMode="NoResize"
+             Height="540" Width="930" Background="#151233">
+    <Canvas>
+
+        <!-- TITLE -->
+        <TextBlock Text="Update Meal"
+                   FontSize="28"
+                   FontWeight="SemiBold"
+                   Foreground="#E0E1F1"
+                   Canvas.Left="380"
+                   Canvas.Top="25"/>
+
+        <!-- MAIN CARD -->
+        <Border Width="838"
+                Height="390"
+                Background="#1C1448"
+                BorderBrush="#9497CD"
+                BorderThickness="1"
+                CornerRadius="12"
+                Padding="20"
+                Canvas.Left="40"
+                Canvas.Top="80" HorizontalAlignment="Left" VerticalAlignment="Center">
+
+            <Canvas>
+
+                <!-- IMAGE (LEFT SIDE) -->
+                <Border Width="320"
+                        Height="290"
+                        Background="#3A2F6F"
+                        BorderBrush="#9497CD"
+                        BorderThickness="1"
+                        CornerRadius="12"
+                        Canvas.Left="20"
+                        Canvas.Top="40">
+
+                    <Grid>
+                        <Image x:Name="AddImage"/>
+                        <Button x:Name="btnEditImage"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Click="btnEditImage_Click">
+                            <StackPanel VerticalAlignment="Center">
+                                <TextBlock Text="🖼️"
+                                           FontSize="50"
+                                           HorizontalAlignment="Center"/>
+                                <TextBlock Text="Edit Image"
+                                           FontSize="14"
+                                           Foreground="#ADACD2"
+                                           HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+                </Border>
+
+                <!-- RIGHT SIDE CONTENT -->
+
+                <!-- Meal Name -->
+                <TextBlock Text="Meal Name"
+                           Foreground="#ADACD2"
+                           FontSize="13"
+                           Canvas.Left="380"
+                           Canvas.Top="30"/>
+
+                <Border Width="350"
+                        Height="45"
+                        Background="#3A2F6F"
+                        BorderBrush="#9497CD"
+                        BorderThickness="1"
+                        CornerRadius="8"
+                        Canvas.Left="380"
+                        Canvas.Top="50">
+                    <TextBox x:Name="txtEditItemName"
+                             Text="Item Name"
+                             Background="Transparent"
+                             Foreground="#E0E1F1"
+                             BorderThickness="0"
+                             FontSize="18"
+                             Padding="10"/>
+                </Border>
+
+                <!-- Description -->
+                <TextBlock Text="Description"
+                           Foreground="#ADACD2"
+                           FontSize="13"
+                           Canvas.Left="380"
+                           Canvas.Top="110"/>
+
+                <Border Width="350"
+                        Height="90"
+                        Background="#3A2F6F"
+                        BorderBrush="#9497CD"
+                        BorderThickness="1"
+                        CornerRadius="8"
+                        Canvas.Left="380"
+                        Canvas.Top="130">
+                    <TextBox x:Name="txtEditDescription"
+                             Text="Lorem ipsum dolor sit amet."
+                             Background="Transparent"
+                             Foreground="#E0E1F1"
+                             BorderThickness="0"
+                             FontSize="13"
+                             TextWrapping="Wrap"
+                             AcceptsReturn="True"
+                             VerticalScrollBarVisibility="Auto"
+                             Padding="10"/>
+                </Border>
+
+                <!-- Price -->
+                <TextBlock Text="Price"
+                           Foreground="#ADACD2"
+                           FontSize="13"
+                           Canvas.Left="380"
+                           Canvas.Top="235"/>
+
+                <Border Width="110"
+                        Height="40"
+                        Background="#3A2F6F"
+                        BorderBrush="#9497CD"
+                        BorderThickness="1"
+                        CornerRadius="8"
+                        Canvas.Left="380"
+                        Canvas.Top="255">
+                    <TextBox x:Name="txtEditPrice"
+                             Text="Price"
+                             Background="Transparent"
+                             Foreground="#E0E1F1"
+                             BorderThickness="0"
+                             Padding="10"/>
+                </Border>
+
+                <!-- Food Type -->
+                <TextBlock Text="Food Type"
+                           Foreground="#ADACD2"
+                           FontSize="13"
+                           Canvas.Left="510"
+                           Canvas.Top="235"/>
+
+                <ListBox x:Name="cmbFoodTypes"
+                         
+                          Width="130"
+                          Height="40"
+                          Canvas.Left="510"
+                          Canvas.Top="255"
+                          Background="#3A2F6F"
+                          BorderBrush="#9497CD"
+                          Foreground="Black"
+                          DisplayMemberPath="FoodTypeName"
+                          SelectedValuePath="FoodTypeId"/>
+
+                <!-- Status -->
+                <TextBlock Text="Status"
+                           Foreground="#ADACD2"
+                           FontSize="13"
+                           Canvas.Left="660"
+                           Canvas.Top="235"/>
+
+                <ComboBox x:Name="cmbEditStatus"
+                          Width="130" Padding="10"
+                          Height="40"
+                          Canvas.Left="660"
+                          Canvas.Top="255"
+                          Background="#3A2F6F"
+                          BorderBrush="#9497CD"
+                          Foreground="Black">
+                    <ComboBoxItem Content="Available" IsSelected="True"/>
+                    <ComboBoxItem Content="Unavailable"/>
+                </ComboBox>
+
+                <!-- BUTTONS -->
+                <Button x:Name="btnUpdate"
+                        Content="Update"
+                        Width="110"
+                        Height="40"
+                        Background="#4FC3F7"
+                        Foreground="White"
+                        FontWeight="SemiBold"
+                        BorderThickness="0"
+                        Cursor="Hand"
+                        Canvas.Left="550"
+                        Canvas.Top="320" Click="btnSumbit_Click">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border"
+                Background="#FF6B9D"
+                CornerRadius="12">
+                                <!-- כאן אתה שולט על העיגול -->
+
+                                <ContentPresenter HorizontalAlignment="Center"
+              VerticalAlignment="Center"/>
+                            </Border>
+
+                            <ControlTemplate.Triggers>
+                                <!-- Hover Effect -->
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border"
+                        Property="Background"
+                        Value="#F06292"/>
+                                </Trigger>
+
+                                <!-- Press Effect -->
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="border"
+                        Property="Opacity"
+                        Value="0.8"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+                <Button x:Name="btnDelete"
+                        Content="Delete"
+                        Width="110"
+                        Height="40"
+                        Background="#FF6B9D"
+                        Foreground="White"
+                        FontWeight="SemiBold"
+                        BorderThickness="0"
+                        Cursor="Hand"
+                        Canvas.Left="680"
+                        Canvas.Top="320">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border"
+                                    Background="#FF6B9D"
+                                    CornerRadius="12">
+                                <!-- כאן אתה שולט על העיגול -->
+
+                                <ContentPresenter HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"/>
+                            </Border>
+
+                            <ControlTemplate.Triggers>
+                                <!-- Hover Effect -->
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border"
+                                            Property="Background"
+                                            Value="#F06292"/>
+                                </Trigger>
+
+                                <!-- Press Effect -->
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="border"
+                                            Property="Opacity"
+                                            Value="0.8"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+            </Canvas>
+        </Border>
+
+    </Canvas>
+</Window>

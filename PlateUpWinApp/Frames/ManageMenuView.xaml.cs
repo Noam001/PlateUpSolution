@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Models;
+using PlateUpWpf.Frames;
 using WebApiClient;
 
 namespace PlateUpWinApp.Frames
@@ -29,32 +30,6 @@ namespace PlateUpWinApp.Frames
             InitializeComponent();
             GetManageMenuViewModel();
         }
-
-        private void btnUploadImage_Click(object sender, RoutedEventArgs e)
-        {
-            // פתיחת חלון לבחירת תמונה
-            Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
-            openFileDialog.Filter = "Image files (*.png;*.jpeg;*.jpg)|*.png;*.jpeg;*.jpg";
-
-            if (openFileDialog.ShowDialog() == true)
-            {
-                string filePath = openFileDialog.FileName;
-                // כאן תוכלי לשמור את הנתיב או להציג את התמונה
-                MessageBox.Show($"Selected image: {filePath}");
-            }
-        }
-
-        private void btnEditImage_Click(object sender, RoutedEventArgs e)
-        {
-            Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
-            openFileDialog.Filter = "Image files (*.png;*.jpeg;*.jpg)|*.png;*.jpeg;*.jpg";
-
-            if (openFileDialog.ShowDialog() == true)
-            {
-                string filePath = openFileDialog.FileName;
-                MessageBox.Show($"Selected image: {filePath}");
-            }
-        }
         private async Task GetManageMenuViewModel(string foodTypeId = "-1")
         {
             WebClient<ManageMenuViewModel> client = new WebClient<ManageMenuViewModel>();
@@ -66,9 +41,14 @@ namespace PlateUpWinApp.Frames
             this.menuViewModel = await client.GetAsync();
             this.lvMeals.ItemsSource = this.menuViewModel.Meals;
             this.cmbFoodTypes.ItemsSource = this.menuViewModel.FoodTypes;
-            this.cmbFoodTypesAdd.ItemsSource = this.menuViewModel.FoodTypes;
             this.DataContext = this.menuViewModel;
 
+        }
+
+        private void AddMealButton_Click(object sender, RoutedEventArgs e)
+        {
+            UpdateMeal meal = new UpdateMeal();
+            bool? result = meal.ShowDialog();
         }
     }
 }

@@ -83,5 +83,19 @@ namespace PlateUpWS
         {
             this.dbContext.CloseConnection();
         }
+        public void Opentransaction()
+        {
+            this.dbContext.BeginTransaction();
+        }
+
+        public void Commit()
+        {
+            this.dbContext.Commit();    
+        }
+
+        public void RollBack()
+        {
+            this.dbContext.RollBack();
+        }
     }
 }

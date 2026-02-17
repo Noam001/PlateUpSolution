@@ -70,7 +70,6 @@ namespace PlateUpWS
             }
         }
 
-
         //ניהול סוגי מזון- מחיקה, הוספה ועדכון
         [HttpGet]
         public List<FoodType> GetFoodTypes()
@@ -147,6 +146,27 @@ namespace PlateUpWS
 
         //ניהול סוגי מנות- מחיקה, הוספה ועדכון
         [HttpGet]
+        public AddMealViewModel GetAddMealViewModel()
+        {
+            AddMealViewModel addMealView = new AddMealViewModel();
+            addMealView.Meal = null;
+            try
+            {
+                this.repositoryFactory.ConnectDb();
+                addMealView.FoodTypes = this.repositoryFactory.FoodTypeRepository.GetAll();
+                return addMealView;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+            finally
+            {
+                this.repositoryFactory.DisconnectDb();
+            }
+        }
+        [HttpGet]
         public ManageMenuViewModel GetManageMenuViewModel(string foodTypeId = "-1")
         {
             try
@@ -176,12 +196,17 @@ namespace PlateUpWS
             }
         }
         [HttpPost]
-        public bool AddMeal(Meal meal)
+        public bool AddMeal(AddMealViewModel meal, IFormFile file)
         {
             try
             {
                 this.repositoryFactory.ConnectDb();
-                return this.repositoryFactory.MealRepository.Create(meal);
+                this.repositoryFactory.Opentransaction();
+
+
+
+                this.repositoryFactory.Commit();
+                return true;
             }
             catch (Exception ex)
             {
