@@ -183,31 +183,31 @@
                         BorderThickness="0"
                         Cursor="Hand"
                         Canvas.Left="550"
-                        Canvas.Top="320" Click="btnSumbit_Click">
+                        Canvas.Top="320" Click="btnUpdate_Click">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <Border x:Name="border"
-                Background="#FF6B9D"
-                CornerRadius="12">
+                                    Background="#FF6B9D"
+                                    CornerRadius="12">
                                 <!-- כאן אתה שולט על העיגול -->
 
                                 <ContentPresenter HorizontalAlignment="Center"
-              VerticalAlignment="Center"/>
+                                                  VerticalAlignment="Center"/>
                             </Border>
 
                             <ControlTemplate.Triggers>
                                 <!-- Hover Effect -->
                                 <Trigger Property="IsMouseOver" Value="True">
                                     <Setter TargetName="border"
-                        Property="Background"
-                        Value="#F06292"/>
+                                            Property="Background"
+                                            Value="#F06292"/>
                                 </Trigger>
 
                                 <!-- Press Effect -->
                                 <Trigger Property="IsPressed" Value="True">
                                     <Setter TargetName="border"
-                        Property="Opacity"
-                        Value="0.8"/>
+                                            Property="Opacity"
+                                            Value="0.8"/>
                                 </Trigger>
                             </ControlTemplate.Triggers>
 

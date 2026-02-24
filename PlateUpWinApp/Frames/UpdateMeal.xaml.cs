@@ -65,7 +65,7 @@ namespace PlateUpWpf.Frames
             }
         }
 
-        private async Task btnSumbit_Click(object sender, RoutedEventArgs e)
+        private async void btnUpdate_Click(object sender, RoutedEventArgs e)
         {
             AddMealViewModel newMeal = new AddMealViewModel();
             newMeal.Meal.MealName = this.txtEditItemName.Text;
