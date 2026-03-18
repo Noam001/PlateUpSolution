@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    public class City
+    public class City : Model
     {
         int cityId;
         string cityName;
@@ -18,7 +18,7 @@ namespace Models
             set { cityId = value; } 
         }
         [Required(ErrorMessage = "You must enter city name")]
-        //[RegularExpression(@"^[א-ת]", ErrorMessage ="Text must be hebrew")]
+        [RegularExpression(@"^[א-ת\s]+$", ErrorMessage = "Text must be hebrew")]
         public string CityName
         {
             get { return cityName; } 

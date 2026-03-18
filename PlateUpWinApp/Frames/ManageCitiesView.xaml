@@ -72,7 +72,7 @@
                 FontWeight="SemiBold"
                 Foreground="#E0E1F1"
                 BorderThickness="0"
-                Cursor="Hand">
+                Cursor="Hand" Click="btnAddCity_Click">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <Border x:Name="btnBorder"
@@ -150,7 +150,7 @@
                                                 HorizontalAlignment="Center"
                                                 VerticalAlignment="Center">
 
-                                        <Button x:Name="btnEdit1"
+                                        <Button x:Name="btnEdit" Click="btnEdit_Click"
                                                 Content="Edit"
                                                 Width="70"
                                                 Height="32"
@@ -177,7 +177,7 @@
                                             </Button.Template>
                                         </Button>
 
-                                        <Button x:Name="btnDelete1"
+                                        <Button x:Name="btnDelete" Click="btnDelete_Click"
                                                 Content="Delete"
                                                 Width="70"
                                                 Height="32"

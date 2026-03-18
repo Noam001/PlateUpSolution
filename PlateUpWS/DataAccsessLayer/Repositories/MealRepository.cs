@@ -27,6 +27,32 @@ namespace PlateUpWS
 
             return this.dbContext.Insert(sql) > 0;
         }
+        public bool AddFoodTypeToMeal(int mealId, int foodtypeId)
+        {
+            string sql = @$"
+                INSERT INTO FoodTypesMeals(FoodTypeId, MealId)
+                VALUES
+                (
+                    @FoodTypeId, @MealId
+                )";
+
+            this.dbContext.AddParameter("@FoodTypeId", foodtypeId);
+            this.dbContext.AddParameter("@MealId", mealId);
+            return this.dbContext.Insert(sql) > 0;
+        }
+        public bool DeleteFoodTypeMeal(string mealId)
+        {
+            string sql = @"DELETE FROM FoodTypesMeals WHERE MealId = @MealId";
+            this.dbContext.AddParameter("@MealId", mealId);
+            return this.dbContext.Delete(sql) > 0;
+        }
+        public bool UpdateMealPhoto(int mealId, string photoName)
+        {
+            string sql = "UPDATE Meals SET MealPhoto = @PhotoName WHERE MealId = @MealId";
+            this.dbContext.AddParameter("@PhotoName", photoName);
+            this.dbContext.AddParameter("@MealId", mealId);
+            return this.dbContext.Update(sql) > 0;
+        }
         public bool Delete(string id)
         {
             string sql = @"DELETE FROM Meals WHERE MealId = @MealId";
@@ -117,7 +143,6 @@ namespace PlateUpWS
                 UPDATE Meals
                 SET 
                     MealName = @MealName,
-                    MealPhoto = @MealPhoto,
                     MealDescription = @MealDescription,
                     MealPrice = @MealPrice,
                     MealStatus = @MealStatus
@@ -126,11 +151,24 @@ namespace PlateUpWS
 
             
             this.dbContext.AddParameter("@MealName", item.MealName);
-            this.dbContext.AddParameter("@MealPhoto", item.MealPhoto);
             this.dbContext.AddParameter("@MealDescription", item.MealDescription);
             this.dbContext.AddParameter("@MealPrice", item.MealPrice);
             this.dbContext.AddParameter("@MealStatus", item.MealStatus);
             this.dbContext.AddParameter("@MealId", item.MealId);
+            return this.dbContext.Update(sql) > 0;
+        }
+        public bool UpdateFoodTypeMeal(int mealId, int foodTypeId) // changing to diffrent foodtype for meal
+        {
+            string sql = @$"
+                UPDATE FoodTypesMeals
+                SET 
+                    FoodTypeId = @FoodTypeId
+                WHERE 
+                    MealId = @MealId";
+
+
+            this.dbContext.AddParameter("@FoodTypeId", foodTypeId);
+            this.dbContext.AddParameter("@MealId", mealId);
             return this.dbContext.Update(sql) > 0;
         }
         public List<Meal> GetTop3MostOrdered()
@@ -163,14 +201,20 @@ namespace PlateUpWS
         public List<Meal> GetTop3LeastOrderedMeals()
         {
             string sql = $@"
-                         SELECT TOP 3 Meals.MealId, Meals.MealName, Meals.MealPhoto, Meals.MealDescription,
-                         Meals.MealPrice, Meals.MealStatus,
-                              SUM(MealsOrders.Quantity) AS TotalOrdered
+                         SELECT TOP 3 
+                                Meals.MealId,
+                                Meals.MealName,
+                                Meals.MealPhoto,
+                                Meals.MealDescription,
+                                Meals.MealPrice,
+                                Meals.MealStatus,
+                         SUM(MealsOrders.Quantity) AS TotalOrdered
                          FROM Meals
-                         INNER JOIN MealsOrders ON Meals.MealId = MealsOrders.MealId
+                         INNER JOIN MealsOrders 
+                               ON Meals.MealId = MealsOrders.MealId
                          GROUP BY Meals.MealId, Meals.MealName, Meals.MealPhoto, Meals.MealDescription,
                          Meals.MealPrice, Meals.MealStatus
-                         ORDER BY SUM(MealsOrders.Quantity) ASC";
+                         ORDER BY SUM(MealsOrders.Quantity) ASC, Meals.MealId ASC";
             List<Meal> meals = new List<Meal>();
             using (IDataReader reader = this.dbContext.Select(sql))
             {
@@ -181,6 +225,17 @@ namespace PlateUpWS
                 }
             }
             return meals;
+        }
+
+        public string GetMealPhotoById(int mealId)
+        {
+            string sql = @"SELECT MealPhoto FROM Meals WHERE MealId = @MealId";
+            this.dbContext.AddParameter("@MealId", mealId);
+            using (IDataReader reader = this.dbContext.Select(sql))
+            {
+                reader.Read();
+                return reader["MealPhoto"].ToString();
+            }
         }
     }
 }

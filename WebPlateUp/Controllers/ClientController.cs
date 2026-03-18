@@ -73,6 +73,18 @@ namespace WebPlateUp.Controllers
             ViewBag.ErrorMessage = "Review Request faild, Try Again.";
             return View("HomePage", "Guest");
         }
+        [HttpGet]
+        public IActionResult DeleteReview(string reviewId)
+        {
+            WebClient<bool> client = new WebClient<bool>();
+            client.Schema = "http";
+            client.Host = "localhost";
+            client.Port = 5035;
+            client.Path = "api/Client/RemoveReview";
+            client.AddParameter("reviewID", reviewId);
+            bool success = client.Get();
+            return RedirectToAction("HomePage", "Guest");
+        }
         [HttpPost]
         public IActionResult UpdateProfile(Client client)
         {

@@ -34,7 +34,12 @@ namespace PlateUpWS
             this.dbContext.AddParameter("@OrderId", id);
             return this.dbContext.Delete(sql) > 0;
         }
-
+        public bool DeleteFromMealsOrders(string id)
+        {
+            string sql = @"DELETE FROM MealsOrders WHERE OrderId = @OrderId";
+            this.dbContext.AddParameter("@OrderId", id);
+            return this.dbContext.Delete(sql) > 0;
+        }
         public List<Order> GetAll()
         {
             List<Order> orders = new List<Order>();
@@ -57,9 +62,26 @@ namespace PlateUpWS
             this.dbContext.AddParameter("@OrderId", id);
             using (IDataReader reader = this.dbContext.Select(sql))
             {
-                reader.Read();
-                return this.modelFactory.OrderCreator.CreateModel(reader);
+                if(reader.Read())
+                   return this.modelFactory.OrderCreator.CreateModel(reader);
+                return null;
             }
+        }
+        public List<Meal> GetMealsFromOrder(string orderId)
+        {
+            List<Meal> meals = new List<Meal>();
+            string sql = @"SELECT FROM MealsOrders 
+                           WHERE OrderID = @OrderId";
+            this.dbContext.AddParameter("@OrderID", orderId);
+            using (IDataReader reader = this.dbContext.Select(sql))
+            {
+                while (reader.Read())
+                {
+                    meals.Add(this.modelFactory.MealCreator.CreateModel(reader));
+                }
+            }
+
+            return meals;
         }
         public List<Order> GetOrdersByStatus(bool? orderStatus)
         {
@@ -198,12 +220,23 @@ namespace PlateUpWS
             this.dbContext.AddParameter("@OrderId", orderId);
             return this.dbContext.Update(sql) > 0;
         }
-        public CartViewModel GetCart(string clientId)
+        public CartViewModel GetCart(string clientId, string orderId)
         {
-            string sql = @"SELECT Meals.MealId, Meals.MealName, MealsOrders.Quantity, MealsOrders.OrderID, MealsOrders.MealPrice, MealsOrders.MealNotes, Orders.ClientId, Orders.OrderStatus
-                           FROM Orders INNER JOIN (Meals INNER JOIN MealsOrders ON Meals.MealId = MealsOrders.MealID) ON Orders.OrderId = MealsOrders.OrderID
-                           WHERE Orders.ClientId = @ClientId AND Orders.OrderStatus = False;";
-            this.dbContext.AddParameter("@ClientId", clientId);
+            string sql = @"SELECT Meals.MealId, Meals.MealName, Meals.MealPhoto, MealsOrders.Quantity, MealsOrders.OrderID, MealsOrders.MealPrice, MealsOrders.MealNotes, Orders.ClientId, Orders.OrderStatus
+                FROM Orders INNER JOIN (Meals INNER JOIN MealsOrders ON Meals.MealId = MealsOrders.MealID) ON Orders.OrderId = MealsOrders.OrderID ";
+
+            if (!string.IsNullOrEmpty(orderId))
+            {
+                sql += "WHERE Orders.OrderId = @OrderId";
+                this.dbContext.AddParameter("@OrderId", orderId);
+            }
+            else
+            {
+                sql += "WHERE Orders.ClientId = @ClientId AND Orders.OrderStatus = False";
+                this.dbContext.AddParameter("@ClientId", clientId);
+            }
+
+
             List<CartItem> cartItems = new List<CartItem>();
             double totalPrice = 0;
             using (IDataReader reader = this.dbContext.Select(sql))
@@ -214,6 +247,7 @@ namespace PlateUpWS
                     {
                         MealId = Convert.ToInt32(reader["MealId"]),
                         MealName = reader["MealName"].ToString(),
+                        MealPhoto = reader["MealPhoto"].ToString(),
                         Quantity = Convert.ToInt32(reader["Quantity"]),
                         OrderID = Convert.ToInt32(reader["OrderID"]),
                         MealPrice = Convert.ToDouble(reader["MealPrice"]),
@@ -249,7 +283,7 @@ namespace PlateUpWS
                           FROM Orders
                           WHERE 
                                CDate(Orders.OrderDate) 
-                          BETWEEN CDate('2025-09-05') AND CDate('2025-09-09');";
+                          BETWEEN CDate(@FromDate) AND CDate(@ToDate);";
             this.dbContext.AddParameter("@FromDate", fromDate);
             this.dbContext.AddParameter("@ToDate", toDate);
             int totalOrders = 0;

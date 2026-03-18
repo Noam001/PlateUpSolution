@@ -190,7 +190,7 @@ namespace PlateUpWS
             try
             {
                 this.repositoryFactory.ConnectDb();
-                CartViewModel vm = this.repositoryFactory.OrderRepository.GetCart(clientId);
+                CartViewModel vm = this.repositoryFactory.OrderRepository.GetCart(clientId,"");
                 return vm;
             }
             catch (Exception ex)

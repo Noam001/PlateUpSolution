@@ -49,7 +49,18 @@ namespace PlateUpWS
                 return this.modelFactory.FoodTypeCreator.CreateModel(reader);
             }
         }
-
+        public FoodType GetFTByMealId(int mealId)
+        {
+            string sql = @"SELECT * FROM FoodTypesMeals WHERE MealId = @MealId";
+            this.dbContext.AddParameter("@MealId", mealId);
+            string foodTypeId = "";
+            using (IDataReader reader = this.dbContext.Select(sql))
+            {
+                reader.Read();
+                foodTypeId = reader["FoodTypeId"].ToString();
+            }
+            return GetById(foodTypeId);
+        }
         public bool Update(FoodType item)
         {
             string sql = @"UPDATE FoodTypes

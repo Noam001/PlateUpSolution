@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media.Imaging;
 
@@ -16,7 +17,6 @@ namespace PlateUpWpf.Frames
             string url = $"http://localhost:5035/DataImages/{value.ToString()}";
             if (value == null)
                 return null;
-
             try
             {
                 return new BitmapImage(new Uri(url, UriKind.Absolute));

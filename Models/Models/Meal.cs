@@ -8,14 +8,14 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Models
 {
-    public class Meal
+    public class Meal : Model
     {
         int mealId;
         string mealName;
         string mealPhoto;
         string mealDescription;
         double mealPrice;
-        string mealStatus;
+        bool mealStatus;
 
         public int MealId
         {
@@ -53,7 +53,7 @@ namespace Models
         }
         [MealStatusAttribute(ErrorMessage = "Meal status must be either 'Available' or 'Unavailable")]
         [Required(ErrorMessage = "You must set the meal availability status")]
-        public string MealStatus
+        public bool MealStatus
         {
             get { return this.mealStatus; }
             set { this.mealStatus = value; }

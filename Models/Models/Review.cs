@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    public class Review
+    public class Review : Model
     {
         int reviewId;
         string clientId;
@@ -32,7 +32,7 @@ namespace Models
             set { this.reviewDate = value; }
         }
         [Required(ErrorMessage = "You must enter your review comment")]
-        [StringLength(200, MinimumLength = 4, ErrorMessage = "Review must be at least 4 characters and max 250 characters")]
+        [StringLength(200, MinimumLength = 4, ErrorMessage = "Review must be at least 4 characters and max 200 characters")]
         public string ReviewComment
         {
             get { return this.reviewComment; }

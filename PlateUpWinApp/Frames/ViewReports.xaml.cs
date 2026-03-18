@@ -14,6 +14,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WebApiClient;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+
 
 namespace PlateUpWinApp.Frames
 {
@@ -23,6 +25,7 @@ namespace PlateUpWinApp.Frames
     public partial class ViewReports : UserControl
     {
         ReportsViewModel reportsViewModel;
+        OrderReport orderReport;
         DateTime? dateFrom;
         DateTime? dateTo;  
         public ViewReports()
@@ -30,16 +33,17 @@ namespace PlateUpWinApp.Frames
             InitializeComponent();
             GetReports();
         }
-        private async Task GetReports(string foodTypeId = "-1")
+        private async Task GetReports(string? fromDate = null, string? toDate = null)
         {
             WebClient<ReportsViewModel> client = new WebClient<ReportsViewModel>();
             client.Schema = "http";
             client.Host = "localhost";
             client.Port = 5035;
-            client.Path = "api/Admin/GetManageMenuViewModel";
-            client.AddParameter("foodTypeId", foodTypeId);
+            client.Path = "api/Admin/GetReports";
+            client.AddParameter("fromDate", fromDate);
+            client.AddParameter("toDate", toDate);
             this.reportsViewModel = await client.GetAsync();
-            
+
             this.DataContext = this.reportsViewModel;
 
         }
@@ -49,17 +53,40 @@ namespace PlateUpWinApp.Frames
             this.dateFrom = this.datePickerRangefrom.SelectedDate;
         }
 
-        private void datePickerRangeto_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        private async void datePickerRangeto_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            this.dateTo = this.datePickerRangefrom.SelectedDate;
-            if(dateFrom <= this.dateTo)
-            {
-                string theDatefrom = dateFrom.ToString().Substring(0,10);
-                string theDateto = dateFrom.ToString().Substring(0,10);
+            this.dateTo = this.datePickerRangeto.SelectedDate;
 
-                MessageBox.Show($"All right {theDatefrom}>{theDateto}");
+            // בדיקה שנבחרו שני תאריכים
+            if (this.dateFrom == null)
+            {
+                MessageBox.Show("Please select a From date as well.", "Missing Date");
+                this.datePickerRangeto.SelectedDate = null;
+                return;
             }
-            
-        } 
+
+            // בדיקה ש-FROM לפני TO
+            if (this.dateFrom > this.dateTo)
+            {
+                MessageBox.Show("The 'From' date must be before the 'To' date.", "Invalid Date Range");
+                this.datePickerRangeto.SelectedDate = null;
+                this.dateTo = null;
+                return;
+            }
+
+            WebClient<OrderReport> client = new WebClient<OrderReport>();
+            client.Schema = "http";
+            client.Host = "localhost";
+            client.Port = 5035;
+            client.Path = "api/Admin/GetOrderReport";
+            client.AddParameter("fromDate", this.dateTo.ToString());
+            client.AddParameter("toDate", this.dateFrom.ToString());
+            this.orderReport = await client.GetAsync();
+
+            this.reportsViewModel.TotalOrdersInDateRange = this.orderReport.TotalOrdersInDateRange;
+            this.reportsViewModel.TotalIncomeInDateRange = this.orderReport.TotalIncomeInDateRange;
+            this.DataContext = null;
+            this.DataContext = this.reportsViewModel;
+        }
     }
 }

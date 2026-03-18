@@ -17,6 +17,7 @@ namespace Models
     {
         public int OrderID { get; set; }
         public string MealName { get; set; }
+        public string MealPhoto { get; set; }
         public double MealPrice { get; set; }
     }
 }

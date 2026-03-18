@@ -10,7 +10,7 @@ namespace Test
     {
         static void Main(string[] args)
         {
-            string date = DateTime.Now.ToString("HH:mm");
+            string date = DateTime.Today.ToString("dd/MM/yyyy");
             Console.WriteLine(date);
             Console.ReadLine();
         }

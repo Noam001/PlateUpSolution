@@ -146,3 +146,20 @@ button:hover {
     margin-top: 10px;
     font-family: 'Open Sans', sans-serif;
 }
+/* הביקורת של הלקוח המחובר */
+
+/* כפתור המחיקה */
+.delete-btn {
+    background: transparent;
+    position:absolute;
+    border: none;
+    font-size: 27px;
+    cursor: pointer;
+    margin-left:322px;
+    margin-top:-15px;
+    transition: transform 0.2s;
+}
+
+.delete-btn:hover {
+    transform: scale(1.2);
+}

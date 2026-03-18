@@ -36,7 +36,11 @@ namespace PlateUpWS
         public List<Review> GetAll()
         {
             List<Review> reviews = new List<Review>();
-            string sql = @"SELECT * FROM Reviews";
+            string sql = @"SELECT * FROM Reviews 
+                            ORDER BY 
+                                Right(ReviewDate, 4) DESC, 
+                                Mid(ReviewDate, 4, 2) DESC,
+                                Left(ReviewDate, 2) DESC";
             using (IDataReader reader = this.dbContext.Select(sql))
             {
                 while (reader.Read())

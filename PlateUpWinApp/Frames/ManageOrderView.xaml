@@ -33,7 +33,7 @@
                            HorizontalAlignment="Left"
                            Margin="12,0,0,0"
                            Foreground="#9497CD"/>
-                <TextBox x:Name="txtSearchOrder"
+                <TextBox x:Name="txtSearchOrder" TextChanged="txtSearchOrder_TextChanged"
                          Background="Transparent"
                          Foreground="#E0E1F1"
                          BorderThickness="0"
@@ -81,7 +81,7 @@
                    Foreground="#D5CFF5"
                    FontWeight="SemiBold"/>
 
-        <ComboBox x:Name="cmbOrderStatus"
+        <ComboBox x:Name="cmbOrderStatus" SelectionChanged="cmbOrderStatus_SelectionChanged"
                   Canvas.Left="50"
                   Canvas.Top="155"
                   Width="200"
@@ -91,143 +91,142 @@
                   Foreground="Black"
                   BorderBrush="#9497CD"
                   BorderThickness="1">
-            <ComboBoxItem Content="Select" IsSelected="True"/>
+            <ComboBoxItem Content="All" IsSelected="True"/>
             <ComboBoxItem Content="Completed"/>
-            <ComboBoxItem Content="Cancelled"/>
+            <ComboBoxItem Content="Pending"/>
         </ComboBox>
 
         <!-- Order List -->
-        <StackPanel Canvas.Left="320"
-                    Canvas.Top="80"
-                    Width="580">
+        <ListView x:Name="lvOrders" Canvas.Left="320" BorderBrush="Transparent"
+                    Canvas.Top="80" Height="460" Background="Transparent"
+                    Width="600" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Border Margin="0,0,0,15"
+                            CornerRadius="15"
+                            BorderThickness="1"
+                            BorderBrush="#9497CD"
+                            Background="#1C1448"
+                            Padding="26,15">
+                        <StackPanel Orientation="Horizontal">
 
-            <!-- Order -->
-            <Border Margin="0,0,0,15"
-                    CornerRadius="15"
-                    BorderThickness="1"
-                    BorderBrush="#9497CD"
-                    Background="#1C1448"
-                    Padding="20,15">
-                <StackPanel Orientation="Horizontal">
-                    
-                    <!-- Left Side: Order Number -->
-                    <TextBlock Text="#1"
-                               FontSize="18"
-                               FontWeight="Bold"
-                               Foreground="#E0E1F1"
-                               VerticalAlignment="Center"
-                               Width="60"/>
-                    
-                    <!-- Status Dropdown -->
-                    <ComboBox x:Name="cmbStatus1"
-                                  Width="150"
-                                  Padding="10,6,0,6"
-                                  FontSize="12"
-                                  Background="#281269"
-                                  BorderBrush="#9497CD"
-                                  BorderThickness="1"                     
-                                  VerticalAlignment="Center">
-                            <ComboBoxItem Content="Current Status" IsSelected="True"/>
-                            <ComboBoxItem Content="Completed"/>
-                            <ComboBoxItem Content="Cancelled"/>
-                    </ComboBox>
+                            <!-- Left Side: Order Id -->
+                            <TextBlock Text="{Binding OrderId}"
+                                       FontSize="18"
+                                       FontWeight="Bold"
+                                       Foreground="#E0E1F1"
+                                       VerticalAlignment="Center"
+                                       Width="60"/>
 
-                    <!-- Total Price -->
-                    <TextBlock Text="Total: [price]"
-                               FontSize="14" VerticalAlignment="Center" Margin="40,0,0,0"
-                               Foreground="#D5CFF5"/>
-                    
+                            <!-- Status Dropdown -->
+                            <ComboBox x:Name="cmbStatus1"
+                                      Width="150"
+                                      Padding="10,6,0,6"
+                                      FontSize="12"
+                                      Background="#281269"
+                                      BorderBrush="#9497CD"
+                                      BorderThickness="1"                     
+                                      VerticalAlignment="Center" 
+                                      SelectedValuePath="Tag"
+                                      SelectedValue="{Binding OrderStatus}">
+                                <ComboBoxItem Content="Completed" Tag="True"/>
+                                <ComboBoxItem Content="Pending" Tag="False"/>
+                            </ComboBox>
 
-                    <!-- Right Side: Action Buttons-->
-                    <StackPanel Orientation="Vertical"
-                                HorizontalAlignment="Right"
-                                Margin="50,0,0,0">
-                        
-                        <!-- Update Status Button -->
-                        <Button x:Name="btnUpdateStatus1"
-                                Content="Update Status"
-                                Width="110"
-                                Height="30"
-                                FontSize="12"
-                                FontWeight="SemiBold"
-                                Foreground="#E0E1F1"
-                                Background="#7B68EE"
-                                BorderThickness="0"
-                                Cursor="Hand"
-                                Margin="0,0,0,8">
-                            <Button.Template>
-                                <ControlTemplate TargetType="Button">
-                                    <Border x:Name="updatebtn" Background="{TemplateBinding Background}"
-                                            CornerRadius="8"
-                                            Padding="10,5">
-                                        <ContentPresenter HorizontalAlignment="Center"
-                                                          VerticalAlignment="Center"/>
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter TargetName="updatebtn" Property="Background" Value="#9D7FEA"/>
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Button.Template>
-                        </Button>
+                            <!-- ClientId -->
+                            <TextBlock Text="{Binding ClientId}"
+                                       FontSize="14" VerticalAlignment="Center" Margin="40,0,0,0" Width="90"
+                                       Foreground="#D5CFF5"/>
+                            
+                            <!-- Right Side: Action Buttons-->
+                            <StackPanel Orientation="Vertical" Margin="20,0,0,0">
 
-                        <!-- View Details Button -->
-                        <Button x:Name="btnViewDetails1"
-                                Content="View Details"
-                                Width="110"
-                                Height="30"
-                                FontSize="12"
-                                FontWeight="SemiBold"
-                                Foreground="#E0E1F1"
+                                <!-- Update Status Button -->
+                                <Button x:Name="btnUpdateStatus" Click="btnUpdateStatus_Click"
+                                        Content="Update Status"
+                                        Width="110"
+                                        Height="30"
+                                        FontSize="12"
+                                        FontWeight="SemiBold"
+                                        Foreground="#E0E1F1"
+                                        Background="#7B68EE"
+                                        BorderThickness="0"
+                                        Cursor="Hand"
+                                        Margin="0,0,0,8">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border x:Name="updatebtn" Background="{TemplateBinding Background}"
+                                                    CornerRadius="8"
+                                                    Padding="10,5">
+                                                <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="updatebtn" Property="Background" Value="#9D7FEA"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+
+                                <!-- View Details Button -->
+                                <Button x:Name="btnViewDetails" Click="btnViewDetails_Click"
+                                        Content="View Details"
+                                        Width="110"
+                                        Height="30"
+                                        FontSize="12"
+                                        FontWeight="SemiBold"
+                                        Foreground="#E0E1F1"
+                                        Background="#4FC3F7"
+                                        BorderThickness="0" 
+                                        Cursor="Hand">
+
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border x:Name="border"
                                 Background="#4FC3F7"
-                                BorderThickness="0" 
-                                Cursor="Hand">
+                                CornerRadius="5" Padding="10,5">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="border" Property="Background" Value="#29B6F6"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                            </StackPanel>
 
-                            <Button.Template>
-                                <ControlTemplate TargetType="Button">
-                                    <Border x:Name="border"
-                                            Background="#4FC3F7"
-                                            CornerRadius="5" Padding="10,5">
-                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter TargetName="border" Property="Background" Value="#29B6F6"/>
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Button.Template>
-                        </Button>
-                    </StackPanel>
+                            <!-- Delete Button (בצד) -->
+                            <Button x:Name="btnDelete" Click="btnDelete_Click"
+                                    Content="🗑️"
+                                    FontSize="20"
+                                    FontWeight="SemiBold"
+                                    Background="Transparent"
+                                    Foreground="DimGray"
+                                    BorderThickness="0"
+                                    Cursor="Hand"
+                                    VerticalAlignment="Center"
+                                    Margin="10,0,0,0">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}"
+                                                CornerRadius="5"
+                                                Padding="10,5">
+                                            <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
 
-                    <!-- Delete Button (בצד) -->
-                    <Button x:Name="btnDelete1"
-                            Content="🗑️"
-                            FontSize="20"
-                            FontWeight="SemiBold"
-                            Background="Transparent"
-                            Foreground="DimGray"
-                            BorderThickness="0"
-                            Cursor="Hand"
-                            VerticalAlignment="Center"
-                            Margin="10,0,0,0">
-                        <Button.Template>
-                            <ControlTemplate TargetType="Button">
-                                <Border Background="{TemplateBinding Background}"
-                                        CornerRadius="5"
-                                        Padding="10,5">
-                                    <ContentPresenter HorizontalAlignment="Center"
-                                                      VerticalAlignment="Center"/>
-                                </Border>
-                            </ControlTemplate>
-                        </Button.Template>
-                    </Button>
-
-                </StackPanel>
-            </Border>
-
-        </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
 
     </Canvas>
 

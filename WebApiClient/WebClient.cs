@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Text.Json;
@@ -101,7 +102,7 @@ namespace WebApiClient
                         {
                             PropertyNameCaseInsensitive = true
                         };
-                        T data = JsonSerializer.Deserialize<T>(result,options); //העברת פורמט מגייסון לאובייקט הספציפי
+                       T data = JsonSerializer.Deserialize<T>(result,options); //העברת פורמט מגייסון לאובייקט הספציפי
                         return data;
                     }
                     else
@@ -138,7 +139,7 @@ namespace WebApiClient
                 StringContent stringContent = new StringContent(jsondata, Encoding.UTF8, "application/json");
                 multipartFormDataContent.Add(stringContent, "data");
                 StreamContent fileContent = new StreamContent(file);
-                multipartFormDataContent.Add(fileContent, "file", "fileName");
+                multipartFormDataContent.Add(fileContent, "file", "file");
                 requestMessage.Content = multipartFormDataContent;
                 using (HttpResponseMessage responseMessage = this.httpClient.SendAsync(requestMessage).Result)
                 {
@@ -191,13 +192,13 @@ namespace WebApiClient
             {
                 requestMessage.Method = HttpMethod.Post;
                 requestMessage.RequestUri = this.uriBuilder.Uri;
-                MultipartFormDataContent multipartFormDataContent = new MultipartFormDataContent();
-                string jsondata = JsonSerializer.Serialize(data);
-                StringContent stringContent = new StringContent(jsondata, Encoding.UTF8, "application/json");
-                multipartFormDataContent.Add(stringContent, "data");
+                MultipartFormDataContent multipartContent = new MultipartFormDataContent();
+                string jsonData = JsonSerializer.Serialize(data);
+                StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
+                multipartContent.Add(stringContent, "data");
                 StreamContent fileContent = new StreamContent(file);
-                multipartFormDataContent.Add(fileContent, "file", "fileName");
-                requestMessage.Content = multipartFormDataContent;
+                multipartContent.Add(fileContent, "file", "fileName");
+                requestMessage.Content = multipartContent;
                 using (HttpResponseMessage responseMessage = await this.httpClient.SendAsync(requestMessage))
                 {
                     return responseMessage.IsSuccessStatusCode;

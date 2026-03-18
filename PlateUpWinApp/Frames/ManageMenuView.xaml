@@ -28,7 +28,7 @@
                    Foreground="#D5CFF5"
                    FontWeight="SemiBold"/>
 
-        <ComboBox x:Name="cmbFoodTypes"
+        <ComboBox x:Name="cmbFoodTypes" SelectionChanged="cmbFoodTypes_SelectionChanged"
                   Canvas.Left="30"
                   Canvas.Top="95"
                   Width="200"
@@ -40,25 +40,45 @@
                   BorderThickness="1"
                   DisplayMemberPath="FoodTypeName"
                   SelectedValuePath="FoodTypeId">
+            
         </ComboBox>
         <Button Content="Add New Meal"
-                Width="90"
-                Height="35"
+                Width="120" Height="45"
                 Canvas.Top="150" Canvas.Left="30"
-                VerticalAlignment="Center"
-                Foreground="#E0E1F1" Click="AddMealButton_Click"
-                BorderThickness="0"
+                Foreground="White" 
+                FontWeight="Bold"
+                Click="AddMealButton_Click"
                 Cursor="Hand">
             <Button.Template>
                 <ControlTemplate TargetType="Button">
-                    <Border Background="#4FC3F7"
-                    CornerRadius="6">
-                        <ContentPresenter HorizontalAlignment="Center"
+                    <Border x:Name="border" 
+                            Background="#1A1A2E" 
+                            CornerRadius="10" 
+                            BorderThickness="2">
+
+                        <!-- הגדרת המברשת ההדרגתית למסגרת -->
+                        <Border.BorderBrush>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Color="#6D2FFF" Offset="0"/>
+                                <GradientStop Color="#FB539B" Offset="0.75"/>
+                                <GradientStop Color="#836EFB" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.BorderBrush>
+
+                        <ContentPresenter HorizontalAlignment="Center" 
                                   VerticalAlignment="Center"/>
                     </Border>
+
+                    <ControlTemplate.Triggers>
+                        <!-- אפקט Hover עדין למסגרת או לרקע -->
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="#252545"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Button.Template>
         </Button>
+
 
         <!-- Menu Title -->
         <TextBlock Text="Menu"
@@ -114,7 +134,7 @@
                                        TextTrimming="CharacterEllipsis"/>
 
                             <!-- View -->
-                            <Button Content="View"
+                            <Button Content="View" Click="ViewUpdateBtn"
                                     Width="70"
                                     Height="35"
                                     Margin="90,0,10,0"
@@ -134,7 +154,7 @@
                             </Button>
 
                             <!-- Update -->
-                            <Button Content="Update"
+                            <Button Content="Update" Click="ViewUpdateBtn"
                                     Width="70"
                                     Height="35"
                                     Margin="0,0,10,0"
@@ -154,7 +174,7 @@
                             </Button>
 
                             <!-- Delete -->
-                            <Button Content="Delete"
+                            <Button Content="Delete" Click="DeleteBtn_Click" 
                                     Width="70"
                                     Height="35"
                                     VerticalAlignment="Center"

@@ -54,6 +54,7 @@ namespace PlateUpWS
         public IDataReader Select(string sql)
         {
             this.command.CommandText = sql;
+            this.command.Transaction = this.transaction;
             IDataReader datareader = this.command.ExecuteReader();
             this.command.Parameters.Clear();
             return datareader;
@@ -66,6 +67,7 @@ namespace PlateUpWS
         private int ChangeDb(string sql)
         {
             this.command.CommandText = sql;
+            this.command.Transaction = this.transaction;
             int records = this.command.ExecuteNonQuery();
             this.command.Parameters.Clear();
             return records;
@@ -77,9 +79,11 @@ namespace PlateUpWS
         public Object GetValue(string sql)
         {
             this.command.CommandText = sql;
+            this.command.Transaction = this.transaction;
             object value = this.command.ExecuteScalar(); // מקבלים ממסד נתונים ערך אחד בלבד
             this.command.Parameters.Clear();
             return value;
         }
+
     }
 }

@@ -10,7 +10,7 @@
         ResizeMode="NoResize"
         WindowStyle="None" 
         MouseDown="Window_MouseDown"
-        Background="Transparent"
+        Background="Transparent" WindowStartupLocation="CenterScreen"
         AllowsTransparency="True">
     <Border CornerRadius="10" BorderThickness="1">
 
@@ -47,7 +47,8 @@
                     <StackPanel Margin="0,0,0,0">
 
                         <!-- View Reports -->
-                        <TextBlock Margin="0,0,0,5">
+                        <Border x:Name="BorderReports" Background="Transparent">
+                            <TextBlock Margin="0,0,0,5">
                             <Hyperlink x:Name="Reports"
                                        Foreground="#9497CD"
                                        TextDecorations="None"
@@ -63,26 +64,30 @@
                                 </StackPanel>
                             </Hyperlink>
                         </TextBlock>
+                        </Border>
 
                         <!-- Manage Menu -->
-                        <TextBlock Margin="0,0,0,5">
-                            <Hyperlink x:Name="Menu"
-                                       Foreground="#9497CD"
-                                       TextDecorations="None"
-                                       Click="Menu_Click">
-                                <StackPanel Orientation="Horizontal" Margin="35,12,0,12">
-                                    <Image Source="/Images/menu.png" Width="40" Height="40" Margin="0,0,17,0"
-                                           Stretch="Fill"/>
-                                    <TextBlock Text="Manage Menu" 
-                                               FontFamily="Montserrat"
-                                               FontWeight="Medium"
-                                               FontSize="16"
-                                               VerticalAlignment="Center"/>
-                                </StackPanel>
-                            </Hyperlink>
-                        </TextBlock>
+                        <Border x:Name="MenuBorder">
+                            <TextBlock Margin="0,0,0,5">
+                                <Hyperlink x:Name="Menu"
+                                           Foreground="#9497CD"
+                                           TextDecorations="None"
+                                           Click="Menu_Click">
+                                    <StackPanel Orientation="Horizontal" Margin="35,12,0,12">
+                                        <Image Source="/Images/menu.png" Width="40" Height="40" Margin="0,0,17,0"
+                                               Stretch="Fill"/>
+                                        <TextBlock Text="Manage Menu" 
+                                                   FontFamily="Montserrat"
+                                                   FontWeight="Medium"
+                                                   FontSize="16"
+                                                   VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Hyperlink>
+                            </TextBlock>
+                        </Border>
 
                         <!-- Manage FoodTypes -->
+                        <Border x:Name="FoodTypesBorder">
                         <TextBlock Margin="0,0,0,5">
                             <Hyperlink x:Name="FoodTypes"
                                        Foreground="#9497CD"
@@ -99,8 +104,10 @@
                                 </StackPanel>
                             </Hyperlink>
                         </TextBlock>
+                        </Border>
 
                         <!-- Manage Orders -->
+                        <Border x:Name="OrdersBorder">
                         <TextBlock Margin="0,0,0,5">
                             <Hyperlink x:Name="Orders"
                                        Foreground="#9497CD"
@@ -117,8 +124,10 @@
                                 </StackPanel>
                             </Hyperlink>
                         </TextBlock>
+                        </Border>
 
                         <!-- Manage Cities -->
+                        <Border x:Name="CitiesBorder">
                         <TextBlock Margin="0,0,0,5">
                             <Hyperlink x:Name="Cities"
                                        Foreground="#9497CD"
@@ -135,8 +144,10 @@
                                 </StackPanel>
                             </Hyperlink>
                         </TextBlock>
+                        </Border>
 
                         <!-- Manage Reviews -->
+                        <Border x:Name="ReviewsBorder">
                         <TextBlock Margin="0,0,0,5">
                             <Hyperlink x:Name="Reviews"
                                        Foreground="#9497CD"
@@ -153,8 +164,10 @@
                                 </StackPanel>
                             </Hyperlink>
                         </TextBlock>
+                        </Border>
 
                         <!-- Login -->
+                        <Border x:Name="LoginBorder">
                         <TextBlock Margin="0,0,0,5">
                             <Hyperlink x:Name="Login"
                                        Foreground="#9497CD"
@@ -170,7 +183,7 @@
                                 </StackPanel>
                             </Hyperlink>
                         </TextBlock>
-
+                        </Border>
                     </StackPanel>
 
                 </StackPanel>

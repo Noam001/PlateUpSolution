@@ -58,11 +58,11 @@
                                 BorderBrush="Transparent"
                                 FontSize="14" SelectedDateChanged="datePickerRangefrom_SelectedDateChanged"/>
                     <DatePicker x:Name="datePickerRangeto"
-                        Width="120"
-                        Height="30"
-                        Background="White"
-                        BorderBrush="Transparent"
-                        FontSize="14" SelectedDateChanged="datePickerRangeto_SelectedDateChanged"/>
+                                Width="120"
+                                Height="30" 
+                                Background="White"
+                                BorderBrush="Transparent"
+                                FontSize="14" SelectedDateChanged="datePickerRangeto_SelectedDateChanged"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
@@ -71,8 +71,7 @@
                                FontWeight="SemiBold"
                                Foreground="White"
                                Margin="0,0,5,0"/>
-                    <TextBlock x:Name="txtOrders"
-                               Text="10"
+                    <TextBlock Text="{Binding TotalOrdersInDateRange}"
                                FontSize="18"
                                FontWeight="Bold"
                                Foreground="#FFD700"/>
@@ -82,8 +81,8 @@
                                FontWeight="SemiBold"
                                Foreground="White"
                                Margin="40,0,5,0"/>
-                    <TextBlock x:Name="txtIncome"
-                               Text="300$"
+
+                    <TextBlock Text="{Binding TotalIncomeInDateRange, StringFormat={}{0}$}"
                                FontSize="18"
                                FontWeight="Bold"
                                Foreground="#7FFF00"/>
@@ -118,20 +117,16 @@
                            HorizontalAlignment="Center"
                            Margin="0,0,0,15"/>
 
-                <StackPanel x:Name="mostFavoriteMeals">
-                    <TextBlock Text="1. Meal Name 1"
-                               FontSize="15"
-                               Foreground="White"
-                               Margin="20,5"/>
-                    <TextBlock Text="2. Meal Name 2"
-                               FontSize="15"
-                               Foreground="White"
-                               Margin="20,5"/>
-                    <TextBlock Text="3. Meal Name 3"
-                               FontSize="15"
-                               Foreground="White"
-                               Margin="20,5"/>
-                </StackPanel>
+                <ItemsControl ItemsSource="{Binding Top3MostOrderedMeals}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding MealName}"
+                           FontSize="16"
+                           Foreground="White" 
+                           Margin="20,5"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
             </StackPanel>
         </Border>
 
@@ -162,20 +157,16 @@
                            HorizontalAlignment="Center"
                            Margin="0,0,0,15"/>
 
-                <StackPanel x:Name="leastFavoriteMeals">
-                    <TextBlock Text="1. Meal Name 1"
-                               FontSize="15"
-                               Foreground="White"
-                               Margin="20,5"/>
-                    <TextBlock Text="2. Meal Name 2"
-                               FontSize="15"
-                               Foreground="White"
-                               Margin="20,5"/>
-                    <TextBlock Text="3. Meal Name 3"
-                               FontSize="15"
-                               Foreground="White"
-                               Margin="20,5"/>
-                </StackPanel>
+                <ItemsControl ItemsSource="{Binding Top3LeastOrderedMeals}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding MealName}"
+                           FontSize="16"
+                           Foreground="White"
+                           Margin="20,5"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
             </StackPanel>
         </Border>
 

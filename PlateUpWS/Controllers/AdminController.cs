@@ -1,7 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Models;
+using Models.ViewModels;
+using System.Text.Json;
+using System.IO;
 
 namespace PlateUpWS
 {
@@ -143,12 +147,30 @@ namespace PlateUpWS
                 this.repositoryFactory.DisconnectDb();
             }
         }
+        [HttpGet]
+        public FoodType GetFoodTypeByMealId(int mealId)
+        {
+            try
+            {
+                this.repositoryFactory.ConnectDb();
+                return this.repositoryFactory.FoodTypeRepository.GetFTByMealId(mealId);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+            finally
+            {
+                this.repositoryFactory.DisconnectDb();
+            }
+        }
 
         //ניהול סוגי מנות- מחיקה, הוספה ועדכון
         [HttpGet]
-        public AddMealViewModel GetAddMealViewModel()
+        public MealViewModel GetAddMealViewModel()
         {
-            AddMealViewModel addMealView = new AddMealViewModel();
+            MealViewModel addMealView = new MealViewModel();
             addMealView.Meal = null;
             try
             {
@@ -196,20 +218,35 @@ namespace PlateUpWS
             }
         }
         [HttpPost]
-        public bool AddMeal(AddMealViewModel meal, IFormFile file)
+        public bool AddMeal()
         {
+            string jsonString = Request.Form["data"];
+            MealViewModel meal = JsonSerializer.Deserialize<MealViewModel>(jsonString);
+            IFormFile file = Request.Form.Files[0];
             try
             {
                 this.repositoryFactory.ConnectDb();
                 this.repositoryFactory.Opentransaction();
 
+                this.repositoryFactory.MealRepository.Create(meal.Meal);
 
+                int mealId = Convert.ToUInt16(this.repositoryFactory.GetLastInsertedId());
+                this.repositoryFactory.MealRepository.AddFoodTypeToMeal(mealId, meal.FoodTypes.First().FoodTypeId);
+
+                //Image saving logic here
+                this.repositoryFactory.MealRepository.UpdateMealPhoto(mealId, mealId + meal.Meal.MealPhoto);
+                using (var stream = new FileStream(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "DataImages", 
+                                                                           mealId + meal.Meal.MealPhoto), FileMode.Create))
+                {
+                    file.CopyTo(stream);
+                }
 
                 this.repositoryFactory.Commit();
                 return true;
             }
             catch (Exception ex)
             {
+                this.repositoryFactory.RollBack();
                 Console.WriteLine(ex.Message);
                 return false;
             }
@@ -219,15 +256,49 @@ namespace PlateUpWS
             }
         }
         [HttpPost]
-        public bool UpdateMeal(Meal meal)
+        public bool UpdateMeal()
         {
+            string jsonString = Request.Form["data"];
+            MealViewModel meal = JsonSerializer.Deserialize<MealViewModel>(jsonString);    //MealPhoto = format.     
             try
             {
                 this.repositoryFactory.ConnectDb();
-                return this.repositoryFactory.MealRepository.Update(meal);
+                this.repositoryFactory.Opentransaction();
+
+                string oldPhoto = this.repositoryFactory.MealRepository.GetMealPhotoById(meal.Meal.MealId);
+                this.repositoryFactory.MealRepository.Update(meal.Meal); //מעדכן את המנה מבלי לעדכן את התמונה
+                this.repositoryFactory.MealRepository.UpdateFoodTypeMeal(meal.Meal.MealId, meal.FoodTypes.First().FoodTypeId);
+                //Image saving logic here              
+                if (meal.Meal.MealPhoto != null)//נבחר תמונה וצריך לעדכן
+                {
+                    // 1. עדכון שם הקובץ החדש במסד הנתונים
+                    string newFileName = meal.Meal.MealId + meal.Meal.MealPhoto;
+                    this.repositoryFactory.MealRepository.UpdateMealPhoto(meal.Meal.MealId, newFileName);
+
+                    // 2. נתיבים
+                    string oldFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "DataImages", oldPhoto);
+                    string newFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "DataImages", newFileName);
+
+                    // 3. שמירת הקובץ החדש (FileMode.Create דורס אוטומטית)
+                    IFormFile file = Request.Form.Files[0];
+                    using (var stream = new FileStream(newFilePath, FileMode.Create))
+                    {
+                        file.CopyTo(stream);
+                    }
+
+                    // 4. מחיקת הקובץ הישן רק אם השם(הפורמט) באמת השתנה
+                    if (oldPhoto != newFileName && System.IO.File.Exists(oldFilePath))
+                    {
+                        System.IO.File.Delete(oldFilePath);
+                    }
+                }
+
+                this.repositoryFactory.Commit();
+                return true;
             }
             catch (Exception ex)
             {
+                this.repositoryFactory.RollBack();
                 Console.WriteLine(ex.Message);
                 return false;
             }
@@ -237,15 +308,24 @@ namespace PlateUpWS
             }
         }
         [HttpGet]
-        public bool RemoveMeal(string mealId)
+        public bool RemoveMeal(string mealId, string mealPhoto)
         {
             try
             {
                 this.repositoryFactory.ConnectDb();
-                return this.repositoryFactory.MealRepository.Delete(mealId);
+                this.repositoryFactory.Opentransaction();
+                this.repositoryFactory.MealRepository.DeleteFoodTypeMeal(mealId);
+                this.repositoryFactory.MealRepository.Delete(mealId);
+                this.repositoryFactory.Commit();
+                // מחיקת הקובץ רק אחרי שהמסד נתונים הצליח
+                string imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "DataImages", mealPhoto);
+                if (System.IO.File.Exists(imagePath))
+                    System.IO.File.Delete(imagePath);
+                return true;
             }
             catch (Exception ex)
             {
+                this.repositoryFactory.RollBack();
                 Console.WriteLine(ex.Message);
                 return false;
             }
@@ -349,7 +429,10 @@ namespace PlateUpWS
                 if (orderStatus == null && orderID > 0)
                 {
                     Order order = this.repositoryFactory.OrderRepository.GetById(orderID.ToString());
-                    movm.Orders = new List<Order>() { order };
+                    if(order == null)
+                        movm.Orders = this.repositoryFactory.OrderRepository.GetAll();
+                    else
+                        movm.Orders = new List<Order>() { order };
                 }
                 // מקרה 3: חיפוש לפי סטטוס הזמנה- שולם\לא שולם
                 if (orderStatus != null && orderID == 0)
@@ -368,7 +451,7 @@ namespace PlateUpWS
                 this.repositoryFactory.DisconnectDb();
             }
         }
-        [HttpPost]
+        [HttpGet]
         public bool UpdateOrderStatus(int orderId, bool orderStatus)
         {
             try
@@ -387,12 +470,12 @@ namespace PlateUpWS
             }
         }
         [HttpGet]
-        public Order ViewOrder(string orderID)
+        public CartViewModel ViewOrderedMeals(string orderID)
         {
             try
             {
                 this.repositoryFactory.ConnectDb();
-                return this.repositoryFactory.OrderRepository.GetById(orderID);
+                return this.repositoryFactory.OrderRepository.GetCart("",orderID);
             }
             catch (Exception ex)
             {
@@ -410,10 +493,15 @@ namespace PlateUpWS
             try
             {
                 this.repositoryFactory.ConnectDb();
-                return this.repositoryFactory.OrderRepository.Delete(orderID);
+                this.repositoryFactory.Opentransaction();
+                this.repositoryFactory.OrderRepository.DeleteFromMealsOrders(orderID);
+                this.repositoryFactory.OrderRepository.Delete(orderID);
+                this.repositoryFactory.Commit();
+                return true;
             }
             catch (Exception ex)
             {
+                this.repositoryFactory.RollBack();
                 Console.WriteLine(ex.Message);
                 return false;
             }

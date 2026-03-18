@@ -20,7 +20,7 @@
                         <a href="http://localhost:5290/Guest/MealDetails/?id=@item.MealId" class="meal-link">
                             @* תמונה *@
                             <div class="item-image">
-                                <img src="http://localhost:5035/DataImages/@(item.MealId).jpg" alt="@item.MealName" />
+                                <img src="http://localhost:5035/DataImages/@item.MealPhoto" alt="@item.MealName" />
                             </div>
 
                             @* שם המנה *@
@@ -39,7 +39,7 @@
                             <form asp-controller="Client" asp-action="UpdateQuantity" method="get" class="quantity-form">
                                 <input type="hidden" name="mealId" value="@item.MealId" />
                                 <input type="hidden" name="orderId" value="@item.OrderID" />
-                                <select name="quantity" class="quantity-select"> @* שומר באופן אוטומטי את הערך שהשתנה *@
+                                <select name="quantity" class="quantity-select" onchange="this.form.submit()">
                                     @for (int i = 1; i <= 10; i++)
                                     {
                                         <option value="@i" selected="@(i == item.Quantity)">@i</option>

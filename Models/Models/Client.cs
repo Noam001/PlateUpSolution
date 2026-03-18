@@ -21,14 +21,14 @@ namespace Models
 
         [Required(ErrorMessage = "You must enter your ID")]
         [RegularExpression("^\\d+$",ErrorMessage = "Invalid ID format. Please try again.")]
-        [StringLength(9, MinimumLength =9, ErrorMessage = "Invalid ID format. Please try again.")]
+        [StringLength(9, MinimumLength =9, ErrorMessage = "\"Invalid length. The ID must be 9 characters long.")]
         public string ClientId
         {
             get { return clientId; }
             set { clientId = value;  ValidateProperty(value, "ClientId"); }
         }
         [Required(ErrorMessage ="You must enter your name")]
-        [StringLength(15, MinimumLength =2, ErrorMessage = "First name cannot be longer than 15 characters and less than 2")]
+        [StringLength(10, MinimumLength =2, ErrorMessage = "First name cannot be longer than 10 characters and less than 2")]
         [FirstLetterCapital(ErrorMessage = "First letter must be capital")]
         public string ClientName
         {
@@ -36,7 +36,7 @@ namespace Models
             set { clientName = value; ValidateProperty(value, "ClientName"); }
         }
         [Required(ErrorMessage = "You must enter your last name")]
-        [StringLength(15, MinimumLength = 2, ErrorMessage = "Last name cannot be longer than 15 characters and less than 2")]
+        [StringLength(10, MinimumLength = 2, ErrorMessage = "Last name cannot be longer than 10 characters and less than 2")]
         [FirstLetterCapital(ErrorMessage = "First letter must be capital")]
         public string ClientLastName
         {

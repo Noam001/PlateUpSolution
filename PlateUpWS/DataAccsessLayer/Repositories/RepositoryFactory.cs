@@ -97,5 +97,10 @@ namespace PlateUpWS
         {
             this.dbContext.RollBack();
         }
+        public object GetLastInsertedId()
+        {
+            string sql = "SELECT @@IDENTITY";
+            return this.dbContext.GetValue(sql);
+        }
     }
 }

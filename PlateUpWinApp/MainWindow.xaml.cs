@@ -24,6 +24,7 @@ namespace PlateUpWinApp
         ManageFoodTypesView foodTypesView;
         ManageMenuView menuView;
         ManageReviewsView reviewsView;
+        Hyperlink activeLink;
 
         bool loginSuccess;
         public MainWindow()
@@ -31,6 +32,36 @@ namespace PlateUpWinApp
             InitializeComponent();
             UpdateLoginButton();
             ViewReports();
+        }
+        private void SetActiveNav(Hyperlink clicked)
+        {
+            // רשימת כל הניווטים
+            var borders = new[] {this.BorderReports, this.MenuBorder, this.FoodTypesBorder, this.OrdersBorder, this.CitiesBorder, this.ReviewsBorder, this.LoginBorder};
+
+            foreach (var border in borders)
+            {
+                // מוצאים את הלינק שבתוך ה-Border
+                var textBlock = border.Child as TextBlock;
+                var link = textBlock?.Inlines.FirstInline as Hyperlink;
+
+                if (link == clicked)
+                {
+                    // עיצוב למצב פעיל
+                    link.Foreground = Brushes.White; // צובע את הטקסט בלבן
+                    border.Background = new SolidColorBrush(Color.FromArgb(40, 255, 255, 255));// מוסיף רקע שקוף לבן 40 זה רמת השקיפות
+                    border.BorderBrush = new SolidColorBrush(Color.FromRgb(251, 83, 155));
+                    border.BorderThickness = new Thickness(4, 0, 0, 0);// יוצר קו רק בצד שמאל עובי 4
+                }
+                else
+                {
+                    // החזרה למצב רגיל
+                    if (link != null)
+                        link.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#9497CD"));
+
+                    border.Background = Brushes.Transparent;// מוריד את הרקע
+                    border.BorderThickness = new Thickness(0);// מעלים את הקו הצידי
+                }
+            }
         }
         public void ViewReports()
         {
@@ -104,29 +135,35 @@ namespace PlateUpWinApp
 
         private void Reports_Click(object sender, RoutedEventArgs e)
         {
+            SetActiveNav(this.Reports);
             ViewReports();
         }
         private void Menu_Click(object sender, RoutedEventArgs e)
         {
+            SetActiveNav(this.Menu);
             ViewManageMenu();
         }
 
         private void FoodTypes_Click(object sender, RoutedEventArgs e)
         {
+            SetActiveNav(this.FoodTypes);
             ViewManageFoodTypes();
         }
 
         private void Orders_Click(object sender, RoutedEventArgs e)
         {
+            SetActiveNav(this.Orders);
             ViewManageOrder();
         }
         private void Cities_Click(object sender, RoutedEventArgs e)
         {
+            SetActiveNav(this.Cities);
             ViewManageCities();
         }
 
         private void Reviews_Click(object sender, RoutedEventArgs e)
         {
+            SetActiveNav(this.Reviews);
             ViewManageReviews();
         }
         private void FrameContent_Navigated(object sender, NavigationEventArgs e)
@@ -136,6 +173,7 @@ namespace PlateUpWinApp
 
         private void Login_Click(object sender, RoutedEventArgs e)
         {
+            SetActiveNav(this.Login);
             ViewLogin();
         }
 
