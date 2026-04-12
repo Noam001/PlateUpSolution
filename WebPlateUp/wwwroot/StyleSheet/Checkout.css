@@ -1,0 +1,121 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.checkout-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    padding: 40px 20px;
+}
+
+.checkout-card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 48px 52px;
+    width: 520px;
+    box-shadow: 0 12px 40px rgba(63, 42, 26, 0.12);
+}
+
+.checkout-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    color: #3F2A1A;
+    margin-bottom: 6px;
+}
+
+.checkout-subtitle {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+    color: #7a6555;
+    margin-bottom: 32px;
+}
+
+.checkout-subtitle strong {
+    color: #3F2A1A;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.form-row {
+    display: flex;
+    gap: 20px;
+}
+
+.form-row .form-group {
+    width: 200px;
+}
+
+label {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: #3F2A1A;
+    margin-bottom: 6px;
+    letter-spacing: 0.5px;
+}
+
+input[type="text"]{
+    padding: 12px 16px;
+    border: 1px solid #d6c6b6;
+    border-radius: 10px;
+    font-size: 15px;
+    font-family: 'Open Sans', sans-serif;
+    background-color: #fdfaf6;
+    outline: none;
+    transition: border 0.2s ease;
+}
+
+input[type="text"]:focus {
+    border-color: #c49a6c;
+}
+
+.error {
+    color: #c0392b;
+    font-size: 12px;
+    margin-top: 4px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.pay-btn {
+    width: 416px;
+    margin-top: 12px;
+    padding: 14px;
+    background-color: #3F2A1A;
+    color: #FDF6EC;
+    border: none;
+    border-radius: 30px;
+    font-size: 16px;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: bold;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 20px rgba(63, 42, 26, 0.2);
+}
+
+.pay-btn:hover {
+    background-color: #8F6947;
+    transform: translateY(-2px);
+}
+.BackToCart {
+    display: block;
+    text-align: center;
+    color: #007bff;
+    text-decoration: none;
+    font-size: 15px;
+    padding: 10px;
+    transition: color 0.3s;
+}
+
+.BackToCart:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}

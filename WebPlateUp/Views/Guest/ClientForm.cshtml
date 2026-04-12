@@ -48,7 +48,7 @@
     </header>
     <div class="page-container">
         <form asp-controller=@(Model.Client == null ? "Guest" : "Client") asp-action=@(Model.Client == null ? "Registration" : "UpdateProfile") class="Signup" method="post">
-            <h1 class="Title">@(Model.Client?.ClientId == "" ? "SignUp" : "Update Your Profile")</h1>
+            <h1 class="Title">@(Model.Client == null ? "SignUp" : "Update Your Profile")</h1>
             <ul class="fields">
                 <li class="field">
                     <div class="input-wrapper">

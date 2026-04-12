@@ -12,7 +12,7 @@
     <link href="~/stylesheet/tablereservation.css" rel="stylesheet" />
 </head>
 <body>
-    <form asp-controller="Client" asp-action="MakeAReservation" class="TableReservation" method="post">
+    <form asp-controller="Client" asp-action="ViewCheckoutReservation" class="TableReservation" method="post">
         <h1 class="PlateUp">PlateUp</h1>
         <h2 class="Title">Reserve a table</h2>
         <ul class="fields">
@@ -38,7 +38,7 @@
         <p class="reserve-text">
             To reserve a table at PlateUp choose a date, time, and number of guests.
         </p>
-        <button class="Reserve-Button" type="submit">Reserve a table</button>
+        <button type="submit" class="Reserve-Button">Reserve a table</button>
         <div class="Extra-Buttons">
             <a href="http://localhost:5290/Guest/Menu/">Menu</a>
             <a href="http://localhost:5290/Guest/HomePage/">Home</a>

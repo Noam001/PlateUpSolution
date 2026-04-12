@@ -1,0 +1,88 @@
+﻿@using Models;
+@model CartViewModel
+@{
+    ViewData["Title"] = "Cart";
+    Layout = "~/Views/Shared/MasterPage.cshtml";
+}
+<link href="~/stylesheet/checkout.css" rel="stylesheet" />
+@{
+    bool isReservation = ViewBag.OrderId == null && ViewBag.TotalPrice == null;
+}
+
+<div class="checkout-page">
+    <div class="checkout-card">
+        <h1 class="checkout-title">
+            @if (isReservation)
+            {
+                @:Credit Card Details
+            }
+            else
+            {
+                @:Payment Details
+            }
+        </h1>
+        <p class="checkout-subtitle">
+            @if (isReservation)
+            {
+                @:Your card will only be charged <strong>$5 per guest</strong> if you don't show up.
+            }
+            else
+            {
+                <text>Total to pay: <strong>$@ViewBag.TotalPrice</strong></text>
+            }
+        </p>
+        <form asp-controller="Client" asp-action="@(isReservation ? "MakeAReservation" : "Checkout")" method="post">
+            <input type="hidden" name="orderId" value="@ViewBag.OrderId" />
+            <div class="form-group">
+                <label>Cardholder Name</label>
+                <input type="text" id="cardName" placeholder="John Doe"
+                       autocomplete="off"
+                       required
+                       pattern="[A-Za-z ]{2,}"
+                       title="Name must contain at least 2 letters" />
+                <span class="error" id="cardNameError"></span>
+            </div>
+
+            <div class="form-group">
+                <label>Card Number</label>
+                <input type="text" id="cardNumber" placeholder="1234567890123456"
+                       autocomplete="off"
+                       required
+                       pattern="\d{16}"
+                       maxlength="16"
+                       title="Card number must be exactly 16 digits" />
+                <span class="error" id="cardNumberError"></span>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Expiry Date</label>
+                    <input type="text" id="expiry" placeholder="MM/YY"
+                           autocomplete="off"
+                           required
+                           pattern="(0[1-9]|1[0-2])\/\d{2}"
+                           maxlength="5"
+                           title="Enter expiry date in MM/YY format" />
+                    <span class="error" id="expiryError"></span>
+                </div>
+                <div class="form-group">
+                    <label>CVV</label>
+                    <input type="text" id="cvv" placeholder="123"
+                           autocomplete="off"
+                           required
+                           pattern="\d{3}"
+                           maxlength="3"
+                           title="CVV must be exactly 3 digits" />
+                    <span class="error" id="cvvError"></span>
+                </div>
+            </div>
+           
+            <button type="submit" class="pay-btn">@(isReservation ? "Confirm Reservation" : "Pay Now")</button>
+            @if (!isReservation)
+            {
+                <a href="http://localhost:5290/Client/Cart/" class="BackToCart">← Back To Cart</a>
+            }      
+        </form>      
+    </div>
+</div>
+

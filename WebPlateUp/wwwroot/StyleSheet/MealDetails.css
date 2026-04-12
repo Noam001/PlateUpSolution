@@ -25,16 +25,20 @@
 .meal-name {
     font-size: 42px;
     margin-bottom: 16px;
+    color: black;
 }
 
 .meal-description {
     font-size: 18px;
     line-height: 1.7;
+    color: #5C3317;
     margin-bottom: 24px;
 }
 
 .meal-price {
     font-size: 26px;
+    color:#ab162c;
+    font-family:'Segoe UI';
     font-weight: bold;
     margin-bottom: 30px;
 }
@@ -126,4 +130,27 @@
     font-size: 12px;
     color: #757575;
     text-align: right;
+}
+.availability {
+    display: block;
+    border-radius: 10px;
+    position: absolute;
+    margin-left: 300px;
+    margin-top: -55px;
+    font-family: 'Segoe UI';
+    padding: 4px;
+    background:#ab162c;
+}
+.availability:hover::after {
+    content: "the item is not available right now";
+    position: absolute;
+    top: 110%; /* מציג את הטקסט מתחת לכפתור */
+    left: 0;
+    background: #333;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    white-space: nowrap; /* מונע מהטקסט להישבר לשורות */
+    font-size: 12px;
+    z-index: 10;
 }

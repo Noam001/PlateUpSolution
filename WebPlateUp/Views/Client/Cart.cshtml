@@ -74,9 +74,7 @@
                     </div>
                 </div>
 
-                <form asp-controller="Client" asp-action="Checkout" method="post">
-                    <button type="submit" class="checkout-btn">Checkout</button>
-                </form>
+                <a href="http://localhost:5290/Client/CheckoutView/?orderId=@Model.CartItems[0].OrderID&totalPrice=@Model.TotalPrice.ToString("F2")" class="checkout-btn">Checkout</a>
 
                 <a href="http://localhost:5290/Guest/Menu/" class="continue-shopping">← Continue Shopping</a>
             </div>

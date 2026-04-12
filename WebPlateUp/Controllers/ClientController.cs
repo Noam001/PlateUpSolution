@@ -69,7 +69,7 @@ namespace WebPlateUp.Controllers
 
             bool ok = client.Post(review);
             if (ok) //האם שליחה למסד נתונים עבדה
-                return RedirectToAction("HomePage", "Guest");
+                return Redirect(Url.Action("HomePage", "Guest") + "#reviews-section");
             ViewBag.ErrorMessage = "Review Request faild, Try Again.";
             return View("HomePage", "Guest");
         }
@@ -116,23 +116,29 @@ namespace WebPlateUp.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult MakeAReservation(Order order)
+        public IActionResult MakeAReservation()
         {
+            Order order = new Order();
+            order.ClientId =  HttpContext.Session.GetString("clientId");
+            order.OrderDate = HttpContext.Session.GetString("reservationDate");
+            order.OrderTime = HttpContext.Session.GetString("reservationTime");
+            order.NumOfPeople = int.Parse(HttpContext.Session.GetString("reservationPeople"));
+            order.OrderStatus = true;
+
             WebClient<Order> client = new WebClient<Order>();
             client.Schema = "http";
             client.Host = "localhost";
             client.Port = 5035;
             client.Path = "api/Client/MakeAnOrder";
-            order.OrderStatus = false;
-            if (!ModelState.IsValid) //בדיקת תקינות הקלט
-                return View("ViewTableReservation",order);
             bool ok = client.Post(order);
-            if(ok)
+
+            if (ok)
             {
+                TempData["SuccessMessage"] = "Your reservation is confirmed!";
                 return RedirectToAction("HomePage", "Guest");
             }
-            ViewBag.ErrorMessage = "Reservation Request faild, Try Again.";
-            return View("ViewTableReservation", order);
+            TempData["ErrorMessage"] = "Reservation failed. Please try again.";
+            return RedirectToAction("CheckoutView");
         }
         [HttpPost]
         public IActionResult AddMealToOrder(int mealId,int quantity, string? mealNotes, string clientId)
@@ -175,6 +181,13 @@ namespace WebPlateUp.Controllers
                 TempData["Message"] = "Failed to remove item.";
             return RedirectToAction("Cart");
         }
+        [HttpGet]
+        public IActionResult CheckoutView(string orderId, string totalPrice)
+        {
+            ViewBag.OrderId = orderId;
+            ViewBag.TotalPrice = totalPrice;
+            return View();
+        }
         [HttpPost]
         public IActionResult Checkout(string orderId)
         {
@@ -182,9 +195,30 @@ namespace WebPlateUp.Controllers
             client.Schema = "http";
             client.Host = "localhost";
             client.Port = 5035;
-            client.Path = "api/Client/AddMealToOrder";
+            client.Path = "api/Client/CheckoutUpdateStatus";
             bool ok = client.Post(orderId);
-            return View();
+
+            if (ok)
+            {
+                TempData["SuccessMessage"] = "Your order is on its way!";
+                return RedirectToAction("HomePage", "Guest");
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "Payment failed. Please try again.";
+                return RedirectToAction("Checkout", new { orderId = orderId, totalPrice = TempData["TotalPrice"] });
+            }
+        }
+        [HttpPost]
+        public IActionResult ViewCheckoutReservation(Order order)
+        {
+            if (!ModelState.IsValid)
+                return View("ViewTableReservation", order);
+
+            HttpContext.Session.SetString("reservationDate", DateTime.Parse(order.OrderDate).ToString("dd/MM/yyyy"));
+            HttpContext.Session.SetString("reservationTime", order.OrderTime.ToString());
+            HttpContext.Session.SetString("reservationPeople", order.NumOfPeople.ToString());
+            return RedirectToAction("CheckoutView");
         }
         [HttpGet]
         public IActionResult UpdateQuantity(int mealId, int orderId, int quantity)

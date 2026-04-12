@@ -91,6 +91,11 @@ button {
     border: none;
     transition: 0.25s ease; /*גורם לHOVER להיות חלק יותר*/
 }
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+}
+
 .Extra-Buttons {
     display: flex;
     justify-content: center;
@@ -110,11 +115,6 @@ button {
     transition: 0.25s ease;
 }
 .Extra-Buttons a:hover{
-    transform: translateY(-2px);
-    cursor: pointer;
-}
-button:hover {
-    background-color: #008189; /* slightly darker */
     transform: translateY(-2px);
     cursor: pointer;
 }

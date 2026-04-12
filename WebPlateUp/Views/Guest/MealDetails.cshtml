@@ -14,6 +14,10 @@
     <!-- Left side: Info -->
     <div class="meal-info">
         <h1 class="meal-name">@Model.MealName</h1>
+        @if(Model.MealStatus == false)
+        {
+            <h3 class="availability">Unavailable</h3>
+        }
         @if (TempData["Message"] != null)
         {
             <div class="alert-message @(TempData["MessageType"]?.ToString() == "success" ? "msg-success" : "msg-error")">
@@ -21,7 +25,6 @@
             </div>
         }
         <p class="meal-description">@Model.MealDescription</p>
-
         <p class="meal-price">$@Model.MealPrice</p>
 
         <form asp-controller="Client" asp-action="AddMealToOrder" method="post">

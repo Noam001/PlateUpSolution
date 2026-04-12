@@ -5,35 +5,38 @@
     box-sizing: border-box;
 }
 .wrapper {
-    min-height: 100vh; /* גובה מינמלי של אלמנט יהיה בגבוה המלא של מסך */
+    min-height: 100vh;
     background: linear-gradient(to bottom, #000000, #1a1715, #141210, #0b0b0b);
+    background-image: url('../images/banner_bg_2.jpg');
     background-repeat: no-repeat;
-    background-size: cover;
+    background-position: right top; /* מדביק לצד ימין למעלה */
     margin: auto;
 }
 .logo img {
-    width: 100px;
+    top: -2px;
+    position:absolute;
+    width: 110px;
     margin-left: 55px;
     cursor: pointer;
 }
 .header {
     display: flex;
     justify-content: space-between;
-    padding: 2px 0;
+    padding: 37px 0;
     align-items: center;
-    border-bottom: 1px solid rgba(255,255,255,0.3);
+    border-bottom: 1px solid rgba(92, 51, 23, 0.2);
 }
 .item {
     display: inline;
     margin: 0 27.5px;
     font-family: 'Open Sans';
     font-weight: bold;
-    color: white;
+    color: #3F2A1A;
     transition: 0.25s ease;
     position: relative; /* חשוב כדי שהדרופדאון יופיע ביחס לפריט */
 }
 .item:hover {
-    color: #8F6947;  /* subtle elegant hover */
+    color: #ab162c;  /* subtle elegant hover */
 }
 .nav a {
     text-decoration: none;
@@ -57,14 +60,12 @@
 .username img {
     width: 30px;
     height: 30px;
-    filter: brightness(0) invert(1); /* הופך את התמונה ללבן */
 }
 
 /* הדרופדאון */
 .dropdown {
     display: none; /* מוסתר כברירת מחדל */
     position: absolute; /*מיקום חופשי, ללא השפעה על מיקום שאר האלמנטים.*/
-    margin-top: 17px;
     background-color: #333;
     top: 100%;
     left: -50px;
@@ -73,7 +74,8 @@
     box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
     border-radius: 5px;
     overflow: hidden;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    z-index: 9999; /*גורם לאלמנט להיות מעל כולם כך שלא ידרסו אותו*/
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .dropdown a {
@@ -107,8 +109,6 @@
 .cart-icon {
     width: 35px;
     height: auto;
-    /* מחקתי את ה-color:white כי תמונה לא מקבלת צבע טקסט */
-    filter: brightness(0) invert(1); /* זה יהפוך תמונה שחורה ללבנה ב-CSS */
 }
 .footer {
     position: fixed;
@@ -119,4 +119,50 @@
     font-size: 13px;
     color: rgba(255, 255, 255, 0.4);
     pointer-events: none;
+}
+
+.toast {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    padding: 40px 60px;
+    border-radius: 20px;
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: bold;
+    color: white;
+    z-index: 9999;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.25);
+    text-align: center;
+    min-width: 400px;
+    animation: fadeInOut 6s ease forwards;
+}
+
+.toast-success {
+    background: linear-gradient(135deg, #3F2A1A, #8F6947);
+}
+
+.toast-error {
+    background: linear-gradient(135deg, #c0392b, #e74c3c);
+}
+
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-40%);
+    }
+
+    12% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(-50%);
+    }
+
+    80% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
 }

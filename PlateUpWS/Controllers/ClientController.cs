@@ -130,7 +130,7 @@ namespace PlateUpWS
             }
         }
         [HttpPost]
-        public bool CheckoutUpdateStatus(string orderId)
+        public bool CheckoutUpdateStatus([FromBody] string orderId)
         {
             try
             {

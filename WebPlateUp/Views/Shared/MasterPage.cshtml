@@ -2,8 +2,24 @@
     ViewData["Title"] = "MasterPage";
 }
 <link href="~/stylesheet/masterpage.css" rel="stylesheet" />
-
+<script>
+    setTimeout(() => {
+        document.querySelectorAll('.toast').forEach(t => t.remove());
+    }, 6000);
+</script>
 <div class="wrapper">
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="toast toast-success">
+            ✓ @TempData["SuccessMessage"]
+        </div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="toast toast-error">
+            ✗ @TempData["ErrorMessage"]
+        </div>
+    }
     <header class="header">
         <div class="logo">
             <a href="HomePage.html">
