@@ -8,6 +8,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using Models;
 
 namespace WebApiClient
 {
@@ -225,6 +226,36 @@ namespace WebApiClient
                 using (HttpResponseMessage responseMessage = await this.httpClient.SendAsync(requestMessage))
                 {
                     return responseMessage.IsSuccessStatusCode;
+                }
+            }
+        }
+        public LoginViewModel Login(LoginModel loginModel)
+        {
+
+            using (HttpRequestMessage requestMessage = new HttpRequestMessage())
+            {
+                HttpClient httpClient = new HttpClient();
+                requestMessage.Method = HttpMethod.Post;
+                requestMessage.RequestUri = new Uri("http://localhost:5035/api/Client/LoginGetId");
+                string jsondata = JsonSerializer.Serialize(loginModel); //מעביר את הפורמט של האובייקט לפורמט גייסון
+                requestMessage.Content = new StringContent(jsondata, Encoding.UTF8, "application/json");
+                using (HttpResponseMessage responseMessage = httpClient.SendAsync(requestMessage).Result)
+                {
+                    if (responseMessage.IsSuccessStatusCode == true) //האם הבקשה הצליחה(קיבלה קוד 200)
+                    {
+                        string result = responseMessage.Content.ReadAsStringAsync().Result;
+                        if (string.IsNullOrWhiteSpace(result))
+                        {
+                            return null; // במידה והמשתמש לא נמצא והתוצאה ריקה
+                        }
+                        JsonSerializerOptions options = new JsonSerializerOptions
+                        {
+                            PropertyNameCaseInsensitive = true
+                        };
+                        LoginViewModel loginViewModel = JsonSerializer.Deserialize<LoginViewModel>(result, options); //העברת פורמט מגייסון לאובייקט הספציפי
+                        return loginViewModel;
+                    }
+                    return null;
                 }
             }
         }

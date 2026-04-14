@@ -12,7 +12,7 @@
     <link href="~/stylesheet/tablereservation.css" rel="stylesheet" />
 </head>
 <body>
-    <form asp-controller="Client" asp-action="ViewCheckoutReservation" class="TableReservation" method="post">
+    <form asp-controller="Client" asp-action="ViewCheckoutReservation" class="TableReservation" method="get">
         <h1 class="PlateUp">PlateUp</h1>
         <h2 class="Title">Reserve a table</h2>
         <ul class="fields">
@@ -33,6 +33,14 @@
                     }
                 </select>
                 <img src="~/images/guests.png" class="guest-icon" />
+            </li>
+            <li class="field">
+                <select asp-for="@Model.OrderPlace">
+                    <option value="" disabled selected>Select Location</option>
+                    <option value="Indoors">Indoors</option>
+                    <option value="Outdoors">Outdoors</option>
+                </select>
+                <span asp-validation-for="@Model.OrderPlace" class="errorData" id="OrderError"></span>
             </li>
         </ul>
         <p class="reserve-text">

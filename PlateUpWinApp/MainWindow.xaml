@@ -29,6 +29,7 @@
             </Grid.ColumnDefinitions>
 
             <!-- Navigation Menu - הסיידבר משמאל -->
+            
             <Border CornerRadius="10,0,0,10" Grid.Column="0">
 
                 <Border.Background>
@@ -37,30 +38,29 @@
                         <GradientStop Color="#210F55" Offset="1"/>
                     </LinearGradientBrush>
                 </Border.Background>
-
                 <StackPanel>
 
                     <!-- Logo -->
                     <Image Source="/Images/AdminLogo.png" Margin="15,30,0,30" />
 
                     <!-- Menu Items -->
-                    <StackPanel Margin="0,0,0,0">
+                    <StackPanel  x:Name="spNavItems" Visibility="Collapsed" Margin="0,0,0,0">
 
                         <!-- View Reports -->
                         <Border x:Name="BorderReports" Background="Transparent">
                             <TextBlock Margin="0,0,0,5">
                             <Hyperlink x:Name="Reports"
-                                       Foreground="#9497CD"
-                                       TextDecorations="None"
-                                       Click="Reports_Click">
+                                        Foreground="#9497CD"
+                                        TextDecorations="None"
+                                        Click="Reports_Click">
                                 <StackPanel Orientation="Horizontal" Margin="35,12,0,12">
                                     <Image Source="/Images/report.png" Width="44"  Height="40" 
-                                     Stretch="Fill" Margin="0,0,15,0"/>
+                                        Stretch="Fill" Margin="0,0,15,0"/>
                                     <TextBlock Text="View Reports" 
-                                               FontFamily="Montserrat"
-                                               FontWeight="Medium"
-                                               FontSize="16.4"
-                                               VerticalAlignment="Center"/>
+                                                FontFamily="Montserrat"
+                                                FontWeight="Medium"
+                                                FontSize="16.4"
+                                                VerticalAlignment="Center"/>
                                 </StackPanel>
                             </Hyperlink>
                         </TextBlock>
@@ -70,17 +70,17 @@
                         <Border x:Name="MenuBorder">
                             <TextBlock Margin="0,0,0,5">
                                 <Hyperlink x:Name="Menu"
-                                           Foreground="#9497CD"
-                                           TextDecorations="None"
-                                           Click="Menu_Click">
+                                            Foreground="#9497CD"
+                                            TextDecorations="None"
+                                            Click="Menu_Click">
                                     <StackPanel Orientation="Horizontal" Margin="35,12,0,12">
                                         <Image Source="/Images/menu.png" Width="40" Height="40" Margin="0,0,17,0"
-                                               Stretch="Fill"/>
+                                                Stretch="Fill"/>
                                         <TextBlock Text="Manage Menu" 
-                                                   FontFamily="Montserrat"
-                                                   FontWeight="Medium"
-                                                   FontSize="16"
-                                                   VerticalAlignment="Center"/>
+                                                    FontFamily="Montserrat"
+                                                    FontWeight="Medium"
+                                                    FontSize="16"
+                                                    VerticalAlignment="Center"/>
                                     </StackPanel>
                                 </Hyperlink>
                             </TextBlock>
@@ -88,19 +88,19 @@
 
                         <!-- Manage FoodTypes -->
                         <Border x:Name="FoodTypesBorder">
-                        <TextBlock Margin="0,0,0,5">
+                            <TextBlock Margin="0,0,0,5">
                             <Hyperlink x:Name="FoodTypes"
-                                       Foreground="#9497CD"
-                                       TextDecorations="None"
-                                       Click="FoodTypes_Click">
+                                        Foreground="#9497CD"
+                                        TextDecorations="None"
+                                        Click="FoodTypes_Click">
                                 <StackPanel Orientation="Horizontal" Margin="35,12,0,12">
                                     <Image Source="/Images/foodtype.png" Width="40" Height="40" Margin="0,0,17,0"
-                                           Stretch="Fill"/>
+                                            Stretch="Fill"/>
                                     <TextBlock Text="Manage FoodTypes" 
-                                               FontFamily="Montserrat"
-                                               FontWeight="Medium"
-                                               FontSize="16"
-                                               VerticalAlignment="Center"/>
+                                                FontFamily="Montserrat"
+                                                FontWeight="Medium"
+                                                FontSize="16"
+                                                VerticalAlignment="Center"/>
                                 </StackPanel>
                             </Hyperlink>
                         </TextBlock>
@@ -108,19 +108,19 @@
 
                         <!-- Manage Orders -->
                         <Border x:Name="OrdersBorder">
-                        <TextBlock Margin="0,0,0,5">
+                            <TextBlock Margin="0,0,0,5">
                             <Hyperlink x:Name="Orders"
-                                       Foreground="#9497CD"
-                                       TextDecorations="None"
-                                       Click="Orders_Click">
-                              <StackPanel Orientation="Horizontal" Margin="35,12,0,12">
+                                        Foreground="#9497CD"
+                                        TextDecorations="None"
+                                        Click="Orders_Click">
+                                <StackPanel Orientation="Horizontal" Margin="35,12,0,12">
                                     <Image Source="/Images/order.png" Width="40" Height="40" Margin="0,0,17,0"
-                                           Stretch="Fill" />
+                                            Stretch="Fill" />
                                     <TextBlock Text="Manage Orders" 
-                                               FontFamily="Montserrat"
-                                               FontWeight="Medium"
-                                               FontSize="16"
-                                               VerticalAlignment="Center"/>
+                                                FontFamily="Montserrat"
+                                                FontWeight="Medium"
+                                                FontSize="16"
+                                                VerticalAlignment="Center"/>
                                 </StackPanel>
                             </Hyperlink>
                         </TextBlock>
@@ -128,19 +128,19 @@
 
                         <!-- Manage Cities -->
                         <Border x:Name="CitiesBorder">
-                        <TextBlock Margin="0,0,0,5">
+                            <TextBlock Margin="0,0,0,5">
                             <Hyperlink x:Name="Cities"
-                                       Foreground="#9497CD"
-                                       TextDecorations="None"
-                                       Click="Cities_Click">
+                                        Foreground="#9497CD"
+                                        TextDecorations="None"
+                                        Click="Cities_Click">
                                 <StackPanel Orientation="Horizontal" Margin="35,12,0,12">
                                     <Image Source="/Images/city.png" Width="40" Height="40" Margin="0,0,17,0"
-                                           Stretch="Fill"/>
+                                            Stretch="Fill"/>
                                     <TextBlock Text="Manage Cities" 
-                                               FontFamily="Montserrat"
-                                               FontWeight="Medium"
-                                               FontSize="16"
-                                               VerticalAlignment="Center"/>
+                                                FontFamily="Montserrat"
+                                                FontWeight="Medium"
+                                                FontSize="16"
+                                                VerticalAlignment="Center"/>
                                 </StackPanel>
                             </Hyperlink>
                         </TextBlock>
@@ -148,26 +148,27 @@
 
                         <!-- Manage Reviews -->
                         <Border x:Name="ReviewsBorder">
-                        <TextBlock Margin="0,0,0,5">
+                            <TextBlock Margin="0,0,0,5">
                             <Hyperlink x:Name="Reviews"
-                                       Foreground="#9497CD"
-                                       TextDecorations="None"
-                                       Click="Reviews_Click">
+                                        Foreground="#9497CD"
+                                        TextDecorations="None"
+                                        Click="Reviews_Click">
                                 <StackPanel Orientation="Horizontal" Margin="35,12,0,12">
                                     <Image Source="/Images/review.png" Width="40" Height="40" Margin="0,0,17,0"
-                                           Stretch="Fill"/>
+                                            Stretch="Fill"/>
                                     <TextBlock Text="Manage Reviews" 
-                                               FontFamily="Montserrat"
-                                               FontWeight="Medium"
-                                               FontSize="16"
-                                               VerticalAlignment="Center"/>
+                                                FontFamily="Montserrat"
+                                                FontWeight="Medium"
+                                                FontSize="16"
+                                                VerticalAlignment="Center"/>
                                 </StackPanel>
                             </Hyperlink>
                         </TextBlock>
                         </Border>
 
-                        <!-- Login -->
-                        <Border x:Name="LoginBorder">
+                    </StackPanel>
+                    <!-- Login -->
+                    <Border x:Name="LoginBorder">
                         <TextBlock Margin="0,0,0,5">
                             <Hyperlink x:Name="Login"
                                        Foreground="#9497CD"
@@ -183,9 +184,7 @@
                                 </StackPanel>
                             </Hyperlink>
                         </TextBlock>
-                        </Border>
-                    </StackPanel>
-
+                    </Border>
                 </StackPanel>
             </Border>
 
@@ -209,15 +208,15 @@
                     <!-- Header Bar -->
                     <Grid Grid.Row="0">
                         <TextBlock x:Name="adminName"
-                                   Text="Admin Name"
+                                   Text=""
                                    VerticalAlignment="Center"
-                                   Margin="700,0,100,0"
+                                   Margin="740,0,100,0"
                                    Foreground="#D5CFF5"
-                                   FontSize="13"
+                                   FontSize="14"
                                    FontWeight="SemiBold"/>
 
-                        <Button x:Name="btnLogout"
-                                Content="Logout"
+                        <Button x:Name="btnLogout" Visibility="Collapsed"
+                                Content="Logout" Click="btnLogout_Click"
                                 VerticalAlignment="Center"
                                 Margin="750,0,15,0"
                                 Width="80"

@@ -56,13 +56,14 @@ namespace PlateUpWinApp.Frames
         private async void datePickerRangeto_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
             this.dateTo = this.datePickerRangeto.SelectedDate;
+            if (this.datePickerRangeto.SelectedDate == null)
+                return;
 
             // בדיקה שנבחרו שני תאריכים
             if (this.dateFrom == null)
             {
                 MessageBox.Show("Please select a From date as well.", "Missing Date");
                 this.datePickerRangeto.SelectedDate = null;
-                return;
             }
 
             // בדיקה ש-FROM לפני TO
@@ -71,7 +72,6 @@ namespace PlateUpWinApp.Frames
                 MessageBox.Show("The 'From' date must be before the 'To' date.", "Invalid Date Range");
                 this.datePickerRangeto.SelectedDate = null;
                 this.dateTo = null;
-                return;
             }
 
             WebClient<OrderReport> client = new WebClient<OrderReport>();

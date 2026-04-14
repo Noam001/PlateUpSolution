@@ -11,7 +11,6 @@ namespace Models
 
         public string  ClientId { get; set; }
         public string Name { get; set; }
-        public bool IsAdmin { get; set; }
     }
 
     public class LoginModel// מה ששולחים

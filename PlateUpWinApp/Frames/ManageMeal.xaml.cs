@@ -40,7 +40,7 @@ namespace PlateUpWpf.Frames
         {
             InitializeComponent();
             GetNewMealVm(foodType.FoodTypeId);
-            this.Title.Text = "Update Meal";
+            this.PageTitle.Text = "Update Meal";
             this.txtEditItemName.Text = meal.MealName; 
             this.txtEditDescription.Text = meal.MealDescription;
             this.txtEditPrice.Text = meal.MealPrice.ToString();

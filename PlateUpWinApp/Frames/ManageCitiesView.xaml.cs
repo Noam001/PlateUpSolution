@@ -114,7 +114,7 @@ namespace PlateUpWinApp.Frames
                 MessageBox.Show("City Removed!");
             }
             else
-                MessageBox.Show("Failed, try again later.", "Fail", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Cannot delete this city because it is currently linked to existing customers", "Fail", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 }

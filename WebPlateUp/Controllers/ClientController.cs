@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using Models;
 using NuGet.Protocol.Core.Types;
 using System.Net;
@@ -23,10 +24,11 @@ namespace WebPlateUp.Controllers
             loginModel.Email = email;
             loginModel.Password = password;
             loginModel.IsAdmin = false;
-            LoginViewModel loginViewModel = ClientLogin(loginModel);
+            WebClient<LoginViewModel> client = new WebClient<LoginViewModel>();
+            LoginViewModel loginViewModel = client.Login(loginModel);
 
             // 4. בדיקת התוצאה
-            if (loginViewModel.ClientId != null)
+            if (loginViewModel != null)
             {
                 // הצלחה- שומרים בסשן ועוברים לדף הבית
                 HttpContext.Session.SetString("clientId", loginViewModel.ClientId);
@@ -68,9 +70,13 @@ namespace WebPlateUp.Controllers
             client.Path = "api/Client/LeaveAReview";
 
             bool ok = client.Post(review);
-            if (ok) //האם שליחה למסד נתונים עבדה
+            if (ok)
+            { //האם שליחה למסד נתונים עבדה
+                TempData["SuccessMessage"] = "Review submitted successfully! Thank you for your feedback.";
                 return Redirect(Url.Action("HomePage", "Guest") + "#reviews-section");
-            ViewBag.ErrorMessage = "Review Request faild, Try Again.";
+            }                
+            else
+                TempData["ErrorMessage"] = "Failed to submit review. Please try again later..";
             return View("HomePage", "Guest");
         }
         [HttpGet]
@@ -83,6 +89,10 @@ namespace WebPlateUp.Controllers
             client.Path = "api/Client/RemoveReview";
             client.AddParameter("reviewID", reviewId);
             bool success = client.Get();
+            if (success)
+                TempData["SuccessMessage"] = "Review deleted successfully.";      
+            else
+                TempData["ErrorMessage"] = "Failed to delete the review. Please try again.";
             return RedirectToAction("HomePage", "Guest");
         }
         [HttpPost]
@@ -124,6 +134,7 @@ namespace WebPlateUp.Controllers
             order.OrderTime = HttpContext.Session.GetString("reservationTime");
             order.NumOfPeople = int.Parse(HttpContext.Session.GetString("reservationPeople"));
             order.OrderStatus = true;
+            order.OrderPlace = HttpContext.Session.GetString("reservationPlace");
 
             WebClient<Order> client = new WebClient<Order>();
             client.Schema = "http";
@@ -155,15 +166,9 @@ namespace WebPlateUp.Controllers
             addMeal.ClientId = HttpContext.Session.GetString("clientId");
             bool ok = client.Post(addMeal);
             if (ok)
-            {
-                TempData["Message"] = "Successfully added to cart!";
-                TempData["MessageType"] = "success";
-            }
+                TempData["SuccessMessage"] = "Successfully added to cart!";
             else
-            {
-                TempData["Message"] = "Failed to add meal.";
-                TempData["MessageType"] = "error";
-            }
+                TempData["ErrorMessage"] = "Failed to add meal.";
             return RedirectToAction("MealDetails", "Guest", new { id = mealId });
         }
         [HttpGet]
@@ -208,8 +213,8 @@ namespace WebPlateUp.Controllers
                 TempData["ErrorMessage"] = "Payment failed. Please try again.";
                 return RedirectToAction("Checkout", new { orderId = orderId, totalPrice = TempData["TotalPrice"] });
             }
-        }
-        [HttpPost]
+        }//checkout for Home Delivery
+        [HttpGet]
         public IActionResult ViewCheckoutReservation(Order order)
         {
             if (!ModelState.IsValid)
@@ -218,6 +223,7 @@ namespace WebPlateUp.Controllers
             HttpContext.Session.SetString("reservationDate", DateTime.Parse(order.OrderDate).ToString("dd/MM/yyyy"));
             HttpContext.Session.SetString("reservationTime", order.OrderTime.ToString());
             HttpContext.Session.SetString("reservationPeople", order.NumOfPeople.ToString());
+            HttpContext.Session.SetString("reservationPlace", order.OrderPlace);
             return RedirectToAction("CheckoutView");
         }
         [HttpGet]
@@ -232,8 +238,11 @@ namespace WebPlateUp.Controllers
             client.AddParameter("orderId", orderId.ToString());
             client.AddParameter("quantity", quantity.ToString());
             bool success = client.Get();
-            if (!success)
-                TempData["Message"] = "Failed to remove item.";
+            if (success)
+                TempData["SuccessMessage"] = "Quantity updated successfully!";
+            else
+                TempData["ErrorMessage"] = "Failed to update quantity. Please try again.";
+
             return RedirectToAction("Cart");
         }
         [HttpGet]
@@ -249,31 +258,6 @@ namespace WebPlateUp.Controllers
             CartViewModel vm = client.Get();
             return View(vm);
         }
-        private LoginViewModel ClientLogin(LoginModel loginModel)
-        {
-
-            using (HttpRequestMessage requestMessage = new HttpRequestMessage())
-            {
-                HttpClient httpClient = new HttpClient();   
-                requestMessage.Method = HttpMethod.Post;
-                requestMessage.RequestUri = new Uri("http://localhost:5035/api/Client/LoginGetId");
-                string jsondata = JsonSerializer.Serialize(loginModel); //מעביר את הפורמט של האובייקט לפורמט גייסון
-                requestMessage.Content = new StringContent(jsondata, Encoding.UTF8, "application/json");
-                using (HttpResponseMessage responseMessage = httpClient.SendAsync(requestMessage).Result)
-                {
-                    if (responseMessage.IsSuccessStatusCode == true) //האם הבקשה הצליחה(קיבלה קוד 200)
-                    {
-                        string result = responseMessage.Content.ReadAsStringAsync().Result;
-                        JsonSerializerOptions options = new JsonSerializerOptions
-                        {
-                            PropertyNameCaseInsensitive = true
-                        };
-                        LoginViewModel loginViewModel = JsonSerializer.Deserialize<LoginViewModel>(result, options); //העברת פורמט מגייסון לאובייקט הספציפי
-                        return loginViewModel;
-                    }
-                    return null;
-                }
-            }
-        }
+        
     }
 }

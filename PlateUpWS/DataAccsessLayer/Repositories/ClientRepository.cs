@@ -124,21 +124,25 @@ namespace PlateUpWS
                     hash = reader["ClientPassword"].ToString();
                     loginViewModel.ClientId = reader["ClientId"].ToString();
                     loginViewModel.Name = reader["ClientName"].ToString();
-                }
-                if (hash == CalculateHash(login.Password, salt))
+                }             
+            }
+            if (hash == CalculateHash(login.Password, salt))
+            {
+                if (login.IsAdmin == false)
+                    return loginViewModel;
+                else
                 {
-                    if (login.IsAdmin == false)
-                        return loginViewModel;
-                    else
+                    sql = "Select AdminId FROM ADMINS WHERE AdminId = @AdminId";
+                    this.dbContext.AddParameter("@AdminId", loginViewModel.ClientId);
+                    using (IDataReader adminReader = this.dbContext.Select(sql))
                     {
-                        sql = "Select AdminId FROM ADMINS WHERE AdminId = @AdminId";
-                        this.dbContext.AddParameter("@AdminId", loginViewModel.ClientId);
-                        return this.dbContext.GetValue(sql) != null ? loginViewModel : null;
+                        if (adminReader.Read())
+                            return loginViewModel;
+                        return null;
                     }
                 }
-                return null;
             }
-
+            return null;
         }
     }
 }

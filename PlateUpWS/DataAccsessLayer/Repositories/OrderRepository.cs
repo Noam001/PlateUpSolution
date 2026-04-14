@@ -13,10 +13,10 @@ namespace PlateUpWS
         public bool Create(Order item)
         {
             string sql = @$"
-                INSERT INTO Orders(ClientId, OrderDate, OrderTime, NumOfPeople, OrderStatus)
+                INSERT INTO Orders(ClientId, OrderDate, OrderTime, NumOfPeople, OrderStatus, OrderPlace)
                 VALUES
                 (
-                    @ClientId, @OrderDate, @OrderTime, @NumOfPeople, @OrderStatus
+                    @ClientId, @OrderDate, @OrderTime, @NumOfPeople, @OrderStatus, @OrderPlace
                 )";
 
             this.dbContext.AddParameter("@ClientId", item.ClientId);
@@ -24,7 +24,7 @@ namespace PlateUpWS
             this.dbContext.AddParameter("@OrderTime", item.OrderTime);
             this.dbContext.AddParameter("@NumOfPeople", item.NumOfPeople);
             this.dbContext.AddParameter("@OrderStatus", item.OrderStatus);
-
+            this.dbContext.AddParameter("@OrderPlace", item.OrderPlace);
             return this.dbContext.Insert(sql) > 0;
         }
 
@@ -106,7 +106,8 @@ namespace PlateUpWS
                     OrderDate = @OrderDate,
                     OrderTime = @OrderTime,
                     NumOfPeople = @NumOfPeople,
-                    OrderStatus = @OrderStatus
+                    OrderStatus = @OrderStatus,
+                    OrderPlace = @OrderPlace
                 WHERE 
                     OrderId = @OrderId";
 
@@ -116,6 +117,7 @@ namespace PlateUpWS
             this.dbContext.AddParameter("@OrderTime", item.OrderTime);
             this.dbContext.AddParameter("@NumOfPeople", item.NumOfPeople);
             this.dbContext.AddParameter("@OrderStatus", item.OrderStatus);
+            this.dbContext.AddParameter("@OrderPlace", item.OrderPlace);
 
             return this.dbContext.Update(sql) > 0;
         }
@@ -144,15 +146,15 @@ namespace PlateUpWS
             }
             if (orderId == null) //יצירת עגלה חדשה אם לא קיימת 
             {
-                string sqlCreateOrder = @"INSERT INTO Orders(ClientId, OrderDate, OrderTime, NumOfPeople, OrderStatus)
-                                  VALUES (@ClientId, @OrderDate, @OrderTime, @NumOfPeople, @OrderStatus)"; //הוספת עגלה
+                string sqlCreateOrder = @"INSERT INTO Orders(ClientId, OrderDate, OrderTime, NumOfPeople, OrderStatus, OrderPlace)
+                                  VALUES (@ClientId, @OrderDate, @OrderTime, @NumOfPeople, @OrderStatus, @OrderPlace)"; //הוספת עגלה
 
                 this.dbContext.AddParameter("@ClientId", addMealReq.ClientId);
                 this.dbContext.AddParameter("@OrderDate", DateTime.Today.ToString("dd/MM/yyyy"));
                 this.dbContext.AddParameter("@OrderTime", DateTime.Now.ToString("HH:mm"));
                 this.dbContext.AddParameter("@NumOfPeople", 0);
                 this.dbContext.AddParameter("@OrderStatus", false);
-
+                this.dbContext.AddParameter("@OrderPlace", "Home Delivery");
                 if (this.dbContext.Insert(sqlCreateOrder) > 0) //אם נוצר הזמנה חדשה
                 {
                     this.dbContext.AddParameter("@ClientId", addMealReq.ClientId);

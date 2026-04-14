@@ -15,6 +15,7 @@ namespace Models
         string orderTime;
         int numOfPeople;
         bool orderStatus;
+        string orderPlace;
         public int OrderId
         {
             get { return this.orderId; }
@@ -52,6 +53,12 @@ namespace Models
         {
             get { return this.orderStatus; }
             set { this.orderStatus = value; }
+        }
+        [Required(ErrorMessage = "Order Place is required")]
+        public string OrderPlace
+        {
+            get { return this.orderPlace; }
+            set { this.orderPlace = value; }
         }
     }
 }

@@ -1,4 +1,7 @@
-﻿using System.Text;
+﻿using Models;
+using PlateUpWinApp.Frames;
+using System.Reflection;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -8,7 +11,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using PlateUpWinApp.Frames;
 
 namespace PlateUpWinApp
 {
@@ -25,12 +27,18 @@ namespace PlateUpWinApp
         ManageMenuView menuView;
         ManageReviewsView reviewsView;
         Hyperlink activeLink;
-
-        bool loginSuccess;
         public MainWindow()
         {
             InitializeComponent();
-            UpdateLoginButton();
+            ViewLogin();
+        }
+      
+        public void LoginSuccess(LoginViewModel loginResult)
+        {
+            this.adminName.Text = loginResult.Name;
+            this.btnLogout.Visibility = Visibility.Visible;
+            this.spNavItems.Visibility = Visibility.Visible;
+            SetActiveNav(this.Reports);
             ViewReports();
         }
         private void SetActiveNav(Hyperlink clicked)
@@ -72,7 +80,7 @@ namespace PlateUpWinApp
         public void ViewLogin()
         {
             if (this.viewLogin == null)
-                this.viewLogin = new Login();
+                this.viewLogin = new Login(this);
             this.FrameContent.Content = this.viewLogin;
         }
         public void ViewManageOrder()
@@ -112,27 +120,6 @@ namespace PlateUpWinApp
                 this.DragMove();
             }
         }
-        private void UpdateLoginButton()
-        {
-            if (loginSuccess)
-            {
-                this.btnLogout.Content = "Logout";
-            }
-            else
-            {
-                this.btnLogout.Content = "Login";
-            }
-        }
-        private void btnLogout_Click(object sender, RoutedEventArgs e)
-        {
-           if (!loginSuccess)
-            {
-                //לאסוף קלט.
-                //לבדוק במסד נתונים
-                //אם מסד נתונים מחזיר אמת 
-            }
-        }
-
         private void Reports_Click(object sender, RoutedEventArgs e)
         {
             SetActiveNav(this.Reports);
@@ -182,6 +169,11 @@ namespace PlateUpWinApp
             Application.Current.Shutdown();
         }
 
-
+        private void btnLogout_Click(object sender, RoutedEventArgs e)
+        {
+            this.adminName.Text = "";
+            this.spNavItems.Visibility = Visibility.Collapsed;
+            ViewLogin();
+        }
     }
 }

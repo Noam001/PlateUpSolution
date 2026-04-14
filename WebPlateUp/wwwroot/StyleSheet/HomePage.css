@@ -156,7 +156,7 @@ html {
     transition: 0.25s ease;
     align-self: flex-start;
 }
-button:hover {
+.Send:hover {
     background-color: #8F6947; /* slightly darker */
     transform: translateY(-2px);
     cursor: pointer;
@@ -229,7 +229,11 @@ button:hover {
     border: none;
     font-size: 27px;
     cursor: pointer;
-    margin-left:322px;
+    margin-left:520px;
     margin-top:-15px;
     transition: transform 0.2s;
+}
+.delete-btn:hover {
+    transform: translateY(-2px);
+    cursor: pointer;
 }

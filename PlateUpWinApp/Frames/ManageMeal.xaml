@@ -9,13 +9,13 @@
     <Canvas>
 
         <!-- TITLE -->
-        <TextBlock x:Name="Title"
+        <TextBlock x:Name="PageTitle"
                    Text="Add Meal"
                    FontSize="28"
                    FontWeight="SemiBold"
                    Foreground="#E0E1F1"
-                   Canvas.Left="380"
-                   Canvas.Top="25"/>
+                   Canvas.Left="398"
+                   Canvas.Top="38"/>
 
         <!-- MAIN CARD -->
         <Border Width="838"
@@ -173,7 +173,7 @@
                     <ComboBoxItem Content="Unavailable" Tag="False"/>
                 </ComboBox>
 
-                <!-- BUTTONS -->               
+                <!-- BUTTONS -->
                 <Button x:Name="btnDelete"
                         Content="Delete"
                         Width="110"

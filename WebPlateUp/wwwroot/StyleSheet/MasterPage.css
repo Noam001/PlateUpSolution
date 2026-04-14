@@ -6,10 +6,11 @@
 }
 .wrapper {
     min-height: 100vh;
-    background: linear-gradient(to bottom, #000000, #1a1715, #141210, #0b0b0b);
-    background-image: url('../images/banner_bg_2.jpg');
-    background-repeat: no-repeat;
-    background-position: right top; /* מדביק לצד ימין למעלה */
+    background: linear-gradient( to bottom, 
+    #ead7b7 0%, /* הצבע מתחיל למעלה */
+    #ead7b7 1000px,
+    #0b0b0b 100% /* סיום הרקע הכהה */
+    );
     margin: auto;
 }
 .logo img {
@@ -120,49 +121,51 @@
     color: rgba(255, 255, 255, 0.4);
     pointer-events: none;
 }
-
 .toast {
     position: fixed;
-    top: 50%;
+    top: 30px;
     left: 50%;
-    transform: translateX(-50%) translateY(-50%);
-    padding: 40px 60px;
-    border-radius: 20px;
-    font-family: 'Playfair Display', serif;
-    font-size: 22px;
-    font-weight: bold;
-    color: white;
+    transform: translateX(-50%);
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
     z-index: 9999;
-    box-shadow: 0 16px 48px rgba(0,0,0,0.25);
-    text-align: center;
-    min-width: 400px;
-    animation: fadeInOut 6s ease forwards;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    animation: slideDown 0.4s ease, fadeOut 0.5s ease 3s forwards;
 }
 
 .toast-success {
-    background: linear-gradient(135deg, #3F2A1A, #8F6947);
+    background-color: #e6f4ea;
+    color: #2d6a4f;
+    border: 1px solid #95d5b2;
 }
 
 .toast-error {
-    background: linear-gradient(135deg, #c0392b, #e74c3c);
+    background-color: #fdecea;
+    color: #a62828;
+    border: 1px solid #f5a5a5;
 }
 
-@keyframes fadeInOut {
-    0% {
+@keyframes slideDown {
+    from {
+        top: 0;
         opacity: 0;
-        transform: translateX(-50%) translateY(-40%);
     }
 
-    12% {
-        opacity: 1;
-        transform: translateX(-50%) translateY(-50%);
-    }
-
-    80% {
+    to {
+        top: 30px;
         opacity: 1;
     }
+}
 
-    100% {
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
         opacity: 0;
+        visibility: hidden;
     }
 }
