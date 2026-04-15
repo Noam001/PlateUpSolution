@@ -11,37 +11,37 @@ namespace Test
     {
         static async Task Main(string[] args)
         {
-            string orderdate = "2020-12-15";
-            string ordertime = "13:00";
-            Day weather = await GetWeather(orderdate, ordertime);
-            PrintWeatherModel(weather);
+            string orderdate = "2026-04-16";
+            string ordertime = "18:00";
+            Hour weather = await GetWeather(orderdate, ordertime);
+            Console.WriteLine($"Date: {orderdate} {ordertime} , temp: {weather.Temp} , icon: {weather.Icon} , con: {weather.Conditions}");
             Console.ReadLine();
         }
-        static async Task<Day> GetWeather(string orderDate, string orderTime)
+        static async Task<Hour> GetWeather(string orderDate, string orderTime)
         {
-
             string date = orderDate + "T" + orderTime + ":00";
-            string url = $"https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/London,UK/{date}?key=YXLRG4K97Z69YFDVRLKP9GNUS";
+            string url = $"https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/Ashkelon,Israel/{date}?key=YXLRG4K97Z69YFDVRLKP9GNUS&unitGroup=metric&include=hours";
+
             using HttpClient client = new HttpClient();
             string json = await client.GetStringAsync(url);
 
-            // כאן הקסם קורה:
             using JsonDocument doc = JsonDocument.Parse(json);
+            JsonElement firstDay = doc.RootElement.GetProperty("days")[0];
+            JsonElement hours = firstDay.GetProperty("hours");
 
-            // אנחנו ניגשים ישירות לאיבר הראשון בתוך המערך "days"
-            JsonElement firstDayJson = doc.RootElement.GetProperty("days")[0];
-
-            // עכשיו אנחנו הופכים רק את החלק הזה למחלקה שלנו
+            string targetHour = orderTime + ":00"; // "13:00:00"
             var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-            Day weatherDay = JsonSerializer.Deserialize<Day>(firstDayJson.GetRawText(), options);
 
-            return weatherDay;
-        }
-        static void PrintWeatherModel(Day weather)
-        {
-            Console.WriteLine($"Date: {weather.Datetime} , temp: {weather.Temp} , icon: {weather.Icon} , con: {weather.Conditions}");
-        }
+            foreach (JsonElement hour in hours.EnumerateArray())
+            {
+                if (hour.GetProperty("datetime").GetString() == targetHour)
+                {
+                    return JsonSerializer.Deserialize<Hour>(hour.GetRawText(), options);
+                }
+            }
 
+            return null; // אם לא נמצאה השעה
+        }
 
         static string GenerateSalt()
         {

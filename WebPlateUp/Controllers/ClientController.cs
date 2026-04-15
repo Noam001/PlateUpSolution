@@ -6,6 +6,7 @@ using System.Net;
 using System.Text;
 using System.Text.Json;
 using WebApiClient;
+using WebAppPlateUp.Models;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace WebPlateUp.Controllers
@@ -224,6 +225,7 @@ namespace WebPlateUp.Controllers
             HttpContext.Session.SetString("reservationTime", order.OrderTime.ToString());
             HttpContext.Session.SetString("reservationPeople", order.NumOfPeople.ToString());
             HttpContext.Session.SetString("reservationPlace", order.OrderPlace);
+
             return RedirectToAction("CheckoutView");
         }
         [HttpGet]
@@ -258,6 +260,42 @@ namespace WebPlateUp.Controllers
             CartViewModel vm = client.Get();
             return View(vm);
         }
-        
+
+        //פעולת עזר שמביאה משירות רשת חיצוני את פרטי מזג אוויר
+        [HttpGet]
+        public async Task<IActionResult> GetWeather(string date, string time)
+        {
+            if (string.IsNullOrEmpty(date) || string.IsNullOrEmpty(time))
+                return Json(null);
+            try
+            { 
+                string url = $"https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/Ashkelon,Israel/{date}T{time}:00?key=YXLRG4K97Z69YFDVRLKP9GNUS&unitGroup=metric&include=hours";
+
+                using HttpClient client = new HttpClient();
+                string json = await client.GetStringAsync(url);
+
+                using JsonDocument doc = JsonDocument.Parse(json);
+                JsonElement firstDay = doc.RootElement.GetProperty("days")[0];
+                JsonElement hours = firstDay.GetProperty("hours");
+
+                string targetHour = time + ":00";
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
+                foreach (JsonElement hour in hours.EnumerateArray())
+                {
+                    if (hour.GetProperty("datetime").GetString() == targetHour)
+                    {
+                        Hour weatherData = JsonSerializer.Deserialize<Hour>(hour.GetRawText(), options);                  
+                        return Json(weatherData);
+                    }
+                }
+            }
+            catch
+            {
+                return Json(null);
+            }
+            return Json(null);
+        }
+
     }
 }

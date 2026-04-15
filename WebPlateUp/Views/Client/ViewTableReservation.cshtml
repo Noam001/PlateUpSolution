@@ -5,6 +5,7 @@
 }
 
 <!DOCTYPE html>
+
 <html>
 <head>
     <meta charset="utf-8" />
@@ -17,12 +18,30 @@
         <h2 class="Title">Reserve a table</h2>
         <ul class="fields">
             <li class="field">
-                <input asp-for="@Model.ClientId" id="id" type="hidden" value="@ViewBag.ClientId" />
-                <input asp-for="@Model.OrderDate" id="id" type="date" placeholder="Reservation Date" />
+                <input asp-for="@Model.ClientId" type="hidden" value="@ViewBag.ClientId" />
+                <input asp-for="@Model.OrderDate" id="OrderDate" type="date"
+                           min="@DateTime.Now.ToString("yyyy-MM-dd")"
+                           max="@DateTime.Now.AddMonths(1).ToString("yyyy-MM-dd")" placeholder="Reservation Date" />
                 <span asp-validation-for="@Model.OrderDate" class="errorData" id="OrderError"></span>
             </li>
             <li class="field">
-                <input asp-for="@Model.OrderTime" id="id" type="time" placeholder="Reservation Time" />
+                <select asp-for="@Model.OrderTime" id="OrderTime" class="form-control">
+                    <option value="" disabled selected>Select Time</option>
+                    <option value="09:00">09:00</option>
+                    <option value="10:00">10:00</option>
+                    <option value="11:00">11:00</option>
+                    <option value="12:00">12:00</option>
+                    <option value="13:00">13:00</option>
+                    <option value="14:00">14:00</option>
+                    <option value="15:00">15:00</option>
+                    <option value="16:00">16:00</option>
+                    <option value="17:00">17:00</option>
+                    <option value="18:00">18:00</option>
+                    <option value="19:00">19:00</option>
+                    <option value="20:00">20:00</option>
+                    <option value="21:00">21:00</option>
+                    <option value="22:00">22:00</option>
+                </select>
                 <span asp-validation-for="@Model.OrderTime" class="errorData" id="OrderError"></span>
             </li>
             <li class="field">
@@ -51,9 +70,53 @@
             <a href="http://localhost:5290/Guest/Menu/">Menu</a>
             <a href="http://localhost:5290/Guest/HomePage/">Home</a>
         </div>
+        <div class="weather-box" id="weatherBox" style="display:none">
+            <div class="weather-top">
+                <img id="weatherIcon" src="" />
+                <p id="weatherTemp"></p>
+            </div>
+            <p id="weatherCondition"></p>
+            <p id="weatherRecommendation"></p>
+        </div>
     </form>
     <footer class="footer">
         <p class="rights">All Rights Reserved</p>
     </footer>
+    <script>
+        // מאזין לשינויים בשדות התאריך והשעה
+        document.getElementById('OrderDate').addEventListener('change', fetchWeather);
+        document.getElementById('OrderTime').addEventListener('change', fetchWeather);
+
+        async function fetchWeather() {
+            const date = document.getElementById('OrderDate').value;
+            const time = document.getElementById('OrderTime').value;
+
+            // אם אחד משניהם ריק — לא עושים כלום
+            if (!date || !time) return;
+
+            // שולחים בקשה שקטה ל-Controller
+            const response = await fetch(`/Client/GetWeather?date=${date}&time=${time}`);
+            const weather = await response.json();
+            if (!weather)
+            {
+                document.getElementById('weatherBox').style.display = 'none';
+                return;
+            }
+            
+            // ממלאים את תיבת מזג האוויר
+            document.getElementById('weatherTemp').textContent = `${weather.temp}°C`;
+            document.getElementById('weatherCondition').textContent = `☁ ${weather.conditions}`;
+            document.getElementById('weatherIcon').src =
+            `https://raw.githubusercontent.com/visualcrossing/WeatherIcons/main/PNG/1st%20Set%20-%20Color/${weather.icon}.png`;
+            // המלצה לפי מזג האוויר
+            const isGood = weather.temp > 15 && weather.temp < 35
+                           && !weather.conditions.toLowerCase().includes('rain');
+            document.getElementById('weatherRecommendation').textContent = isGood
+                ? '✅ Great weather for outdoors!'
+                : '🏠 We recommend sitting indoors.';
+            // מציגים את הקופסה
+            document.getElementById('weatherBox').style.display = 'block';
+        }
+    </script>
 </body>
 </html>

@@ -58,6 +58,15 @@ body {
 .field {
     position: relative;
 }
+.errorData {
+    display: block;
+    font-size: 13px;
+    font-weight:400;
+    color:red;
+    margin-top: 4px;
+    padding-left: 10px;
+    font-family: 'Open Sans', sans-serif;
+}
 /* 2. נותן רווח בצד ימין ל־select כדי שהטקסט לא יסתיר את האייקון */
 .field select {
     padding-right: 42px; /* מספיק מקום לאייקון */
@@ -130,4 +139,60 @@ button:hover {
     width: 100%;
     backdrop-filter: blur(5px);
     box-shadow: none;
+}
+
+.weather-box {
+    position: fixed;
+    top: -50px;
+    left: -410px;
+    width: 364px;
+    background: white;
+    border-radius: 20px;
+    padding: 20px 20px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    font-family: 'Open Sans', sans-serif;
+}
+.weather-top {
+    display: flex;
+    align-items: center;
+    margin: 6px 0px;
+    gap: 13px;
+}
+#weatherIcon {
+    margin-left: -6px;
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
+}
+.weather-box::before {
+    content: '🌤 Weather Forecast';
+    font-size: 13px;
+    font-weight: 700;
+    color: #009ca6;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+#weatherTemp {
+    font-size: 32px;
+    font-weight: 700;
+    color: #1a1a1a;
+}
+
+#weatherCondition {
+    margin-left: 4px;
+    font-size: 15px;
+    color: #666;
+}
+
+#weatherRecommendation {
+    font-size: 14px;
+    font-weight: 600;
+    padding: 10px 14px;
+    border-radius: 12px;
+    background-color: #f0fafa;
+    color: #007a82;
+    border: 1px solid #b2e4e8;
+    line-height: 1.5;
+    margin: 6px 0px;
 }

@@ -1,11 +1,10 @@
 ﻿namespace WebAppPlateUp.Models
 {
-    public class Weather
+    public class Hour
     {
-        public string datetime { get; set; }
-        public int temp { get; set; }
-        public string conditions { get; set; }
-        public string icon { get; set; }
+        public double Temp { get; set; }
+        public string Icon { get; set; }
+        public string Conditions { get; set; }
     }
 }
 //https://github.com/visualcrossing/WeatherIcons
