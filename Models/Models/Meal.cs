@@ -11,11 +11,11 @@ namespace Models
     public class Meal : Model
     {
         int mealId;
-        string mealName;
-        string mealPhoto;
-        string mealDescription;
-        double mealPrice;
-        bool mealStatus;
+        string mealName="";
+        string mealPhoto = "";
+        string mealDescription="";
+        double mealPrice=-1;
+        bool mealStatus=false;
 
         public int MealId
         {
@@ -28,7 +28,8 @@ namespace Models
         public string MealName
         {
             get { return this.mealName; }
-            set { this.mealName = value; }
+            set { this.mealName = value;
+            }
         }
         [Required(ErrorMessage = "You must provide a meal photo")]
         [RegularExpression(@".*\.(jpg|jpeg|png)$", ErrorMessage = "Photo must be a valid image file (jpg, jpeg, png).")]

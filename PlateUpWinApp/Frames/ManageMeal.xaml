@@ -6,6 +6,9 @@
              xmlns:local="clr-namespace:PlateUpWpf.Frames"
              mc:Ignorable="d" ResizeMode="NoResize"
              Height="540" Width="930" Background="#151233">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="booleanToVisibilityConverter"></BooleanToVisibilityConverter>
+    </Window.Resources>
     <Canvas>
 
         <!-- TITLE -->
@@ -67,6 +70,13 @@
                            FontSize="13"
                            Canvas.Left="380"
                            Canvas.Top="30"/>
+                <TextBlock Text="{Binding (Validation.Errors)[0].ErrorContent, ElementName=txtEditItemName}"
+                           Visibility="{Binding (Validation.HasError), Converter={StaticResource booleanToVisibilityConverter},ElementName=txtEditPrice}"
+                           Foreground="red"
+                           FontSize="13"
+                           Width="270"
+                           Canvas.Left="460"
+                           Canvas.Top="30"/>
 
                 <Border Width="350"
                         Height="45"
@@ -90,6 +100,13 @@
                            Foreground="#ADACD2"
                            FontSize="13"
                            Canvas.Left="380"
+                           Canvas.Top="110"/>
+                <TextBlock Text="{Binding (Validation.Errors)[0].ErrorContent, ElementName=txtEditDescription}"
+                           Visibility="{Binding (Validation.HasError), Converter={StaticResource booleanToVisibilityConverter},ElementName=txtEditPrice}"
+                           Foreground="red"
+                           FontSize="13"
+                           Width="270"
+                           Canvas.Left="460"
                            Canvas.Top="110"/>
 
                 <Border Width="350"
@@ -134,6 +151,13 @@
                              BorderThickness="0"
                              Padding="10"/>
                 </Border>
+                <TextBlock Text="{Binding (Validation.Errors)[0].ErrorContent, ElementName=txtEditPrice}"
+                           Visibility="{Binding (Validation.HasError), Converter={StaticResource booleanToVisibilityConverter},ElementName=txtEditPrice}"
+                           Foreground="red"
+                           FontSize="13"
+                           Width="160"
+                           Canvas.Left="380"
+                           Canvas.Top="305"/>
 
                 <!-- Food Type -->
                 <TextBlock Text="Food Type"

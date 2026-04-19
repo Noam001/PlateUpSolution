@@ -68,7 +68,9 @@ namespace PlateUpWpf.Frames
             client.Host = "localhost";
             client.Port = 5035;
             client.Path = "api/Admin/UpdateMeal";
-            if (this.imgPath != null)
+            updateMeal.Meal.Validate();
+            bool isValid = updateMeal.Meal.IsValid;
+            if (this.imgPath != null && isValid==true)
             {
                 updateMeal.Meal.MealPhoto = System.IO.Path.GetExtension(this.imgPath);
                 Stream stream = new FileStream(this.imgPath, FileMode.Open, FileAccess.Read);
@@ -97,6 +99,7 @@ namespace PlateUpWpf.Frames
         private async Task GetNewMealVm(int selectedFoodTypeId = 0)
         {
             WebClient<MealViewModel> client = new WebClient<MealViewModel>();
+
             client.Schema = "http";
             client.Host = "localhost";
             client.Port = 5035;
@@ -107,10 +110,9 @@ namespace PlateUpWpf.Frames
             {
                 this.cmbFoodTypes.ItemsSource = this.addMealView.FoodTypes;
                 this.cmbFoodTypes.SelectedValue = selectedFoodTypeId;
-                this.DataContext = addMealView;
                 if (this.addMealView.Meal == null)
                     this.addMealView.Meal = new Meal();
-
+                this.DataContext = addMealView;
             }
         }
 
@@ -141,21 +143,33 @@ namespace PlateUpWpf.Frames
             newMeal.FoodTypes = new List<FoodType>() { selectedFoodType };
             newMeal.Meal.MealStatus = this.cmbEditStatus.SelectedValue == "True";
             Stream stream = new FileStream(this.imgPath, FileMode.Open, FileAccess.Read);
-            WebClient<MealViewModel> client = new WebClient<MealViewModel>();
-            client.Schema = "http";
-            client.Host = "localhost";
-            client.Port = 5035;
-            client.Path = "api/Admin/AddMeal";
-            bool ok = await client.PostAsync(newMeal, stream);
-            if (ok)
+
+            newMeal.Meal.Validate();
+            bool isValid = newMeal.Meal.IsValid;
+            if (isValid == true)
             {
-                this.DialogResult = true;
-                MessageBox.Show("Meal Added!");
-                
-                this.Close();
+                WebClient<MealViewModel> client = new WebClient<MealViewModel>();
+                client.Schema = "http";
+                client.Host = "localhost";
+                client.Port = 5035;
+                client.Path = "api/Admin/AddMeal";
+                bool ok = await client.PostAsync(newMeal, stream);
+                if (ok)
+                {
+                    this.DialogResult = true;
+                    MessageBox.Show("Meal Added!");
+
+                    this.Close();
+                }
+                else
+                    MessageBox.Show("Failed, try again later.", "Fail", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            else
-                MessageBox.Show("Failed, try again later.", "Fail", MessageBoxButton.OK, MessageBoxImage.Error);
+
         }
+
+         
+            
+                
+          
     }
 }

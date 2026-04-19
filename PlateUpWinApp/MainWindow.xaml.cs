@@ -27,14 +27,19 @@ namespace PlateUpWinApp
         ManageMenuView menuView;
         ManageReviewsView reviewsView;
         Hyperlink activeLink;
+        bool isAdmin;
         public MainWindow()
         {
+            isAdmin = false;
             InitializeComponent();
-            ViewLogin();
+            // ViewLogin();
+            this.spNavItems.Visibility = Visibility.Visible;
+            ViewReports();
         }
       
         public void LoginSuccess(LoginViewModel loginResult)
         {
+            this.isAdmin = true;
             this.adminName.Text = loginResult.Name;
             this.btnLogout.Visibility = Visibility.Visible;
             this.spNavItems.Visibility = Visibility.Visible;
