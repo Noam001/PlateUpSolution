@@ -34,12 +34,13 @@ namespace WebPlateUp.Controllers
                 // הצלחה- שומרים בסשן ועוברים לדף הבית
                 HttpContext.Session.SetString("clientId", loginViewModel.ClientId);
                 HttpContext.Session.SetString("clientName", loginViewModel.Name);
+                TempData["SuccessMessage"] = "Successfully logged in!";
                 return RedirectToAction("HomePage", "Guest");
             }
             else
             {
                 // כישלון - נחזור לדף ההתחברות עם הודעת שגיאה
-                ViewBag.ErrorMessage = "Invalid Email or Password.";
+                TempData["ErrorMessage"] = "Invalid email or password.";
                 return View("ViewLogin");
             }
         }
@@ -47,6 +48,7 @@ namespace WebPlateUp.Controllers
         public IActionResult Logout()
         {
             HttpContext.Session.Clear();
+            TempData["SuccessMessage"] = "Successfully logged out.";
             return RedirectToAction("HomePage", "Guest");
         }
         [HttpPost]

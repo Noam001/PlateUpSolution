@@ -3,114 +3,15 @@
     padding: 0;
     box-sizing: border-box;
 }
-
-body {
-    background-color: #f5eadb;
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    flex-direction: column;
-}
-.page-container {
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 .Signup {
     width: 600px;
-    padding: 60px 30px;
+    padding: 40px 30px;
     margin-top: 20px;
     background: rgba(255, 255, 255, 0.25);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
     border-radius: 18px;
-}
-.logo img {
-    width: 100px;
-    margin-left: 55px;
-    cursor: pointer;
-}
-.username {
-    display: inline-flex;
-    flex-direction: column; /* מסדר את האלמנטים אחד אחרי השני */
-    align-items: center; /* ממרכז אופקית */
-    cursor: pointer;
-    transition: opacity 0.3s;
-}
-
-.username:hover {
-    opacity: 0.8;
-}
-
-.username img {
-    width: 30px;
-    height: 30px;
-}
-
-/* הדרופדאון */
-.dropdown {
-    display: none; /* מוסתר כברירת מחדל */
-    position: absolute; /*מיקום חופשי, ללא השפעה על מיקום שאר האלמנטים.*/
-    margin-top: 17px;
-    background-color: #333;
-    top: 100%;
-    left: -50px;
-    width: 170px;
-    text-align: center;
-    box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
-    border-radius: 5px;
-    overflow: hidden;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-.dropdown a {
-    display: block;
-    padding: 12px 20px;
-    text-decoration: none;
-    color: white;
-    transition: all 0.3s ease; /* חשוב! */
-    text-align: center;
-    position: relative;
-}
-.dropdown a:hover {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    padding-left: 30px;
-}
-
-/* הצגת הדרופדאון בהובר */
-.item:hover .dropdown {
-    display: block;
-}
-.header {
-    display: flex;
-    justify-content: space-between;
-    padding: 2px 0;
-    align-items: center;
-    border-bottom: 1px solid rgba(255,255,255,0.5);
-}
-
-.item {
-    display: inline;
-    margin: 0 27.5px;
-    font-family: 'Open Sans';
-    font-weight: bold;
-    color: #595149;
-    position: relative
-}
-.item:hover .dropdown a {
-    color: white;
-}
-.item:hover {
-    color: #8F6947; /* subtle elegant hover */
-}
-
-.nav a {
-    text-decoration: none;
-    color: inherit;
-}
-
-.nav {
-    margin-right: 100px;
+    margin-left:670px;
+    margin-top:50px;
 }
 .Title {
     text-align: center;
@@ -230,15 +131,4 @@ button:hover {
     text-decoration: none;
     color: #595149;
     font-weight: bold;
-}
-
-.footer {
-    position: fixed;
-    bottom: 8px;
-    left: 10px;
-    background: none;
-    padding: 0;
-    font-size: 13px;
-    color: rgba(255, 255, 255, 0.4);
-    pointer-events: none;
 }
