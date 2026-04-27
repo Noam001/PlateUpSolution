@@ -103,7 +103,7 @@ namespace WebApiClient
                         {
                             PropertyNameCaseInsensitive = true
                         };
-                       T data = JsonSerializer.Deserialize<T>(result,options); //העברת פורמט מגייסון לאובייקט הספציפי
+                       T data = JsonSerializer.Deserialize<T>(result,options); //העברת פורמט מגייסון לאובייקט הנבחר
                         return data;
                     }
                     else

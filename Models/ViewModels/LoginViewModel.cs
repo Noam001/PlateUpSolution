@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    public class LoginViewModel/// מה שמתקבל
+    public class LoginViewModel// מה שמתקבל
     {
-
         public string  ClientId { get; set; }
         public string Name { get; set; }
     }
