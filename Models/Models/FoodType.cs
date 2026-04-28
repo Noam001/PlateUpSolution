@@ -22,7 +22,9 @@ namespace Models
         public string FoodTypeName
         {
             get { return this.foodTypeName; }
-            set { this.foodTypeName = value; }
+            set { this.foodTypeName = value;
+                ValidateProperty(value, "FoodTypeName");
+            }
         }
 
 

@@ -44,6 +44,12 @@
                         Canvas.Top="40">
 
                     <Grid>
+                        <TextBox x:Name="MealPhotoEdit"
+                                 Text="{Binding Meal.MealPhoto, Mode=TwoWay, 
+                                               UpdateSourceTrigger=PropertyChanged,
+                                               ValidatesOnDataErrors=True}"
+                                 Visibility="Hidden"
+                                 />
                         <Image x:Name="AddImage"/>
                         <Button x:Name="btnEditImage"
                                 Background="Transparent"
@@ -61,6 +67,13 @@
                         </Button>
                     </Grid>
                 </Border>
+                <TextBlock Text="{Binding (Validation.Errors)[0].ErrorContent, ElementName=MealPhotoEdit}"
+                           Visibility="{Binding (Validation.HasError), Converter={StaticResource booleanToVisibilityConverter},ElementName=MealPhotoEdit}"
+                           Foreground="red"
+                           FontSize="13"
+                           Width="290"
+                           Canvas.Left="26"
+                           Canvas.Top="336"/>
 
                 <!-- RIGHT SIDE CONTENT -->
 
@@ -71,10 +84,10 @@
                            Canvas.Left="380"
                            Canvas.Top="30"/>
                 <TextBlock Text="{Binding (Validation.Errors)[0].ErrorContent, ElementName=txtEditItemName}"
-                           Visibility="{Binding (Validation.HasError), Converter={StaticResource booleanToVisibilityConverter},ElementName=txtEditPrice}"
+                           Visibility="{Binding (Validation.HasError), Converter={StaticResource booleanToVisibilityConverter},ElementName=txtEditItemName}"
                            Foreground="red"
                            FontSize="13"
-                           Width="270"
+                           Width="290"
                            Canvas.Left="460"
                            Canvas.Top="30"/>
 
@@ -87,12 +100,16 @@
                         Canvas.Left="380"
                         Canvas.Top="50">
                     <TextBox x:Name="txtEditItemName"
-                             Text=""
+                             Validation.ErrorTemplate="{x:Null}" 
+                             Text="{Binding Meal.MealName, Mode=TwoWay, 
+                                           UpdateSourceTrigger=PropertyChanged,
+                                           ValidatesOnDataErrors=True}"
                              Background="Transparent"
                              Foreground="#E0E1F1"
                              BorderThickness="0"
                              FontSize="18"
-                             Padding="10"/>
+                             Padding="10"
+                             />
                 </Border>
 
                 <!-- Description -->
@@ -102,10 +119,10 @@
                            Canvas.Left="380"
                            Canvas.Top="110"/>
                 <TextBlock Text="{Binding (Validation.Errors)[0].ErrorContent, ElementName=txtEditDescription}"
-                           Visibility="{Binding (Validation.HasError), Converter={StaticResource booleanToVisibilityConverter},ElementName=txtEditPrice}"
+                           Visibility="{Binding (Validation.HasError), Converter={StaticResource booleanToVisibilityConverter},ElementName=txtEditDescription}"
                            Foreground="red"
                            FontSize="13"
-                           Width="270"
+                           Width="290"
                            Canvas.Left="460"
                            Canvas.Top="110"/>
 
@@ -118,7 +135,10 @@
                         Canvas.Left="380"
                         Canvas.Top="130">
                     <TextBox x:Name="txtEditDescription"
-                             Text=""
+                             Validation.ErrorTemplate="{x:Null}" 
+                             Text="{Binding Meal.MealDescription, Mode=TwoWay, 
+                                      UpdateSourceTrigger=PropertyChanged,
+                                      ValidatesOnDataErrors=True}"
                              Background="Transparent"
                              Foreground="#E0E1F1"
                              BorderThickness="0"
@@ -145,7 +165,12 @@
                         Canvas.Left="380"
                         Canvas.Top="255">
                     <TextBox x:Name="txtEditPrice"
-                             Text=""
+                             Validation.ErrorTemplate="{x:Null}" 
+                             Text="{Binding Meal.MealPrice, Mode=TwoWay, 
+                                     UpdateSourceTrigger=PropertyChanged,
+                                     ValidatesOnDataErrors=True,
+                                     ValidatesOnExceptions=True,
+                                     NotifyOnValidationError=True}"
                              Background="Transparent"
                              Foreground="#E0E1F1"
                              BorderThickness="0"
@@ -155,9 +180,9 @@
                            Visibility="{Binding (Validation.HasError), Converter={StaticResource booleanToVisibilityConverter},ElementName=txtEditPrice}"
                            Foreground="red"
                            FontSize="13"
-                           Width="160"
+                           Width="240"
                            Canvas.Left="380"
-                           Canvas.Top="305"/>
+                           Canvas.Top="302"/>
 
                 <!-- Food Type -->
                 <TextBlock Text="Food Type"

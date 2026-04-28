@@ -35,6 +35,12 @@ namespace PlateUpWpf.Frames
             GetNewMealVm();
             this.sumbitBtn.Click += (s, e) => AddNewMealBtn();
 
+
+        }
+
+        private void SetDataContext()
+        {
+
         }
         public ManageMeal(Meal meal, FoodType foodType)
         {
@@ -137,12 +143,18 @@ namespace PlateUpWpf.Frames
             newMeal.Meal = new Meal();
             newMeal.Meal.MealName = this.txtEditItemName.Text;
             newMeal.Meal.MealDescription = this.txtEditDescription.Text;
-            newMeal.Meal.MealPrice = double.Parse(this.txtEditPrice.Text);
-            newMeal.Meal.MealPhoto = System.IO.Path.GetExtension(this.imgPath); //שומר את סוג הפורמט
+            double n;
+            bool isNumeric = double.TryParse(this.txtEditPrice.Text, out n);
+            newMeal.Meal.MealPrice = isNumeric ? n : -1;
+
+            newMeal.Meal.MealPhoto = string.IsNullOrEmpty(imgPath) ? null : System.IO.Path.GetExtension(this.imgPath); //שומר את סוג הפורמט
             FoodType selectedFoodType = this.cmbFoodTypes.SelectedItem as FoodType;
             newMeal.FoodTypes = new List<FoodType>() { selectedFoodType };
             newMeal.Meal.MealStatus = this.cmbEditStatus.SelectedValue == "True";
-            Stream stream = new FileStream(this.imgPath, FileMode.Open, FileAccess.Read);
+            this.MealPhotoEdit.Text = newMeal.Meal.MealPhoto;
+            Stream stream = null;
+            if (newMeal.Meal.MealPhoto != null)
+                stream = new FileStream(this.imgPath, FileMode.Open, FileAccess.Read);
 
             newMeal.Meal.Validate();
             bool isValid = newMeal.Meal.IsValid;
