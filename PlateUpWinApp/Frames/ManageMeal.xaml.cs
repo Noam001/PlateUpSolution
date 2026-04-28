@@ -143,6 +143,7 @@ namespace PlateUpWpf.Frames
             newMeal.Meal = new Meal();
             newMeal.Meal.MealName = this.txtEditItemName.Text;
             newMeal.Meal.MealDescription = this.txtEditDescription.Text;
+
             double n;
             bool isNumeric = double.TryParse(this.txtEditPrice.Text, out n);
             newMeal.Meal.MealPrice = isNumeric ? n : -1;
@@ -151,14 +152,20 @@ namespace PlateUpWpf.Frames
             FoodType selectedFoodType = this.cmbFoodTypes.SelectedItem as FoodType;
             newMeal.FoodTypes = new List<FoodType>() { selectedFoodType };
             newMeal.Meal.MealStatus = this.cmbEditStatus.SelectedValue == "True";
+
             this.MealPhotoEdit.Text = newMeal.Meal.MealPhoto;
+           // this.FoodTypeSelect.Text = selectedFoodType == null ? null : selectedFoodType.FoodTypeName;
+
             Stream stream = null;
             if (newMeal.Meal.MealPhoto != null)
                 stream = new FileStream(this.imgPath, FileMode.Open, FileAccess.Read);
 
             newMeal.Meal.Validate();
-            bool isValid = newMeal.Meal.IsValid;
-            if (isValid == true)
+            newMeal.FoodTypes[0].Validate();
+
+            bool isMealValid = newMeal.Meal.IsValid;
+            bool isFoodTypeSelected = newMeal.FoodTypes[0].IsValid;
+            if (isMealValid && isFoodTypeSelected)
             {
                 WebClient<MealViewModel> client = new WebClient<MealViewModel>();
                 client.Schema = "http";

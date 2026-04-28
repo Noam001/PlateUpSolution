@@ -5,9 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PlateUpWpf.Frames"
              mc:Ignorable="d" ResizeMode="NoResize"
-             Height="540" Width="930" Background="#151233">
+             Height="570" Width="930" Background="#151233">
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="booleanToVisibilityConverter"></BooleanToVisibilityConverter>
+        <local:SelectedIndexToVisibility x:Key="selectedTovisibility"></local:SelectedIndexToVisibility>
     </Window.Resources>
     <Canvas>
 
@@ -22,7 +23,7 @@
 
         <!-- MAIN CARD -->
         <Border Width="838"
-                Height="390"
+                Height="420"
                 Background="#1C1448"
                 BorderBrush="#9497CD"
                 BorderThickness="1"
@@ -164,6 +165,7 @@
                         CornerRadius="8"
                         Canvas.Left="380"
                         Canvas.Top="255">
+
                     <TextBox x:Name="txtEditPrice"
                              Validation.ErrorTemplate="{x:Null}" 
                              Text="{Binding Meal.MealPrice, Mode=TwoWay, 
@@ -176,13 +178,30 @@
                              BorderThickness="0"
                              Padding="10"/>
                 </Border>
-                <TextBlock Text="{Binding (Validation.Errors)[0].ErrorContent, ElementName=txtEditPrice}"
-                           Visibility="{Binding (Validation.HasError), Converter={StaticResource booleanToVisibilityConverter},ElementName=txtEditPrice}"
-                           Foreground="red"
-                           FontSize="13"
-                           Width="240"
-                           Canvas.Left="380"
-                           Canvas.Top="302"/>
+                <Image Source="/images/ErrorIcon.png" Canvas.Left="460" Canvas.Top="259" Height="31" Width="30" HorizontalAlignment="Center" VerticalAlignment="Top"></Image>
+                <!-- Error Msg For price -->
+                <Border Width="125"
+                        Height="40"
+                        Canvas.Left="380"
+                        Canvas.Top="302">
+
+                    <Border.Visibility>
+                        <Binding Path="(Validation.HasError)"
+                            ElementName="txtEditPrice"
+                            Converter="{StaticResource booleanToVisibilityConverter}"/>
+                    </Border.Visibility>
+
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                        VerticalScrollBarVisibility="Hidden">
+
+                        <TextBlock Text="{Binding (Validation.Errors)[0].ErrorContent, ElementName=txtEditPrice}"
+                            Foreground="Red"
+                            FontSize="12"
+                            TextWrapping="NoWrap"/>
+                    </ScrollViewer>
+
+                </Border>
+
 
                 <!-- Food Type -->
                 <TextBlock Text="Food Type"
@@ -190,6 +209,7 @@
                            FontSize="13"
                            Canvas.Left="510"
                            Canvas.Top="235"/>
+
 
                 <ComboBox x:Name="cmbFoodTypes"                        
                           Width="130" Padding="12"
@@ -201,6 +221,30 @@
                           Foreground="Black"
                           DisplayMemberPath="FoodTypeName"
                           SelectedValuePath="FoodTypeId"/>
+                <!-- Error Msg For FoodType -->
+                <Border Width="135"
+                     Height="40"
+                     Canvas.Left="510"
+                     Canvas.Top="302">
+
+                    <Border.Visibility>
+                        <Binding Path="(Validation.HasError)"
+                                     ElementName="FoodTypeSelect"
+                                     Converter="{StaticResource booleanToVisibilityConverter}"/>
+                    </Border.Visibility>
+
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                                     VerticalScrollBarVisibility="Hidden">
+
+                        <TextBlock Text="You must select a food type"
+                                   Foreground="Red"
+                                   FontSize="12"
+                                   Canvas.Left="510"
+                                   Canvas.Top="300"
+                                   Visibility="{Binding SelectedIndex, ElementName=cmbFoodTypes, Converter={StaticResource selectedTovisibility}}" />
+                    </ScrollViewer>
+
+                </Border>
 
                 <!-- Status -->
                 <TextBlock Text="Status"
@@ -233,7 +277,7 @@
                         BorderThickness="0"
                         Cursor="Hand"
                         Canvas.Left="550"
-                        Canvas.Top="320">
+                        Canvas.Top="340">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <Border x:Name="border"
@@ -274,7 +318,7 @@
                         BorderThickness="0"
                         Cursor="Hand"
                         Canvas.Left="680"
-                        Canvas.Top="320">
+                        Canvas.Top="340">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <Border x:Name="border"

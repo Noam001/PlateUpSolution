@@ -20,6 +20,7 @@
     <None Remove="Images\city.png" />
     <None Remove="Images\city2.png" />
     <None Remove="Images\Email.png" />
+    <None Remove="Images\ErrorIcon.png" />
     <None Remove="Images\foodtype.png" />
     <None Remove="Images\lock.png" />
     <None Remove="Images\LoginBackground.jpg" />
@@ -41,6 +42,7 @@
   <ItemGroup>
     <Resource Include="Images\city.png" />
     <Resource Include="Images\Email.png" />
+    <Resource Include="Images\ErrorIcon.png" />
     <Resource Include="Images\lock.png" />
     <Resource Include="Images\LoginBackground.jpg" />
     <Resource Include="Images\order.png" />
