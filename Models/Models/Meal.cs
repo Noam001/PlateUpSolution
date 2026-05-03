@@ -29,7 +29,7 @@ namespace Models
         {
             get { return this.mealName; }
             set { this.mealName = value;
-                ValidateProperty(value,"MealName");
+                ValidateProperty(value , "MealName");
             }
         }
         [Required(ErrorMessage = "You must provide a meal photo")]

@@ -20,11 +20,11 @@ namespace PlateUpWpf.Frames
     public partial class DataEditView : Window
     {
         public string updatedName;
-        public DataEditView(string currentName, string label) //label - foodtype or city.
+        public DataEditView(string currentName, string label) //currentname - Default name, label - is it foodtype or city.
         {
             InitializeComponent();
-            this.txtLabel.Text = label;        // "Food Type Name:" או "City Name:"
             this.Title = $"Edit {label}";
+            this.txtLabel.Text = label;        // "Food Type Name:" או "City Name:"
             this.txtName.Text = currentName;
         }
         private void btnSave_Click(object sender, RoutedEventArgs e)

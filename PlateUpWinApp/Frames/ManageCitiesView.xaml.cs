@@ -74,7 +74,7 @@ namespace PlateUpWinApp.Frames
             if (result == true) // אם החלון של העדכון נפתח
             {
                 city.CityName = editCityWindow.updatedName; //עדכון שם העיר
-
+                
                 WebClient<City> client = new WebClient<City>();
                 client.Schema = "http";
                 client.Host = "localhost";

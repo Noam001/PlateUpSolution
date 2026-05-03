@@ -22,7 +22,7 @@ namespace Models
         public string CityName
         {
             get { return cityName; } 
-            set {cityName = value; } 
+            set {cityName = value; ValidateProperty(value, "CityName"); } 
         }
     }
 }

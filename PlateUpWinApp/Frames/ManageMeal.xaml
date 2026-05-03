@@ -102,7 +102,7 @@
                         Canvas.Top="50">
                     <TextBox x:Name="txtEditItemName"
                              Validation.ErrorTemplate="{x:Null}" 
-                             Text="{Binding Meal.MealName, Mode=TwoWay, 
+                             Text="{Binding Meal.MealName,
                                            UpdateSourceTrigger=PropertyChanged,
                                            ValidatesOnDataErrors=True}"
                              Background="Transparent"
@@ -137,7 +137,7 @@
                         Canvas.Top="130">
                     <TextBox x:Name="txtEditDescription"
                              Validation.ErrorTemplate="{x:Null}" 
-                             Text="{Binding Meal.MealDescription, Mode=TwoWay, 
+                             Text="{Binding Meal.MealDescription, 
                                       UpdateSourceTrigger=PropertyChanged,
                                       ValidatesOnDataErrors=True}"
                              Background="Transparent"
@@ -200,7 +200,6 @@
                            Canvas.Left="510"
                            Canvas.Top="235"/>
 
-
                 <ComboBox x:Name="cmbFoodTypes"                        
                           Width="130" Padding="12"
                           Height="40"
@@ -210,31 +209,22 @@
                           BorderBrush="#9497CD"
                           Foreground="Black"
                           DisplayMemberPath="FoodTypeName"
-                          SelectedValuePath="FoodTypeId"/>
-                <!-- Error Msg For FoodType -->
-                <Border Width="135"
-                     Height="40"
-                     Canvas.Left="510"
-                     Canvas.Top="302">
-
-                    <Border.Visibility>
-                        <Binding Path="(Validation.HasError)"
-                                     ElementName="FoodTypeSelect"
-                                     Converter="{StaticResource booleanToVisibilityConverter}"/>
-                    </Border.Visibility>
-
-                    <ScrollViewer HorizontalScrollBarVisibility="Auto"
-                                     VerticalScrollBarVisibility="Hidden">
-
-                        <TextBlock Text="You must select a food type"
-                                   Foreground="Red"
-                                   FontSize="12"
-                                   Canvas.Left="510"
-                                   Canvas.Top="300"
-                                   Visibility="{Binding SelectedIndex, ElementName=cmbFoodTypes, Converter={StaticResource selectedTovisibility}}" />
-                    </ScrollViewer>
-
-                </Border>
+                          SelectedValuePath="FoodTypeId"
+                         />
+                <Image Source="/images/ErrorIcon.png"
+                        Canvas.Left="600" Canvas.Top="264" Height="24" Width="24" 
+                        HorizontalAlignment="Left" VerticalAlignment="Center"
+                        >
+                    <Image.Visibility>
+                        <Binding Path="SelectedIndex"
+                                 ElementName="cmbFoodTypes"
+                                 Converter="{StaticResource selectedTovisibility}"/>
+                    </Image.Visibility>
+                    <Image.ToolTip>
+                        <TextBlock Text="You must select food type"
+                                   ></TextBlock>
+                    </Image.ToolTip>
+                </Image>
 
                 <!-- Status -->
                 <TextBlock Text="Status"
@@ -255,6 +245,18 @@
                     <ComboBoxItem Content="Available" Tag="True"/>
                     <ComboBoxItem Content="Unavailable" Tag="False"/>
                 </ComboBox>
+                <Image Source="/images/ErrorIcon.png"
+                       Canvas.Left="751" Canvas.Top="264" Height="24" Width="24" 
+                       HorizontalAlignment="Left" VerticalAlignment="Top" >
+                    <Image.Visibility>
+                        <Binding Path="SelectedIndex"
+                                 ElementName="cmbEditStatus"
+                                 Converter="{StaticResource selectedTovisibility}"/>
+                    </Image.Visibility>
+                    <Image.ToolTip>
+                        <TextBlock Text="You must select a status"></TextBlock>
+                    </Image.ToolTip>
+                </Image>
 
                 <!-- BUTTONS -->
                 <Button x:Name="btnDelete"

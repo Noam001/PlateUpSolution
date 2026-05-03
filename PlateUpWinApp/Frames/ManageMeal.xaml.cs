@@ -28,34 +28,33 @@ namespace PlateUpWpf.Frames
     public partial class ManageMeal : Window
     {
         MealViewModel addMealView;
+        Meal meal;
+        FoodType foodType;
         string imgPath;
         public ManageMeal()
         {
             InitializeComponent();
+            this.meal = null;
+            this.foodType = null;
             GetNewMealVm();
             this.sumbitBtn.Click += (s, e) => AddNewMealBtn();
-
-
-        }
-
-        private void SetDataContext()
-        {
-
         }
         public ManageMeal(Meal meal, FoodType foodType)
         {
             InitializeComponent();
-            GetNewMealVm(foodType.FoodTypeId);
-            this.PageTitle.Text = "Update Meal";
-            this.txtEditItemName.Text = meal.MealName; 
-            this.txtEditDescription.Text = meal.MealDescription;
-            this.txtEditPrice.Text = meal.MealPrice.ToString();
-            this.cmbEditStatus.SelectedValue = meal.MealStatus.ToString();
-            string imageUrl = $"http://localhost:5035/DataImages/{meal.MealPhoto}";
-            this.AddImage.Source = new BitmapImage(new Uri(imageUrl, UriKind.Absolute));
+            this.meal = new Meal { 
+                 MealDescription=meal.MealDescription,
+                 MealId=meal.MealId,
+                 MealName=meal.MealName,
+                 MealPhoto = meal.MealPhoto,
+                 MealPrice = meal.MealPrice,
+                 MealStatus = meal.MealStatus 
+            };
+            this.foodType = foodType;
             this.ImageClickDesign.Visibility = Visibility.Collapsed;
             this.sumbitBtn.Content = "Update";
             this.sumbitBtn.Click += (s, e) => UpdateMeal(meal.MealId);
+            GetNewMealVm();
         }
         private async void UpdateMeal(int mealId)
         {
@@ -102,7 +101,7 @@ namespace PlateUpWpf.Frames
             else
                 MessageBox.Show("Failed, try again later.", "Fail", MessageBoxButton.OK, MessageBoxImage.Error);
         }
-        private async Task GetNewMealVm(int selectedFoodTypeId = 0)
+        private async Task GetNewMealVm()
         {
             WebClient<MealViewModel> client = new WebClient<MealViewModel>();
 
@@ -114,10 +113,19 @@ namespace PlateUpWpf.Frames
 
             if (this.addMealView != null)
             {
-                this.cmbFoodTypes.ItemsSource = this.addMealView.FoodTypes;
-                this.cmbFoodTypes.SelectedValue = selectedFoodTypeId;
-                if (this.addMealView.Meal == null)
+
+                this.cmbFoodTypes.ItemsSource = this.addMealView.FoodTypes;              
+                if (this.meal == null)
                     this.addMealView.Meal = new Meal();
+                else
+                {
+                    this.addMealView.Meal = this.meal;
+                    this.cmbFoodTypes.SelectedValue = this.foodType.FoodTypeId;
+                    string imageUrl = $"http://localhost:5035/DataImages/{meal.MealPhoto}";
+                    this.AddImage.Source = new BitmapImage(new Uri(imageUrl, UriKind.Absolute));
+                    this.cmbEditStatus.SelectedIndex = this.addMealView.Meal.MealStatus ? 0 : 1;
+                }
+
                 this.DataContext = addMealView;
             }
         }
@@ -139,6 +147,8 @@ namespace PlateUpWpf.Frames
 
         private async void AddNewMealBtn()
         {
+            txtEditItemName.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
+            txtEditDescription.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
             MealViewModel newMeal = new MealViewModel();
             newMeal.Meal = new Meal();
             newMeal.Meal.MealName = this.txtEditItemName.Text;
@@ -161,11 +171,9 @@ namespace PlateUpWpf.Frames
                 stream = new FileStream(this.imgPath, FileMode.Open, FileAccess.Read);
 
             newMeal.Meal.Validate();
-            newMeal.FoodTypes[0].Validate();
-
             bool isMealValid = newMeal.Meal.IsValid;
-            bool isFoodTypeSelected = newMeal.FoodTypes[0].IsValid;
-            if (isMealValid && isFoodTypeSelected)
+
+            if (isMealValid)
             {
                 WebClient<MealViewModel> client = new WebClient<MealViewModel>();
                 client.Schema = "http";
