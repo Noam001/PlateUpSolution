@@ -7,7 +7,7 @@ namespace PlateUpWS
     {
         OleDbConnection connection; //אובייקט שפותח קשר עם מסד נתונים וסוגר- אחראי על הקשר עם מסד נתונים
         OleDbCommand command; //אובייקט שאחראי להעביר את הפקודות למסד נתונים
-        OleDbTransaction transaction; //
+        OleDbTransaction transaction;
 
         public OledbContext()
         {

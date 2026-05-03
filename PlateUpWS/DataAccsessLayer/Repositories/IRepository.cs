@@ -2,8 +2,7 @@
 {
     public interface IRepository<T>
     {
-        List<T> GetAll(); //רשימה של המודל
-
+        List<T> GetAll();
         T GetById(string id);
         bool Create(T item);
         bool Update(T item);

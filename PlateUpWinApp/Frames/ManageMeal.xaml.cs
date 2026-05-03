@@ -184,11 +184,6 @@ namespace PlateUpWpf.Frames
                     MessageBox.Show("Failed, try again later.", "Fail", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
-        }
-
-         
-            
-                
-          
+        }                         
     }
 }

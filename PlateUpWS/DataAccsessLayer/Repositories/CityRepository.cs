@@ -37,7 +37,6 @@ namespace PlateUpWS
                     cities.Add(this.modelFactory.CityCreator.CreateModel(reader));
                 }
             }
-
             return cities;
         }
 
