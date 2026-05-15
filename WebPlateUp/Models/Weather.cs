@@ -7,4 +7,3 @@
         public string Conditions { get; set; }
     }
 }
-//https://github.com/visualcrossing/WeatherIcons

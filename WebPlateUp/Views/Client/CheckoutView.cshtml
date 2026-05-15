@@ -33,6 +33,7 @@
         </p>
         <form asp-controller="Client" asp-action="@(isReservation ? "MakeAReservation" : "Checkout")" method="post">
             <input type="hidden" name="orderId" value="@ViewBag.OrderId" />
+            <input type="hidden" name="totalPrice" value="@ViewBag.TotalPrice" />
             <div class="form-group">
                 <label>Cardholder Name</label>
                 <input type="text" id="cardName" placeholder="John Doe"

@@ -68,7 +68,7 @@
     display: none; /* מוסתר כברירת מחדל */
     position: absolute; /*מיקום חופשי, ללא השפעה על מיקום שאר האלמנטים.*/
     background-color: #333;
-    top: 100%;
+    top: 175%;
     left: -50px;
     width: 170px;
     text-align: center;

@@ -278,6 +278,17 @@ namespace PlateUpWS
 
             return this.dbContext.Update(sql) > 0;
         }
+        public bool UpdateMealNote(int mealId, int orderId, string note)
+        {
+            string sql = @"UPDATE MealsOrders 
+                   SET MealNotes = @MealNotes
+                   WHERE MealID = @MealID AND OrderID = @OrderID";
+
+            this.dbContext.AddParameter("@MealNotes", note);
+            this.dbContext.AddParameter("@MealID", mealId);
+            this.dbContext.AddParameter("@OrderID", orderId);
+            return this.dbContext.Update(sql) > 0;
+        }
         public int GetTotalOrdersInDateRange(string fromDate, string toDate)
         {
             string sql = @"SELECT 

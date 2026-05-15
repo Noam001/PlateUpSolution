@@ -83,8 +83,7 @@
             }
         </section>
     </div>
-    <section class="pagination">
-       
+    <section class="pagination">     
         @if (Model.Pages >1)
         {
             <a href="http://localhost:5290/Guest/Menu/?pageNumber=@(Model.PageNumber - 1)&priceSort=@Model.PriceSort&foodTypeId=@Model.FoodTypeId"
@@ -104,7 +103,6 @@
                    class="@(Model.PageNumber == i ? "active" : "")">
                     @i @* תנאי ? ערך_אם_אמת : ערך_אם_שקר *@
                 </a>
-
             }
             <a href="http://localhost:5290/Guest/Menu/?pageNumber=@(Model.PageNumber + 1)&priceSort=@Model.PriceSort&foodTypeId=@Model.FoodTypeId"
                class="@(Model.PageNumber == Model.Pages ? "disabled" : "")">Next</a>

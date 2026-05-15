@@ -62,7 +62,11 @@
     text-decoration: none;
     color: inherit;
 }
-
+.meal-link-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
     .meal-link:hover .item-name h3 {
         color: #007bff;
     }
@@ -96,7 +100,32 @@
     font-style: italic;
     margin: 0;
 }
+.note-form {
+    position:absolute;
+    margin-left: 167px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 110px;
+}
 
+.note-input {
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 5px 9px;
+    font-size: 13px;
+    width: 190px;
+}
+
+.note-btn {
+    background: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 4px 10px;
+    cursor: pointer;
+    font-size: 13px;
+}
 .item-price {
     font-size: 18px;
     font-weight: bold;

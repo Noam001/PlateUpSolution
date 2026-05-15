@@ -37,6 +37,7 @@ namespace PlateUpWS
         }
 
         [HttpGet]
+        //פעולה המחזירה את התפריט לפי סינוני ומיוני המשתמש
         public MenuViewModel GetMenu(string foodTypeId = "-1", int pageNumber = 1, string mealNameSearch = "", bool? priceSort =null, int pages = 0)
         {
             MenuViewModel menuViewModel = new MenuViewModel();
@@ -129,9 +130,6 @@ namespace PlateUpWS
                 this.repositoryFactory.DisconnectDb();
             }
         }
-
-    
-
         [HttpGet]
         public Meal GetMealDetails(string mealId)
         {
@@ -149,7 +147,7 @@ namespace PlateUpWS
             {
                 this.repositoryFactory.DisconnectDb();
             }
-        }
+        }//פעולה המחזירה את נתוני המנה לפי ID
 
         [HttpPost]
         public bool Registration([FromBody] Client client)
@@ -168,7 +166,7 @@ namespace PlateUpWS
             {
                 this.repositoryFactory.DisconnectDb();
             }
-        }
+        }//פעולה מבצעת הרשמה
         [HttpGet]
         public ClientFormViewModel GetRegistrationViewModel()
         {
@@ -189,7 +187,7 @@ namespace PlateUpWS
             {
                 this.repositoryFactory.DisconnectDb();
             }
-        }
+        }//פעולה המחזירה את נתוני הטופס להרשמה-כלומר ערים
 
     }
 }

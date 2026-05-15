@@ -52,7 +52,7 @@
                     </li>
                 }
             </ul>
-            @if (Context.Session.GetString("clientId") != null)
+            @if (Context.Session.GetString("clientId") != null)@* יוצג רק אם המשתמש מחובר *@
             {
                 <div class="cart-container">
                     <a href="http://localhost:5290/Client/Cart">

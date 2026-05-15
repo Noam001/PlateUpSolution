@@ -129,7 +129,7 @@ namespace WebPlateUp.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult MakeAReservation()
+        public IActionResult MakeAReservation() //checkout for Table Reservation
         {
             Order order = new Order();
             order.ClientId =  HttpContext.Session.GetString("clientId");
@@ -186,7 +186,7 @@ namespace WebPlateUp.Controllers
             client.AddParameter("orderId", orderId);
             bool success = client.Get();
             if (!success)
-                TempData["Message"] = "Failed to remove item.";
+                TempData["ErrorMessage"] = "Failed to remove item.";
             return RedirectToAction("Cart");
         }
         [HttpGet]
@@ -197,7 +197,7 @@ namespace WebPlateUp.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Checkout(string orderId)
+        public IActionResult Checkout(string orderId , string totalPrice)//checkout for Home Delivery
         {
             WebClient<string> client = new WebClient<string>();
             client.Schema = "http";
@@ -214,9 +214,9 @@ namespace WebPlateUp.Controllers
             else
             {
                 TempData["ErrorMessage"] = "Payment failed. Please try again.";
-                return RedirectToAction("Checkout", new { orderId = orderId, totalPrice = TempData["TotalPrice"] });
+                return RedirectToAction("CheckoutView", new { orderId = orderId, totalPrice = totalPrice });
             }
-        }//checkout for Home Delivery
+        }
         [HttpGet]
         public IActionResult ViewCheckoutReservation(Order order)
         {
@@ -250,6 +250,24 @@ namespace WebPlateUp.Controllers
             return RedirectToAction("Cart");
         }
         [HttpGet]
+        public IActionResult UpdateNote(int mealId, int orderId, string note)
+        {
+            WebClient<bool> client = new WebClient<bool>();
+            client.Schema = "http";
+            client.Host = "localhost";
+            client.Port = 5035;
+            client.Path = "api/Client/UpdateNote";
+            client.AddParameter("mealId", mealId.ToString());
+            client.AddParameter("orderId", orderId.ToString());
+            client.AddParameter("note", note ?? "");
+            bool success = client.Get();
+            if (success)
+                TempData["SuccessMessage"] = "Note updated!";
+            else
+                TempData["ErrorMessage"] = "Failed to update note.";
+            return RedirectToAction("Cart");
+        }
+        [HttpGet]
         public IActionResult Cart(string clientId)
         {
             WebClient<CartViewModel> client = new WebClient<CartViewModel>();
@@ -271,7 +289,8 @@ namespace WebPlateUp.Controllers
                 return Json(null);
             try
             { 
-                string url = $"https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/Ashkelon,Israel/{date}T{time}:00?key=YXLRG4K97Z69YFDVRLKP9GNUS&unitGroup=metric&include=hours";
+                string url = $"https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/Ashkelon,Israel/{date}T{time}:00" +
+                    $"?key=YXLRG4K97Z69YFDVRLKP9GNUS&unitGroup=metric&include=hours";
 
                 using HttpClient client = new HttpClient();
                 string json = await client.GetStringAsync(url);

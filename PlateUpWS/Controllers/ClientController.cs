@@ -221,5 +221,23 @@ namespace PlateUpWS
                 this.repositoryFactory.DisconnectDb();
             }
         }
+        [HttpGet]
+        public bool UpdateNote(int mealId, int orderId, string note)
+        {
+            try
+            {
+                this.repositoryFactory.ConnectDb();
+                return this.repositoryFactory.OrderRepository.UpdateMealNote(mealId, orderId, note);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
+            finally
+            {
+                this.repositoryFactory.DisconnectDb();
+            }
+        }
     }
 }

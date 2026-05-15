@@ -21,7 +21,7 @@ namespace Models
 
         [Required(ErrorMessage = "You must enter your ID")]
         [RegularExpression("^\\d+$",ErrorMessage = "Invalid ID format. Please try again.")]
-        [StringLength(9, MinimumLength =9, ErrorMessage = "\"Invalid length. The ID must be 9 characters long.")]
+        [StringLength(9, MinimumLength =9, ErrorMessage = "Invalid length. The ID must be 9 characters long.")]
         public string ClientId
         {
             get { return clientId; }
