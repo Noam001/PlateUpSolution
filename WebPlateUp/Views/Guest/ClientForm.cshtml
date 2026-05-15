@@ -14,11 +14,13 @@
                 <div class="input-wrapper">
                     @if (Model.Client == null)
                     {
+                        <!-- במצב הרשמה: השדה פתוח להקלדה -->
                         <input asp-for="Client.ClientId" id="id" type="text" placeholder="ID" />
                     }
                     else
                     {
-                        <input asp-for="Client.ClientId" id="id" type="text" placeholder="ID"  />
+                        <!-- במצב עדכון פרופיל: השדה חסום לעריכה כי תעודת זהות לא משתנה -->
+                        <input asp-for="Client.ClientId" id="id" type="text" placeholder="ID" readonly/>
                     }
                     <img class="icon" src="~/images/@(Model.Client == null ? "id.png" : "edit.png")" />
                 </div>
