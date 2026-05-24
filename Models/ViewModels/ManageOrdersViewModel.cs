@@ -8,8 +8,8 @@ namespace Models
 {
     public class ManageOrdersViewModel
     {
-        public int? OrderID { get; set; }
-        public List<Order> Orders { get; set; }
-        public bool? OrderStatus { get; set; }
+        public int? OrderID { get; set; }// מזהה הזמנה אופציונלי לצורך חיפוש וסינון
+        public List<Order> Orders { get; set; } // רשימת ההזמנות המוצגות במערכת הניהול
+        public bool? OrderStatus { get; set; } // סטטוס ההזמנה (ממתין/הושלם) לצורך סינון או עדכון
     }
 }

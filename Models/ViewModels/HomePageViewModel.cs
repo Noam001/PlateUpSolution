@@ -8,7 +8,7 @@ namespace Models
 {
     public class HomePageViewModel
     {
-        public List<Review> Reviews { get; set; }
-        public Review Review { get; set; }
+        public List<Review> Reviews { get; set; } //רשימת ביקורות המסעדה
+        public Review Review { get; set; } // אובייקט ביקורת לצורך קליטת נתוני הטופס החדש
     }
 }

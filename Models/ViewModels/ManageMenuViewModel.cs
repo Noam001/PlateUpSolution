@@ -8,8 +8,8 @@ namespace Models
 {
     public class ManageMenuViewModel
     {
-        public string? FoodTypeId { get; set; } = "";
-        public List<FoodType> FoodTypes { get; set; }
-        public List<Meal> Meals { get; set; }
+        public string? FoodTypeId { get; set; } = ""; // מזהה סוג האוכל הנוכחי המשמש לסינון התפריט
+        public List<FoodType> FoodTypes { get; set; } // רשימת כל סוגי האוכל 
+        public List<Meal> Meals { get; set; }// רשימת המנות המוצגות למנהל
     }
 }

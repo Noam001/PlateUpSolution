@@ -8,7 +8,7 @@ namespace Models
 {
     public class ClientFormViewModel
     {
-        public List<City> Cities {  get; set; }
-        public Client Client { get; set; }
+        public List<City> Cities {  get; set; } //ערים לבחירה בטופס העדכון פרופיל או הרשמה
+        public Client Client { get; set; } //פרטי הלקוח
     }
 }

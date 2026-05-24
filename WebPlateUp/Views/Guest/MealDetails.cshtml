@@ -33,12 +33,20 @@
             </div>
             @if (Context.Session.GetString("clientId") != null)
             {
-                <button class="add-to-cart" type="submit">Add to Cart</button>
+                @if (Model.MealStatus == false)
+                {
+                    <button class="add-to-cart" disabled title="The dish is unavailable">Add to Cart</button>
+                }
+                else
+                {
+                    <button class="add-to-cart" type="submit">Add to Cart</button>
+                }
             }
             else
             {
                 <button class="add-to-cart" disabled title="Please login first">Add to Cart</button>
             }
+
         </form>    
     </div>
 

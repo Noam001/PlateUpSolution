@@ -186,7 +186,7 @@ namespace PlateUpWS
                                  ON Meals.MealId = MealsOrders.MealId
                             GROUP BY Meals.MealId, Meals.MealName, Meals.MealPhoto,Meals.MealDescription, 
                             Meals.MealPrice, Meals.MealStatus
-                            ORDER BY SUM(MealsOrders.Quantity) DESC";
+                            ORDER BY SUM(MealsOrders.Quantity) DESC,Meals.MealId ASC";
             List<Meal> meals = new List<Meal>();
             using (IDataReader reader = this.dbContext.Select(sql))
             {

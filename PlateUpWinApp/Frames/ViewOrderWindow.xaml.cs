@@ -28,6 +28,7 @@ namespace PlateUpWpf.Frames
             txtOrderDate.Text = order.OrderDate;
             txtOrderTime.Text = order.OrderTime;
             txtNumOfPeople.Text = order.NumOfPeople.ToString();
+            txtOrderPlace.Text = order.OrderPlace;
             txtStatus.Text = order.OrderStatus ? "Completed" : "Pending";
             this.lvMeals.ItemsSource = orderedMeals.CartItems;
             if(orderedMeals.CartItems.Count == 0) //אם לא קיים מנות להזמנה

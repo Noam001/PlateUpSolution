@@ -34,10 +34,10 @@
                 <!-- Order ID -->
                 <TextBlock Text="Order ID"
                            Foreground="#ADACD2" FontSize="13"
-                           Canvas.Left="40" Canvas.Top="30"/>
+                           Canvas.Left="140" Canvas.Top="30"/>
                 <Border Width="160" Height="45" Background="#3A2F6F"
                         BorderBrush="#9497CD" BorderThickness="1"
-                        CornerRadius="8" Canvas.Left="40" Canvas.Top="50">
+                        CornerRadius="8" Canvas.Left="140" Canvas.Top="50">
                     <TextBlock x:Name="txtOrderId"
                                Foreground="#E0E1F1" FontSize="18"
                                FontWeight="Bold" Padding="10"
@@ -47,10 +47,10 @@
                 <!-- Client ID -->
                 <TextBlock Text="Client ID"
                            Foreground="#ADACD2" FontSize="13"
-                           Canvas.Left="230" Canvas.Top="30"/>
+                           Canvas.Left="330" Canvas.Top="30"/>
                 <Border Width="200" Height="45" Background="#3A2F6F"
                         BorderBrush="#9497CD" BorderThickness="1"
-                        CornerRadius="8" Canvas.Left="230" Canvas.Top="50">
+                        CornerRadius="8" Canvas.Left="330" Canvas.Top="50">
                     <TextBlock x:Name="txtClientId"
                                Foreground="#E0E1F1" FontSize="18"
                                Padding="10" VerticalAlignment="Center"/>
@@ -59,10 +59,10 @@
                 <!-- Status -->
                 <TextBlock Text="Status"
                            Foreground="#ADACD2" FontSize="13"
-                           Canvas.Left="460" Canvas.Top="30"/>
+                           Canvas.Left="560" Canvas.Top="30"/>
                 <Border Width="150" Height="45" Background="#3A2F6F"
                         BorderBrush="#9497CD" BorderThickness="1"
-                        CornerRadius="8" Canvas.Left="460" Canvas.Top="50">
+                        CornerRadius="8" Canvas.Left="560" Canvas.Top="50">
                     <TextBlock x:Name="txtStatus"
                                Foreground="#E0E1F1" FontSize="16"
                                Padding="10" VerticalAlignment="Center"/>
@@ -100,6 +100,16 @@
                         BorderBrush="#9497CD" BorderThickness="1"
                         CornerRadius="8" Canvas.Left="460" Canvas.Top="150">
                     <TextBlock x:Name="txtNumOfPeople"
+                               Foreground="#E0E1F1" FontSize="16"
+                               Padding="10" VerticalAlignment="Center"/>
+                </Border>
+                <TextBlock Text="Order Place"
+                           Foreground="#ADACD2" FontSize="13"
+                           Canvas.Left="640" Canvas.Top="130"/>
+                <Border Width="150" Height="45" Background="#3A2F6F"
+                        BorderBrush="#9497CD" BorderThickness="1"
+                        CornerRadius="8" Canvas.Left="640" Canvas.Top="150">
+                    <TextBlock x:Name="txtOrderPlace"
                                Foreground="#E0E1F1" FontSize="16"
                                Padding="10" VerticalAlignment="Center"/>
                 </Border>

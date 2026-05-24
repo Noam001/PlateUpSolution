@@ -12,6 +12,7 @@ namespace PlateUpWS
                 OrderId = Convert.ToUInt16(reader["OrderId"]),
                 OrderDate = Convert.ToString(reader["OrderDate"]),
                 OrderTime = Convert.ToString(reader["OrderTime"]),
+                OrderPlace = Convert.ToString(reader["OrderPlace"]),
                 NumOfPeople = Convert.ToUInt16(reader["NumOfPeople"]),
                 OrderStatus = Convert.ToBoolean(reader["OrderStatus"])
             };

@@ -14,16 +14,19 @@ namespace PlateUpWpf.Frames
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            // בניית כתובת URL מלאה לתמונה בשרת לפי שם הקובץ
             string url = $"http://localhost:5035/DataImages/{value.ToString()}";
             if (value == null)
                 return null;
             try
             {
+                // יצירת BitmapImage מהכתובת המלאה לטעינת התמונה מהשרת
                 return new BitmapImage(new Uri(url, UriKind.Absolute));
             }
             catch
             {
-                return null; // או תמונת ברירת מחדל
+                // במקרה של כשל בטעינה (שרת לא זמין, קובץ לא קיים וכו
+                return null;
             }
         }
 

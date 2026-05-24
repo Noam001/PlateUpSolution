@@ -117,9 +117,10 @@ namespace WebPlateUp.Controllers
             if (ok) //האם שליחה למסד נתונים עבדה
             {
                 HttpContext.Session.SetString("clientName", client.ClientName);
+                TempData["SuccessMessage"] = "Profile updated successfully.";
                 return RedirectToAction("HomePage", "Guest");
             }
-            ViewBag.Error = true;
+            TempData["ErrorMessage"] = "Update failed. Please try again later.";
             return RedirectToAction("ViewRegistration", "Guest");
         }
         [HttpGet]

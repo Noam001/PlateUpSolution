@@ -13,7 +13,8 @@ namespace PlateUpWpf.Frames
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            int index = (int)value;
+            int index = (int)value; // המרת הערך המתקבל לאינדקס שלם
+            //אם האינדקס הוא -1 כלומר לא נבחר בתיבה להציג את האלמנט
             return index == -1 ? Visibility.Visible : Visibility.Hidden;
         }
 

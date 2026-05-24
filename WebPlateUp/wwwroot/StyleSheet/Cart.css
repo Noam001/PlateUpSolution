@@ -29,11 +29,14 @@
     align-items: start;
 }
 
-/* ========== צד שמאל - רשימת מנות ========== */
+/*צד שמאל - רשימת מנות  */
 .cart-items-section {
     display: flex;
     flex-direction: column;
     gap: 20px;
+    max-height: 600px;
+    overflow-y: auto;
+    padding-right: 8px;
 }
 
 /* כרטיס מנה */
@@ -101,12 +104,11 @@
     margin: 0;
 }
 .note-form {
-    position:absolute;
-    margin-left: 167px;
     display: flex;
     align-items: center;
     gap: 6px;
-    margin-top: 110px;
+    margin-top: -50px;
+    margin-left: 170px;
 }
 
 .note-input {

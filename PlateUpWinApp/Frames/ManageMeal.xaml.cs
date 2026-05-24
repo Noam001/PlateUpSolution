@@ -52,6 +52,7 @@ namespace PlateUpWpf.Frames
             };
             this.foodType = foodType;
             this.ImageClickDesign.Visibility = Visibility.Collapsed;
+            this.PageTitle.Text = "Manage Meal";
             this.sumbitBtn.Content = "Update";
             this.sumbitBtn.Click += (s, e) => UpdateMeal(meal.MealId);
             GetNewMealVm();

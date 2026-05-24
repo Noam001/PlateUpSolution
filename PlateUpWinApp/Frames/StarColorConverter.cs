@@ -11,36 +11,29 @@ namespace PlateUpWpf.Frames
 {
     public class StarColorConverter : IValueConverter
     {
+        // המרת ציון הדירוג המספרי של הלקוח לצבע הכוכב המתאים במסך
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            // בדיקה למקרה שהערך ריק
+            // מניעת קריסה ובדיקה למקרה שהערך או מספר הכוכב ריקים
             if (value == null || parameter == null)
                 return Brushes.Gray;
 
             int rating; //הדירוג שהלקוח נתן 1–5
-            int starIndex; //מספר הכוכב שנבדק כרגע
+            int starIndex; // מספר הכוכב הספציפי שנבדק כרגע במסך
 
+            // המרת הנתונים לערכים מספריים חוקיים, אם נכשל יוחזר צבע אפור
             if (!int.TryParse(value.ToString(), out rating))
                 return Brushes.Gray;
-
             if (!int.TryParse(parameter.ToString(), out starIndex))
                 return Brushes.Gray;
 
-            // אם מספר הכוכב קטן או שווה לדירוג → זהב
+            // אם מספר הכוכב הנוכחי קטן או שווה לציון הדירוג הכולל -> צביעה בזהב
             if (starIndex <= rating)
                 return Brushes.Gold;
 
-            // אחרת אפור
+            // אם מספר הכוכב גבוה מהציון שניתן -> צביעה באפור
             return Brushes.Gray;
-            //int rating = (int)value; גרסה פשוטה בהרבה אך פחות בטוחה
-            //int starIndex = int.Parse(parameter.ToString());
-
-            //if (starIndex <= rating)
-            //    return Brushes.Gold;
-
-            //return Brushes.Gray;
         }
-
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();

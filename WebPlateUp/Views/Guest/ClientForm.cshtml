@@ -7,7 +7,8 @@
 <link href="~/stylesheet/clientform.css" rel="stylesheet" />
 
 <div class="page-container">
-    <form asp-controller=@(Model.Client == null ? "Guest" : "Client") asp-action=@(Model.Client == null ? "Registration" : "UpdateProfile") class="Signup" method="post">
+    <form asp-controller=@(Model.Client == null ? "Guest" : "Client") asp-action=@(Model.Client == null ? "Registration" : "UpdateProfile") 
+     class="Signup" method="post">
         <h1 class="Title">@(Model.Client == null ? "SignUp" : "Update Your Profile")</h1>
         <ul class="fields">
             <li class="field">
@@ -20,9 +21,9 @@
                     else
                     {
                         <!-- במצב עדכון פרופיל: השדה חסום לעריכה כי תעודת זהות לא משתנה -->
-                        <input asp-for="Client.ClientId" id="id" type="text" placeholder="ID" readonly/>
+                        <input asp-for="Client.ClientId" id="id" type="text" placeholder="ID" readonly style="pointer-events: none; cursor: not-allowed;"/>
                     }
-                    <img class="icon" src="~/images/@(Model.Client == null ? "id.png" : "edit.png")" />
+                    <img class="icon" src="~/images/@(Model.Client == null ? "id.png" : "disabled.png")" />
                 </div>
                 <span asp-validation-for="Client.ClientId" class="errorData" id="ClientError"></span>
             </li>

@@ -32,9 +32,8 @@ namespace PlateUpWinApp
         {
             isAdmin = false;
             InitializeComponent();
-            // ViewLogin();
-            this.spNavItems.Visibility = Visibility.Visible;
-            ViewReports();
+            ViewLogin();
+            
         }
       
         public void LoginSuccess(LoginViewModel loginResult)

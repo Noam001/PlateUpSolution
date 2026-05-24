@@ -8,7 +8,7 @@ namespace Models.ViewModels
 {
     public class MealViewModel
     {
-        public Meal Meal { get; set; }
-        public List<FoodType> FoodTypes { get; set; }
+        public Meal Meal { get; set; } // אובייקט המנה המכיל את פרטיה
+        public List<FoodType> FoodTypes { get; set; }// רשימת סוגי האוכל הזמינים לבחירה עבור המנה
     }
 }
