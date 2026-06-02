@@ -96,8 +96,9 @@ namespace PlateUpWS
             this.dbContext.AddParameter("@MealName", mealName);
             using (IDataReader reader = this.dbContext.Select(sql))
             {
-                reader.Read();
-                return this.modelFactory.MealCreator.CreateModel(reader);
+                if (reader.Read())
+                    return this.modelFactory.MealCreator.CreateModel(reader);
+                return null; // לא נמצאה מנה
             }
         }
         public List<Meal> SortByPrice(bool? option)

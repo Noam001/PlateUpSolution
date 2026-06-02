@@ -101,7 +101,7 @@ namespace PlateUpWS
                 else if (mealNameSearch != "")
                 {
                     Meal meal = repositoryFactory.MealRepository.GetMealByName(mealNameSearch);
-                    menuViewModel.Meals = new List<Meal>() { meal };
+                    menuViewModel.Meals = meal != null ? new List<Meal>() { meal } : null;
                     menuViewModel.Pages = 1;
                 }
 

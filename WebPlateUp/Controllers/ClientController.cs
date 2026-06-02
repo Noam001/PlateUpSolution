@@ -221,6 +221,12 @@ namespace WebPlateUp.Controllers
         [HttpGet]
         public IActionResult ViewCheckoutReservation(Order order)
         {
+            //בדיקה אם המשתמש הוא אורח
+            if (HttpContext.Session.GetString("clientId") == null)
+            {
+                TempData["ErrorMessage"] = "You must be logged in to make a reservation.";
+                return RedirectToAction("ViewTableReservation");
+            }
             if (!ModelState.IsValid)
                 return View("ViewTableReservation", order);
 
@@ -260,7 +266,8 @@ namespace WebPlateUp.Controllers
             client.Path = "api/Client/UpdateNote";
             client.AddParameter("mealId", mealId.ToString());
             client.AddParameter("orderId", orderId.ToString());
-            client.AddParameter("note", note ?? "");
+            string finalNote = string.IsNullOrEmpty(note) ? "empty" : note;
+            client.AddParameter("note", finalNote);
             bool success = client.Get();
             if (success)
                 TempData["SuccessMessage"] = "Note updated!";

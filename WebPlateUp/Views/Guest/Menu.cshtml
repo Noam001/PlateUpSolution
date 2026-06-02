@@ -25,6 +25,7 @@
         document.getElementById("foodType").value = "-1";
         document.getElementById("sort").value = "";
         document.getElementById("pageNum").value = 1;
+        document.getElementById("search").value = "";
         // ביטול סימון רדיו
         document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
 
@@ -36,7 +37,7 @@
         <aside class="filters">       
             <form action="http://localhost:5290/Guest/Menu/" method="get" id="filterForm">
                 <section class="search-section">
-                    <input type="text" name="mealNameSearch" placeholder="Search" class="search-bar" value="@Model.MealNameSearch">
+                    <input type="text" id="search" name="mealNameSearch" placeholder="Search" class="search-bar" value="@Model.MealNameSearch">
                 </section>
                 <h3>Food Type</h3>
                 <select name="foodTypeId" id="foodType" onchange="GoLink()">
@@ -71,15 +72,18 @@
         </aside>
         <!-- Menu items grid -->
         <section class="menu-items">
-            @foreach (Meal meal in Model.Meals)
+            @if(Model.Meals != null)
             {
-                <div class="item">
-                    <a href="http://localhost:5290/Guest/MealDetails/?id=@meal.MealId">
-                        <img src="http://localhost:5035/DataImages/@meal.MealPhoto">
-                        <p>@meal.MealName</p>
-                        <p>$@meal.MealPrice</p>
-                    </a>
-                </div>
+                @foreach (Meal meal in Model.Meals)
+                {
+                    <div class="item">
+                        <a href="http://localhost:5290/Guest/MealDetails/?id=@meal.MealId">
+                            <img src="http://localhost:5035/DataImages/@meal.MealPhoto">
+                            <p>@meal.MealName</p>
+                            <p>$@meal.MealPrice</p>
+                        </a>
+                    </div>
+                }
             }
         </section>
     </div>

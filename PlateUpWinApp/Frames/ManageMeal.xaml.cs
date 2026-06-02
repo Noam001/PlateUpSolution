@@ -65,7 +65,7 @@ namespace PlateUpWpf.Frames
             updateMeal.Meal.MealName = this.txtEditItemName.Text;
             updateMeal.Meal.MealDescription = this.txtEditDescription.Text;
             updateMeal.Meal.MealPrice = double.Parse(this.txtEditPrice.Text);
-            updateMeal.Meal.MealStatus = this.cmbEditStatus.SelectedValue == "True";
+            updateMeal.Meal.MealStatus = this.cmbEditStatus.SelectedValue?.ToString() == "True";
 
             FoodType selectedFoodType = this.cmbFoodTypes.SelectedItem as FoodType;
             updateMeal.FoodTypes = new List<FoodType>() { selectedFoodType };
@@ -74,11 +74,12 @@ namespace PlateUpWpf.Frames
             client.Host = "localhost";
             client.Port = 5035;
             client.Path = "api/Admin/UpdateMeal";
+            if (this.imgPath != null)
+                updateMeal.Meal.MealPhoto = System.IO.Path.GetExtension(this.imgPath);
             updateMeal.Meal.Validate();
             bool isValid = updateMeal.Meal.IsValid;
             if (this.imgPath != null && isValid==true)
             {
-                updateMeal.Meal.MealPhoto = System.IO.Path.GetExtension(this.imgPath);
                 Stream stream = new FileStream(this.imgPath, FileMode.Open, FileAccess.Read);
                 bool ok = await client.PostAsync(updateMeal, stream);
                 HandleResult(ok);
@@ -165,7 +166,6 @@ namespace PlateUpWpf.Frames
             newMeal.Meal.MealStatus = this.cmbEditStatus.SelectedValue == "True";
 
             this.MealPhotoEdit.Text = newMeal.Meal.MealPhoto;
-           // this.FoodTypeSelect.Text = selectedFoodType == null ? null : selectedFoodType.FoodTypeName;
 
             Stream stream = null;
             if (newMeal.Meal.MealPhoto != null)

@@ -283,7 +283,8 @@ namespace PlateUpWS
             string sql = @"UPDATE MealsOrders 
                    SET MealNotes = @MealNotes
                    WHERE MealID = @MealID AND OrderID = @OrderID";
-
+            if (note == "empty")
+                note = "";
             this.dbContext.AddParameter("@MealNotes", note);
             this.dbContext.AddParameter("@MealID", mealId);
             this.dbContext.AddParameter("@OrderID", orderId);

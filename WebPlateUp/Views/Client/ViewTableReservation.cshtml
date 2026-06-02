@@ -13,16 +13,22 @@
     <link href="~/stylesheet/tablereservation.css" rel="stylesheet" />
 </head>
 <body>
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="toast-reservation">
+            ✗ @TempData["ErrorMessage"]
+        </div>
+    }
     <form asp-controller="Client" asp-action="ViewCheckoutReservation" class="TableReservation" method="get">
         <h1 class="PlateUp">PlateUp</h1>
         <h2 class="Title">Reserve a table</h2>
         <ul class="fields">
             <li class="field">
-                <input asp-for="@Model.ClientId" type="hidden" value="@ViewBag.ClientId" />
+                <input type="hidden" name="ClientId" value="@ViewBag.ClientId" />
                 <input asp-for="@Model.OrderDate" id="OrderDate" type="date"
                            min="@DateTime.Now.ToString("yyyy-MM-dd")"
                            max="@DateTime.Now.AddMonths(1).ToString("yyyy-MM-dd")" placeholder="Reservation Date" />
-                <span asp-validation-for="@Model.OrderDate" class="errorData" id="OrderError"></span>
+                <span asp-validation-for="@Model.OrderDate" class="errorData"></span>
             </li>
             <li class="field">
                 <select asp-for="@Model.OrderTime" id="OrderTime" class="form-control">
@@ -59,7 +65,7 @@
                     <option value="Indoors">Indoors</option>
                     <option value="Outdoors">Outdoors</option>
                 </select>
-                <span asp-validation-for="@Model.OrderPlace" class="errorData" id="OrderError"></span>
+                <span asp-validation-for="@Model.OrderPlace" class="errorData"></span>
             </li>
         </ul>
         <p class="reserve-text">

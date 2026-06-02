@@ -191,28 +191,6 @@
                                                        VerticalAlignment="Center"
                                                        Width="45"/>
 
-                                            <Button Grid.Column="4" Content="View Meal"
-                                                    Width="90" Height="30"
-                                                    FontSize="12" FontWeight="SemiBold"
-                                                    Foreground="#E0E1F1"
-                                                    BorderThickness="0" Cursor="Hand">
-                                                <Button.Template>
-                                                    <ControlTemplate TargetType="Button">
-                                                        <Border x:Name="border"
-                                                                Background="#4FC3F7"
-                                                                CornerRadius="6">
-                                                            <ContentPresenter HorizontalAlignment="Center"
-                                                                              VerticalAlignment="Center"/>
-                                                        </Border>
-                                                        <ControlTemplate.Triggers>
-                                                            <Trigger Property="IsMouseOver" Value="True">
-                                                                <Setter TargetName="border" Property="Background" Value="#29B6F6"/>
-                                                            </Trigger>
-                                                        </ControlTemplate.Triggers>
-                                                    </ControlTemplate>
-                                                </Button.Template>
-                                            </Button>
-
                                         </Grid>
                                     </Border>
                                 </DataTemplate>

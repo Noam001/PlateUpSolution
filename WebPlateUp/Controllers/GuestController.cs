@@ -99,9 +99,10 @@ namespace WebPlateUp.Controllers
             {
                 HttpContext.Session.SetString("clientId", client.ClientId);
                 HttpContext.Session.SetString("clientName", client.ClientName);
+                TempData["SuccessMessage"] = "Your account has been created!";
                 return RedirectToAction("HomePage", "Guest"); //מעביר דף במידה והצליח
             }
-            ViewBag.ErrorMessage = "Registration faild, Try Again."; //אם לא הצליח להירשם, יוסף לו הודעת שגיאה 
+            TempData["ErrorMessage"] = "Registration faild, Try Again."; //אם לא הצליח להירשם, יוסף לו הודעת שגיאה 
             return View("ClientForm", GetRegistrationViewModel(client));
         }
         //Get RegistrationViewModel from WS

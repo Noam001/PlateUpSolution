@@ -28,16 +28,16 @@ namespace Models
             set { clientId = value;  ValidateProperty(value, "ClientId"); }
         }
         [Required(ErrorMessage ="You must enter your name")]
-        [StringLength(10, MinimumLength =2, ErrorMessage = "First name cannot be longer than 10 characters and less than 2")]
         [FirstLetterCapital(ErrorMessage = "First letter must be capital")]
+        [StringLength(10, MinimumLength =2, ErrorMessage = "First name cannot be longer than 10 characters and less than 2")]
         public string ClientName
         {
             get { return clientName; }
             set { clientName = value; ValidateProperty(value, "ClientName"); }
         }
         [Required(ErrorMessage = "You must enter your last name")]
-        [StringLength(10, MinimumLength = 2, ErrorMessage = "Last name cannot be longer than 10 characters and less than 2")]
         [FirstLetterCapital(ErrorMessage = "First letter must be capital")]
+        [StringLength(10, MinimumLength = 2, ErrorMessage = "Last name cannot be longer than 10 characters and less than 2")]
         public string ClientLastName
         {
             get { return clientLastName; }
@@ -72,6 +72,7 @@ namespace Models
             set { clientPhoneNumber = value; }
         }
         [Required(ErrorMessage = "You must enter your city")]
+        [Range(1, int.MaxValue, ErrorMessage = "You must select a city")]
         public int CityId
         {
             get { return cityId; }
